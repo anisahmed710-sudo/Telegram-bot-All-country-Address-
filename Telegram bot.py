@@ -1,6 +1,6 @@
 # ==========================================
 # GLOBAL COUNTRY ADDRESS BOT
-# 121 COUNTRIES (FULL SINGLE-FILE BOT CODE)
+# 121 COUNTRIES (FULL SINGLE-FILE BOT CODE WITH COPY BUTTON)
 # ==========================================
 
 import random
@@ -151,6 +151,7 @@ by|Belarus|🇧🇾|Minsk,Gomel,Mogilev,Vitebsk,Grodno
 md|Moldova|🇲🇩|Chisinau,Balti,Bender,Cahul,Orhei
 mt|Malta|🇲🇹|Valletta,Birkirkara,Mosta,Qormi,Sliema
 cy|Cyprus|🇨🇾|Nicosia,Limasol,Larnaca,Paphos,Famagusta
+il|Israel|🇮🇱|Jerusalem,Tel Aviv,Haifa,Eilat,Nazareth
 ar|Argentina|🇦🇷|Buenos Aires,Cordoba,Rosario,Mendoza,La Plata
 br|Brazil|🇧🇷|Sao Paulo,Rio de Janeiro,Brasilia,Salvador,Recife
 cl|Chile|🇨🇱|Santiago,Valparaiso,Concepcion,Antofagasta,Temuco
@@ -170,6 +171,9 @@ do|Dominican Republic|🇩🇴|Santo Domingo,Santiago,La Romana,Punta Cana,Puert
 jm|Jamaica|🇯🇲|Kingston,Montego Bay,Spanish Town,Portmore,Mandeville
 tt|Trinidad and Tobago|🇹🇹|Port of Spain,San Fernando,Chaguanas,Arima,Scarborough
 ht|Haiti|🇭🇹|Port-au-Prince,Cap-Haitien,Gonaives,Jacmel,Les Cayes
+us|United States|🇺🇸|New York,Los Angeles,Chicago,Houston,Miami
+ca|Canada|🇨🇦|Toronto,Vancouver,Montreal,Calgary,Ottawa
+au|Australia|🇦🇺|Sydney,Melbourne,Brisbane,Perth,Adelaide
 nz|New Zealand|🇳🇿|Auckland,Wellington,Christchurch,Hamilton,Dunedin
 fj|Fiji|🇫🇯|Suva,Nadi,Lautoka,Nausori,Ba
 pg|Papua New Guinea|🇵🇬|Port Moresby,Lae,Mount Hagen,Madang,Goroka
@@ -217,84 +221,121 @@ ALIASES.update({
     "turkey": "tr"
 })
 
+
+# ==========================================
+# DATA BANKS & MAPS
+# ==========================================
+
+FAMOUS = {
+    "Dhaka": "রাজধানী, ব্যবসা-বাণিজ্য ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Chattogram": "সমুদ্রবন্দর, পাহাড় ও প্রাকৃতিক সৌন্দর্যের জন্য বিখ্যাত",
+    "Rajshahi": "আম, রেশম ও শিক্ষা প্রতিষ্ঠানের জন্য বিখ্যাত",
+    "Khulna": "সুন্দরবন ও শিল্পাঞ্চলের জন্য বিখ্যাত",
+    "Sylhet": "চা-বাগান, পাহাড় ও প্রাকৃতিক সৌন্দর্যের জন্য বিখ্যাত",
+    "Mumbai": "বলিউড, আর্থিক কেন্দ্র ও সমুদ্রতটের জন্য বিখ্যাত",
+    "Delhi": "রাজধানী, ইতিহাস ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Kolkata": "সাহিত্য, সংস্কৃতি ও ঐতিহ্যের জন্য বিখ্যাত",
+    "Bengaluru": "প্রযুক্তি ও IT industry-এর জন্য বিখ্যাত",
+    "Chennai": "শিল্প, প্রযুক্তি ও সমুদ্রসৈকতের জন্য বিখ্যাত",
+    "Hyderabad": "IT industry, চারমিনার ও খাবারের জন্য বিখ্যাত",
+    "Kuala Lumpur": "Petronas Twin Towers, ব্যবসা ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
+    "George Town": "ঐতিহ্যবাহী স্থাপনা, খাবার ও সংস্কৃতির জন্য বিখ্যাত",
+    "Johor Bahru": "ব্যবসা, পর্যটন ও Singapore-এর কাছাকাছি অবস্থানের জন্য বিখ্যাত",
+    "Malacca": "ঐতিহাসিক স্থাপনা ও Portuguese heritage-এর জন্য বিখ্যাত",
+    "Kota Kinabalu": "সমুদ্র, দ্বীপ ও Mount Kinabalu-এর জন্য বিখ্যাত",
+    "Doha": "আধুনিক স্থাপত্য, ব্যবসা ও আন্তর্জাতিক ক্রীড়ার জন্য বিখ্যাত",
+    "Al Rayyan": "শিক্ষা, ক্রীড়া ও আধুনিক স্থাপনার জন্য বিখ্যাত",
+    "Al Wakrah": "ঐতিহ্যবাহী বাজার, সমুদ্র ও মাছ ধরার জন্য বিখ্যাত",
+    "Muscat": "সমুদ্র, পাহাড় ও ঐতিহ্যবাহী আরব স্থাপত্যের জন্য বিখ্যাত",
+    "Salalah": "খরিফ মৌসুম, সবুজ পাহাড় ও প্রাকৃতিক সৌন্দর্যের জন্য বিখ্যাত",
+    "Sohar": "বন্দর, শিল্প ও ঐতিহাসিক ঐতিহ্যের জন্য বিখ্যাত",
+    "Nizwa": "ঐতিহাসিক দুর্গ, বাজার ও সংস্কৃতির জন্য বিখ্যাত",
+    "Dubai": "আকাশচুম্বী ভবন, ব্যবসা, পর্যটন ও শপিংয়ের জন্য বিখ্যাত",
+    "Abu Dhabi": "রাজধানী, তেল-গ্যাস ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
+    "Sharjah": "সংস্কৃতি, জাদুঘর ও শিল্পের জন্য বিখ্যাত",
+    "Ajman": "সমুদ্রসৈকত, বন্দর ও পর্যটনের জন্য বিখ্যাত",
+    "Al Ain": "সবুজ বাগান, মরূদ্যান ও ঐতিহাসিক স্থানের জন্য বিখ্যাত",
+    "Tokyo": "প্রযুক্তি, ব্যবসা ও আধুনিক নগরজীবনের জন্য বিখ্যাত",
+    "Osaka": "ব্যবসা, খাবার ও বিনোদনের জন্য বিখ্যাত",
+    "Kyoto": "প্রাচীন মন্দির, ঐতিহ্য ও সংস্কৃতির জন্য বিখ্যাত",
+    "Yokohama": "বন্দর, সমুদ্র ও আধুনিক নগরজীবনের জন্য বিখ্যাত",
+    "Nagoya": "অটোমোবাইল ও শিল্পের জন্য বিখ্যাত",
+    "New York": "আর্থিক কেন্দ্র, Times Square ও Statue of Liberty-এর জন্য বিখ্যাত",
+    "Los Angeles": "Hollywood, চলচ্চিত্র ও বিনোদনের জন্য বিখ্যাত",
+    "Chicago": "স্থাপত্য, ব্যবসা ও শিল্পের জন্য বিখ্যাত",
+    "Houston": "Space Center, energy industry ও ব্যবসার জন্য বিখ্যাত",
+    "Miami": "সমুদ্রসৈকত, পর্যটন ও nightlife-এর জন্য বিখ্যাত",
+    "London": "রাজধানী, ব্যবসা, ইতিহাস ও পর্যটনের জন্য বিখ্যাত",
+    "Manchester": "ফুটবল, শিল্প ও সঙ্গীতের জন্য বিখ্যাত",
+    "Birmingham": "শিল্প, ব্যবসা ও শিক্ষা প্রতিষ্ঠানের জন্য বিখ্যাত",
+    "Liverpool": "সঙ্গীত, বন্দর ও ফুটবলের জন্য বিখ্যাত",
+    "Leeds": "ব্যবসা, শিক্ষা ও shopping-এর জন্য বিখ্যাত",
+    "Paris": "Eiffel Tower, fashion, শিল্প ও সংস্কৃতির জন্য বিখ্যাত",
+    "Lyon": "খাবার, ইতিহাস ও silk industry-এর জন্য বিখ্যাত",
+    "Marseille": "সমুদ্রবন্দর, Mediterranean coast ও খাবারের জন্য বিখ্যাত",
+    "Toulouse": "Aerospace industry ও গোলাপি স্থাপত্যের জন্য বিখ্যাত",
+    "Nice": "সমুদ্রসৈকত ও পর্যটনের জন্য বিখ্যাত",
+    "Berlin": "ইতিহাস, সংস্কৃতি ও আধুনিক শিল্পের জন্য বিখ্যাত",
+    "Munich": "BMW, শিল্প ও Oktoberfest-এর জন্য বিখ্যাত",
+    "Hamburg": "বন্দর, ব্যবসা ও সঙ্গীতের জন্য বিখ্যাত",
+    "Frankfurt": "ব্যাংকিং, Finance ও আন্তর্জাতিক ব্যবসার জন্য বিখ্যাত",
+    "Cologne": "Cologne Cathedral ও সংস্কৃতির জন্য বিখ্যাত",
+    "Rome": "Colosseum, প্রাচীন ইতিহাস ও Vatican-এর জন্য বিখ্যাত",
+    "Milan": "Fashion, design ও ব্যবসার জন্য বিখ্যাত",
+    "Naples": "Pizza, সমুদ্র ও ঐতিহাসিক স্থানের জন্য বিখ্যাত",
+    "Turin": "Automobile industry ও ইতিহাসের জন্য বিখ্যাত",
+    "Florence": "Renaissance art ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Madrid": "ফুটবল, শিল্প, সংস্কৃতি ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Barcelona": "Gaudi architecture, সমুদ্রসৈকত ও ফুটবলের জন্য বিখ্যাত",
+    "Valencia": "সমুদ্রসৈকত, খাবার ও City of Arts-এর জন্য বিখ্যাত",
+    "Seville": "Flamenco, ঐতিহ্য ও স্থাপত্যের জন্য বিখ্যাত",
+    "Bilbao": "Guggenheim Museum ও শিল্পের জন্য বিখ্যাত",
+    "Lisbon": "ঐতিহাসিক স্থাপনা, সমুদ্র ও Portuguese culture-এর জন্য বিখ্যাত",
+    "Porto": "Port wine, নদী ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Braga": "ঐতিহাসিক গির্জা ও ধর্মীয় স্থাপনার জন্য বিখ্যাত",
+    "Coimbra": "প্রাচীন বিশ্ববিদ্যালয় ও ইতিহাসের জন্য বিখ্যাত",
+    "Faro": "Algarve region ও সমুদ্রসৈকতের জন্য বিখ্যাত",
+    "Istanbul": "ইউরোপ-এশিয়ার সংযোগ, ইতিহাস ও পর্যটনের জন্য বিখ্যাত",
+    "Ankara": "তুরস্কের রাজধানী ও প্রশাসনিক কেন্দ্র হিসেবে বিখ্যাত",
+    "Izmir": "সমুদ্র, বন্দর ও পর্যটনের জন্য বিখ্যাত",
+    "Bursa": "ঐতিহাসিক স্থাপনা ও শিল্পের জন্য বিখ্যাত",
+    "Antalya": "সমুদ্রসৈকত ও পর্যটনের জন্য বিখ্যাত",
+    "Riyadh": "রাজধানী, ব্যবসা ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
+    "Jeddah": "লাল সাগর, বন্দর ও ব্যবসার জন্য বিখ্যাত",
+    "Dammam": "তেল-গ্যাস, শিল্প ও সমুদ্রের জন্য বিখ্যাত",
+    "Mecca": "ইসলামের পবিত্রতম স্থান হিসেবে বিখ্যাত",
+    "Medina": "মসজিদে নববী ও ইসলামী ইতিহাসের জন্য বিখ্যাত",
+    "Beijing": "রাজধানী, ইতিহাস ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Shanghai": "Finance, বন্দর ও আধুনিক skyline-এর জন্য বিখ্যাত",
+    "Guangzhou": "ব্যবসা, বাণিজ্য ও Canton Fair-এর জন্য বিখ্যাত",
+    "Shenzhen": "Technology, manufacturing ও innovation-এর জন্য বিখ্যাত",
+    "Chengdu": "Panda, খাবার ও প্রযুক্তির জন্য বিখ্যাত",
+    "Seoul": "Technology, K-pop, fashion ও আধুনিক সংস্কৃতির জন্য বিখ্যাত",
+    "Busan": "সমুদ্রসৈকত, বন্দর ও চলচ্চিত্র উৎসবের জন্য বিখ্যাত",
+    "Incheon": "আন্তর্জাতিক বিমানবন্দর ও বন্দরনগরী হিসেবে বিখ্যাত",
+    "Daegu": "Textile industry ও সংস্কৃতির জন্য বিখ্যাত",
+    "Daejeon": "Science, research ও technology-এর জন্য বিখ্যাত"
+}
+
 NAME_BANK = {
-    "bd": "মাহমুদুল হাসান,সাইফুল ইসলাম,রাকিব হাসান,নুসরাত জাহান,সুমাইয়া আক্তার,তানজিলা রহমান",
-    "in": "Aarav Sharma,Arjun Patel,Rahul Mehta,Priya Singh,Ananya Gupta,Rohan Verma",
-    "my": "Muhammad Faris,Ahmad Hakim,Nur Aisyah,Siti Aminah,Hafiz Rahman,Amir Hakim",
-    "qa": "Mohammed Al-Kuwari,Ahmed Al-Thani,Fatima Al-Hajri,Mariam Al-Mansoori",
-    "om": "Ahmed Al-Harthy,Mohammed Al-Balushi,Fatma Al-Rawahi,Aisha Al-Hinai",
-    "ae": "Omar Al-Mansouri,Ahmed Al-Nuaimi,Fatima Al-Mazrouei,Maryam Al-Hashimi",
-    "jp": "Haruto Sato,Yuki Tanaka,Ren Suzuki,Aoi Yamamoto,Daiki Ito",
-    "cn": "Wei Zhang,Li Wang,Chen Liu,Mei Zhang,Jun Chen",
-    "kr": "Kim Min-jun,Lee Ji-hoon,Park Seo-jun,Choi Min-seo,Han Ji-won",
-    "de": "Lukas Müller,Thomas Schneider,Anna Weber,Sophie Fischer",
-    "fr": "Jean Martin,Pierre Bernard,Claire Dubois,Marie Laurent",
-    "it": "Marco Rossi,Luca Romano,Giulia Bianchi,Sofia Conti",
-    "es": "Carlos García,Miguel Fernández,Lucía Martínez,Sofía López",
-    "pt": "João Silva,Miguel Santos,Tiago Pereira,Ana Ferreira",
-    "tr": "Mehmet Yılmaz,Ahmet Kaya,Elif Demir,Zeynep Aydın",
-    "sa": "Ahmed Al-Qahtani,Mohammed Al-Harbi,Fatimah Al-Shehri,Noura Al-Otaibi",
-    "id": "Muhammad Rizky,Andi Pratama,Siti Rahmawan,Dewi Lestari",
-    "th": "Nattapong Srisuk,Somsak Prasert,Siriporn Chaiyaporn",
-    "vn": "Nguyen Minh Anh,Tran Quang Huy,Le Thi Mai,Pham Duc Long",
-    "pk": "Muhammad Hamza,Ali Raza,Ayesha Khan,Sana Ahmed",
-    "np": "Aarav Thapa,Suman Gurung,Anisha Sharma,Prakash Karki",
-    "lk": "Kasun Perera,Nimal Silva,Anjali Fernando,Dilshan Jayawardena",
-    "ru": "Ivan Petrov,Alexei Smirnov,Anna Ivanova,Elena Volkov",
-    "br": "João Silva,Carlos Santos,Lucas Oliveira,Ana Souza",
-    "mx": "Carlos Hernández,Luis García,Diego Martínez,Sofía López",
-    "ar": "Mateo González,Santiago Rodríguez,Lucía Fernández,Valentina López",
-    "cl": "Matías González,Diego Morales,Camila Rojas,Valentina Soto",
-    "co": "Juan Rodríguez,Carlos Martínez,Andrés Gómez,Laura Torres",
-    "za": "Thabo Mokoena,Sipho Dlamini,Lerato Molefe,Nomsa Ndlovu",
-    "ng": "Chinedu Okafor,Emeka Nwosu,Adaobi Eze,Chioma Okoye",
-    "eg": "Ahmed Hassan,Mohamed Ali,Omar Mahmoud,Mariam Ahmed",
-    "ma": "Youssef Amrani,Ahmed Benali,Fatima Idrissi,Maryam Alaoui",
-    "ke": "Brian Otieno,Kevin Mwangi,Aisha Hassan,Wanjiku Kamau",
-    "gh": "Kwame Mensah,Kofi Asante,Akosua Boateng,Yaa Owusu",
-    "et": "Dawit Bekele,Tesfaye Alemu,Hana Mekonnen,Marta Tadesse",
-    "se": "Erik Andersson,Lars Johansson,Anna Karlsson,Elsa Nilsson",
-    "no": "Lars Hansen,Erik Olsen,Ingrid Larsen,Nora Berg",
-    "fi": "Mikko Virtanen,Juha Korhonen,Aino Nieminen,Emilia Laine",
-    "dk": "Mikkel Jensen,Lars Nielsen,Emma Hansen,Sofie Andersen",
-    "nl": "Daan de Vries,Jan Jansen,Emma Bakker,Sophie Visser",
-    "be": "Lucas Dubois,Thomas Lambert,Marie Martin,Julie Laurent",
-    "pl": "Jakub Kowalski,Piotr Nowak,Anna Wiśniewska,Zofia Wójcik",
-    "gr": "Georgios Papadopoulos,Nikos Nikolaou,Maria Georgiou,Eleni Dimitriou",
-    "ro": "Andrei Popescu,Alexandru Ionescu,Elena Popa,Ioana Stan",
-    "cz": "Jan Novak,Petr Svoboda,Anna Dvořáková,Lucie Černá",
-    "hu": "Bálint Nagy,Gábor Kovács,Anna Szabó,Eszter Horváth",
-    "at": "Lukas Gruber,Johann Huber,Anna Bauer,Sophie Wagner",
-    "ch": "Lukas Müller,Martin Meier,Anna Keller,Laura Weber",
-    "ie": "Sean Murphy,Liam Kelly,Emma Ryan,Saoirse Byrne",
-    "au": "Jack Smith,William Jones,Charlotte Brown,Amelia Wilson",
-    "ca": "Liam Martin,Noah Wilson,Emma Thompson,Olivia Brown",
-    "us": "James Williams,Michael Johnson,William Davis,Daniel Brown,Emily Wilson",
-    "gb": "Oliver Smith,George Williams,Harry Taylor,Emily Brown,Sophie Wilson",
-    "nz": "Liam Taylor,Jack Wilson,Oliver Brown,Emily Clarke",
-    "fj": "Jone Ratu,Viliame Bale,Ana Naqaqa,Salote Vakaloloma",
-    "ph": "Juan Santos,Mark Reyes,Angelo Cruz,Maria Garcia",
-    "kh": "Sokha Chan,Dara Kim,Sophea Lim,Vanna Chea",
-    "la": "Khamla Phommasone,Somchai Vong,Malai Keovongsa",
-    "mn": "Bat-Erdene Bold,Batsaikhan Ganbold,Anu Enkhbayar",
-    "kz": "Ayan Nurgaliyev,Dias Sarsenov,Aigerim Bekova",
-    "uz": "Bekzod Karimov,Aziz Rakhimov,Madina Usmanova",
-    "af": "Ahmad Rahimi,Omid Ahmadi,Fatima Noori,Maryam Waziri",
-    "ir": "Reza Hosseini,Ali Mohammadi,Sara Ahmadi,Maryam Karimi",
-    "iq": "Ali Hassan,Omar Abbas,Zainab Ahmed,Mariam Kareem",
-    "jo": "Omar Haddad,Ahmad Khalil,Lina Saleh,Noor Mansour",
-    "lb": "Karim Haddad,Michel Khoury,Nour Daher,Maya Saad",
-    "kw": "Fahad Al-Sabah,Ahmed Al-Rashid,Noura Al-Ali",
-    "bh": "Hassan Al-Khalifa,Ali Al-Doseri,Fatima Al-Mahdi",
-    "tn": "Mohamed Ben Ali,Ahmed Trabelsi,Amira Mansour",
-    "dz": "Karim Benali,Ahmed Boudiaf,Lamia Haddad",
-    "ly": "Ahmed Al-Misrati,Omar Al-Fituri,Mariam Al-Werfalli",
-    "sd": "Ahmed Mohamed,Omer Hassan,Mariam Ali",
-    "tz": "Juma Hassan,Abdallah Said,Asha Mohamed",
-    "ug": "Daniel Okello,Samuel Kato,Grace Namusoke",
-    "rw": "Jean Niyonzima,Eric Habimana,Claudine Mukamana",
-    "zm": "Brian Banda,Joseph Phiri,Mary Mwansa",
-    "zw": "Tendai Moyo,Tawanda Dube,Rudo Ncube"
+    "bd": ["মাহমুদুল হাসান", "সাইফুল ইসলাম", "রাকিব হাসান", "নুসরাত জাহান", "সুমাইয়া আক্তার", "তানজিলা রহমান"],
+    "in": ["Aarav Sharma", "Arjun Patel", "Rahul Mehta", "Priya Singh", "Ananya Gupta", "Rohan Verma"],
+    "my": ["Muhammad Faris", "Ahmad Hakim", "Nur Aisyah", "Siti Aminah", "Hafiz Rahman", "Amir Hakim"],
+    "qa": ["Mohammed Al-Kuwari", "Ahmed Al-Thani", "Fatima Al-Hajri", "Mariam Al-Mansoori"],
+    "om": ["Ahmed Al-Harthy", "Mohammed Al-Balushi", "Fatma Al-Rawahi", "Aisha Al-Hinai"],
+    "ae": ["Omar Al-Mansouri", "Ahmed Al-Nuaimi", "Fatima Al-Mazrouei", "Maryam Al-Hashimi"],
+    "jp": ["Haruto Sato", "Yuki Tanaka", "Ren Suzuki", "Aoi Yamamoto", "Daiki Ito"],
+    "us": ["James Williams", "Michael Johnson", "William Davis", "Daniel Brown", "Emily Wilson"],
+    "gb": ["Oliver Smith", "George Williams", "Harry Taylor", "Emily Brown", "Sophie Wilson"],
+    "de": ["Lukas Müller", "Thomas Schneider", "Anna Weber", "Sophie Fischer"],
+    "fr": ["Jean Martin", "Pierre Bernard", "Claire Dubois", "Marie Laurent"],
+    "it": ["Marco Rossi", "Luca Romano", "Giulia Bianchi", "Sofia Conti"],
+    "es": ["Carlos García", "Miguel Fernández", "Lucía Martínez", "Sofía López"],
+    "pt": ["João Silva", "Miguel Santos", "Tiago Pereira", "Ana Ferreira"],
+    "tr": ["Mehmet Yılmaz", "Ahmet Kaya", "Elif Demir", "Zeynep Aydın"],
+    "sa": ["Ahmed Al-Qahtani", "Mohammed Al-Harbi", "Fatimah Al-Shehri", "Noura Al-Otaibi"],
+    "cn": ["Wei Zhang", "Li Wang", "Chen Liu", "Mei Zhang", "Jun Chen"],
+    "kr": ["Kim Min-jun", "Lee Ji-hoon", "Park Seo-jun", "Choi Min-seo"]
 }
 
 DEFAULT_NAMES = [
@@ -323,170 +364,170 @@ LEADERS = {
     "pt": "লুইস মন্টেনেগ্রো",
     "tr": "রেজেপ তাইয়েপ এরদোয়ান",
     "sa": "বাদশাহ সালমান বিন আবদুলআজিজ",
-    "eg": "আবদেল ফাত্তাহ এল-সিসি",
-    "za": "সিরিল রামাফোসা",
     "br": "লুইজ ইনাসিও লুলা দা সিলভা",
-    "mx": "ক্লাউদিয়া শেইনবাউম",
-    "kr": "লি জে-মিয়ং"
+    "mx": "ক্লাউদিয়া শেইনবাউম"
 }
 
 FACTS = {
-    "bd": ("প্রায় ১৭.৫ কোটি","প্রায় ১,৪৭,৫৭০ বর্গকিমি","ভাত, মাছ, ডাল, ভর্তা","গার্মেন্টস / কৃষি / ব্যবসা / সেবা"),
-    "in": ("প্রায় ১৪৬ কোটি","প্রায় ৩২,৮৭,২৬৩ বর্গকিমি","ভাত, রুটি, ডাল, বিরিয়ানি","IT / ব্যবসা / কৃষি / শিল্প"),
-    "my": ("প্রায় ৩.৫ কোটি","প্রায় ৩,৩০,৮০৩ বর্গকিমি","Nasi Lemak, Satay, Laksa","Manufacturing / Business / Services"),
-    "qa": ("প্রায় ৩০ লাখ","প্রায় ১১,৫৮৬ বর্গকিমি","Machboos, Harees, Dates","তেল-গ্যাস / Business / Construction"),
-    "om": ("প্রায় ৫৫ লাখ","প্রায় ৩,০৯,৫০০ বর্গকিমি","Shuwa, Majboos, Dates","তেল-গ্যাস / Business / Tourism"),
-    "ae": ("প্রায় ১ কোটি","প্রায় ৮৩,৬০০ বর্গকিমি","Machboos, Hummus, Shawarma","Business / Oil-Gas / Tourism"),
-    "jp": ("প্রায় ১২.৩ কোটি","প্রায় ৩,৭৭,৯৭৫ বর্গকিমি","Sushi, Ramen, Tempura","Technology / Automobile / Industry"),
-    "cn": ("প্রায় ১৪১ কোটি","প্রায় ৯৫,৯৬,৯৬০ বর্গকিমি","Rice, Noodles, Dumplings","Manufacturing / Technology / Business"),
-    "us": ("প্রায় ৩৪ কোটি","প্রায় ৯৮,৩৩,৫১৭ বর্গকিমি","Burger, Steak, Pizza","Technology / Business / Services"),
-    "gb": ("প্রায় ৬.৯ কোটি","প্রায় ২,৪৩,৬১০ বর্গকিমি","Fish and Chips, Roast","Finance / Services / Technology"),
-    "de": ("প্রায় ৮.৪ কোটি","প্রায় ৩,৫৭,৫৮৮ বর্গকিমি","Bratwurst, Pretzel, Bread","Automobile / Engineering / Industry"),
-    "fr": ("প্রায় ৬.৮ কোটি","প্রায় ৫,৫১,৬৯৫ বর্গকিমি","Baguette, Cheese, Croissant","Tourism / Fashion / Industry"),
-    "it": ("প্রায় ৫.৯ কোটি","প্রায় ৩,০১,৩৪০ বর্গকিমি","Pizza, Pasta, Risotto","Fashion / Tourism / Industry"),
-    "pt": ("প্রায় ১.১ কোটি","প্রায় ৯২,২১২ বর্গকিমি","Bacalhau, Pastel de Nata","Tourism / Fishing / Services"),
-    "es": ("প্রায় ৪.৯ কোটি","প্রায় ৫,০৫,৯৯০ বর্গকিমি","Paella, Tapas","Tourism / Services / Industry"),
-    "tr": ("প্রায় ৮.৭ কোটি","প্রায় ৭,৮৩,৫৬২ বর্গকিমি","Kebab, Pide, Baklava","Industry / Tourism / Agriculture"),
-    "sa": ("প্রায় ৩.৫ কোটি","প্রায় ২১,৪৯,৬৯০ বর্গকিমি","Kabsa, Mandi, Dates","Oil-Gas / Business / Construction"),
-    "br": ("প্রায় ২১.৩ কোটি","প্রায় ৮৫,১৫,৭৬৭ বর্গকিমি","Feijoada, Rice, Beans","Agriculture / Industry / Mining"),
-    "mx": ("প্রায় ১৩.২ কোটি","প্রায় ১৯,৬৪,৩৭৫ বর্গকিমি","Tacos, Tamales, Mole","Manufacturing / Tourism / Business"),
-    "ca": ("প্রায় ৪.১ কোটি","প্রায় ৯৯,৮৪,৬৭০ বর্গকিমি","Poutine, Salmon","Services / Technology / Natural Resources"),
-    "au": ("প্রায় ২.৭ কোটি","প্রায় ৭৬,৯২,০২৪ বর্গকিমি","Meat Pie, Seafood, Barbecue","Mining / Agriculture / Services"),
-    "za": ("প্রায় ৬.৪ কোটি","প্রায় ১২,২১,০৩৭ বর্গকিমি","Braai, Pap, Bobotie","Mining / Industry / Tourism")
+    "bd": ("প্রায় ১৭.৫ কোটি", "প্রায় ১,৪৭,৫৭০ বর্গকিলোমিটার", "ভাত, মাছ, ডাল ও ভর্তা", "গার্মেন্টস / কৃষি / ব্যবসা / সেবা"),
+    "in": ("প্রায় ১৪৬ কোটি", "প্রায় ৩২,৮৭,২৬৩ বর্গকিলোমিটার", "ভাত, রুটি, ডাল ও বিরিয়ানি", "IT / ব্যবসা / কৃষি / শিল্প"),
+    "my": ("প্রায় ৩.৫ কোটি", "প্রায় ৩,৩০,৮০৩ বর্গকিলোমিটার", "Nasi Lemak, Satay ও Laksa", "Manufacturing / Business / Services"),
+    "qa": ("প্রায় ৩০ লাখ", "প্রায় ১১,৫৮৬ বর্গকিলোমিটার", "Machboos, Harees ও Dates", "তেল-গ্যাস / Business / Construction"),
+    "om": ("প্রায় ৫৫ লাখ", "প্রায় ৩,০৯,৫০০ বর্গকিলোমিটার", "Shuwa, Majboos ও Dates", "তেল-গ্যাস / Business / Tourism"),
+    "ae": ("প্রায় ১ কোটি", "প্রায় ৮৩,৬০০ বর্গকিলোমিটার", "Machboos, Hummus ও Shawarma", "Business / Oil-Gas / Tourism"),
+    "jp": ("প্রায় ১২.৩ কোটি", "প্রায় ৩,৭৭,৯৭৫ বর্গকিলোমিটার", "Sushi, Ramen ও Tempura", "Technology / Automobile / Industry"),
+    "us": ("প্রায় ৩৪ কোটি", "প্রায় ৯৮,৩৩,৫১৭ বর্গকিলোমিটার", "Burger, Steak ও Pizza", "Technology / Business / Services"),
+    "gb": ("প্রায় ৬.৯ কোটি", "প্রায় ২,৪৩,৬১০ বর্গকিলোমিটার", "Fish and Chips ও Roast", "Finance / Services / Technology")
 }
 
-FAMOUS = {
-    "Dubai": "আকাশচুম্বী ভবন, ব্যবসা, পর্যটন ও শপিংয়ের জন্য বিখ্যাত",
-    "Abu Dhabi": "রাজধানী, তেল-গ্যাস ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
-    "Kuala Lumpur": "Petronas Twin Towers, ব্যবসা ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
-    "George Town": "ঐতিহ্যবাহী স্থাপনা, খাবার ও সংস্কৃতির জন্য বিখ্যাত",
-    "Doha": "আধুনিক স্থাপত্য, ব্যবসা ও আন্তর্জাতিক ক্রীড়া আয়োজনের জন্য বিখ্যাত",
-    "Muscat": "সমুদ্র, পাহাড় ও ঐতিহ্যবাহী আরব স্থাপত্যের জন্য বিখ্যাত",
-    "Tokyo": "প্রযুক্তি, ব্যবসা ও আধুনিক নগরজীবনের জন্য বিখ্যাত",
-    "Mumbai": "বলিউড, আর্থিক কেন্দ্র ও সমুদ্রতটের জন্য বিখ্যাত",
-    "Delhi": "রাজধানী, ইতিহাস ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
-    "Dhaka": "রাজধানী, ব্যবসা-বাণিজ্য ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
-    "London": "রাজধানী, ব্যবসা, ইতিহাস ও পর্যটনের জন্য বিখ্যাত",
-    "New York": "আর্থিক কেন্দ্র, Times Square ও Statue of Liberty-এর জন্য বিখ্যাত",
-    "Paris": "Eiffel Tower, Fashion, শিল্প ও সংস্কৃতির জন্য বিখ্যাত",
-    "Berlin": "ইতিহাস, সংস্কৃতি ও আধুনিক শিল্পের জন্য বিখ্যাত",
-    "Rome": "Colosseum, প্রাচীন ইতিহাস ও Vatican-এর জন্য বিখ্যাত",
-    "Lisbon": "ঐতিহাসিক স্থাপনা, সমুদ্র ও Portuguese culture-এর জন্য বিখ্যাত",
-    "Beijing": "রাজধানী, ইতিহাস ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
-    "Seoul": "প্রযুক্তি, K-pop, ব্যবসা ও আধুনিক সংস্কৃতির জন্য বিখ্যাত",
-    "Cairo": "পিরামিড, নীলনদ ও প্রাচীন ইতিহাসের জন্য বিখ্যাত"
-    
+STATE_MAP = {
+    "my": {
+        "Kuala Lumpur": "Kuala Lumpur Federal Territory",
+        "George Town": "Penang",
+        "Johor Bahru": "Johor",
+        "Malacca": "Malacca",
+        "Kota Kinabalu": "Sabah"
+    },
+    "in": {
+        "Mumbai": "Maharashtra",
+        "Delhi": "Delhi",
+        "Kolkata": "West Bengal",
+        "Bengaluru": "Karnataka",
+        "Chennai": "Tamil Nadu",
+        "Hyderabad": "Telangana"
+    },
+    "ae": {
+        "Dubai": "Dubai Emirate",
+        "Abu Dhabi": "Abu Dhabi Emirate",
+        "Sharjah": "Sharjah Emirate",
+        "Ajman": "Ajman Emirate",
+        "Al Ain": "Abu Dhabi Emirate"
+    },
+    "qa": {
+        "Doha": "Doha Municipality",
+        "Al Rayyan": "Al Rayyan Municipality",
+        "Al Wakrah": "Al Wakrah Municipality"
+    },
+    "om": {
+        "Muscat": "Muscat Governorate",
+        "Salalah": "Dhofar Governorate",
+        "Sohar": "North Al Batinah",
+        "Nizwa": "Ad Dakhiliyah Governorate"
+    }
 }
+
+
+# ==========================================
+# GENERATOR FUNCTIONS
+# ==========================================
+
 def postal_code(code):
     if code == "bd":
-        return random.choice(["1000","1100","1205","4000","6000","3100"])
+        return random.choice(["1000", "1100", "1205", "4000", "6000", "3100"])
     if code == "in":
-        return random.choice(["110001","400001","700001","560001","600001","500001"])
+        return random.choice(["110001", "400001", "700001", "560001", "600001", "500001"])
     if code == "my":
-        return random.choice(["50000","50100","50450","80000","75000"])
-    if code in ["qa","om","ae"]:
+        return random.choice(["50000", "50100", "50450", "80000", "75000"])
+    if code in ["qa", "om", "ae"]:
         return "N/A"
     if code == "jp":
-        return random.choice(["100-0001","530-0001","600-8001","160-0022"])
+        return random.choice(["100-0001", "530-0001", "600-8001", "160-0022"])
     if code == "us":
         return str(random.randint(10000, 99999))
     if code == "gb":
-        return random.choice(["SW1A 1AA","EC1A 1BB","M1 1AE","B1 1AA"])
+        return random.choice(["SW1A 1AA", "EC1A 1BB", "M1 1AE", "B1 1AA"])
     if code == "ca":
-        return random.choice(["M5V 2T6","V6B 1A1","H2X 1Y4"])
+        return random.choice(["M5V 2T6", "V6B 1A1", "H2X 1Y4"])
     if code == "au":
-        return random.choice(["2000","3000","4000","6000"])
-    if code in ["de"]:
-        return random.choice(["10115","20095","80331","50667"])
+        return random.choice(["2000", "3000", "4000", "6000"])
+    if code == "de":
+        return random.choice(["10115", "20095", "80331", "50667"])
     if code == "fr":
-        return random.choice(["75001","69001","13001"])
+        return random.choice(["75001", "69001", "13001"])
     if code == "it":
-        return random.choice(["00118","20121","80100"])
+        return random.choice(["00118", "20121", "80100"])
     if code == "pt":
-        return random.choice(["1000-001","4000-001","3000-001"])
+        return random.choice(["1000-001", "4000-001", "3000-001"])
     if code == "es":
-        return random.choice(["28001","08001","41001"])
+        return random.choice(["28001", "08001", "41001"])
     if code == "tr":
-        return random.choice(["06000","34000","35000"])
-    if code == "br":
-        return random.choice(["01000-000","20000-000","30100-000"])
+        return random.choice(["06000", "34000", "35000"])
     return str(random.randint(10000, 999999))
 
-def state_name(code, city):
-    states = {
-        "my": {
-            "Kuala Lumpur": "Kuala Lumpur Federal Territory",
-            "George Town": "Penang",
-            "Johor Bahru": "Johor",
-            "Malacca": "Malacca",
-            "Kota Kinabalu": "Sabah"
-        },
-        "in": {
-            "Mumbai": "Maharashtra",
-            "Delhi": "Delhi",
-            "Kolkata": "West Bengal",
-            "Bengaluru": "Karnataka",
-            "Chennai": "Tamil Nadu",
-            "Hyderabad": "Telangana"
-        },
-        "ae": {
-            "Dubai": "Dubai Emirate",
-            "Abu Dhabi": "Abu Dhabi Emirate",
-            "Sharjah": "Sharjah Emirate",
-            "Ajman": "Ajman Emirate",
-            "Al Ain": "Abu Dhabi Emirate"
-        },
-        "qa": {
-            "Doha": "Doha Municipality",
-            "Al Rayyan": "Al Rayyan Municipality",
-            "Al Wakrah": "Al Wakrah Municipality"
-        },
-        "om": {
-            "Muscat": "Muscat Governorate",
-            "Salalah": "Dhofar Governorate",
-            "Sohar": "North Al Batinah"
-        }
+def make_street(code):
+    special = {
+        "my": ["Jalan Ampang", "Jalan Bukit Bintang", "Jalan Tun Razak", "Jalan Sultan Ismail"],
+        "qa": ["Al Corniche Street", "Salwa Road", "Al Rayyan Road", "Airport Road"],
+        "om": ["Sultan Qaboos Street", "Al Khuwair Street", "Al Wadi Street", "Al Noor Street"],
+        "ae": ["Sheikh Zayed Road", "Al Wasl Road", "Jumeirah Street", "Al Khaleej Street"],
+        "jp": ["Chuo Street", "Meiji Avenue", "Sakura Street", "Shibuya Street"],
+        "in": ["MG Road", "Park Street", "Link Road", "Station Road"]
     }
-    if code in states and city in states[code]:
-        return states[code][city]
+    normal = ["Main Street", "Central Road", "Market Road", "Station Road", "Park Avenue", "King Street"]
+    roads = special.get(code, normal)
+    return str(random.randint(10, 999)) + " " + random.choice(roads) + ", Block " + random.choice(["A", "B", "C", "D"])
+
+def get_state(code, city):
+    if code in STATE_MAP and city in STATE_MAP[code]:
+        return STATE_MAP[code][city]
     return city + " Region"
 
-def street_name(code):
-    number = random.randint(10, 999)
-    streets = {
-        "my": ["Jalan Ampang", "Jalan Bukit Bintang", "Jalan Tun Razak"],
-        "qa": ["Al Corniche Street", "Salwa Road", "Al Rayyan Road"],
-        "om": ["Sultan Qaboos Street", "Al Khuwair Street", "Al Wadi Street"],
-        "ae": ["Sheikh Zayed Road", "Al Wasl Road", "Jumeirah Street"],
-        "jp": ["Chuo Street", "Meiji Avenue", "Sakura Street"],
-        "in": ["MG Road", "Park Street", "Link Road"]
-    }
-    options = streets.get(code, ["Main Street", "Central Road", "Market Road", "Station Road", "Park Avenue", "King Street"])
-    return f"{number} {random.choice(options)}, Block {random.choice(['A','B','C','D'])}"
-
-def generate_data(code):
+def generate_data(code, old_data=None):
     country = COUNTRIES[code]
-    city = random.choice(country["cities"])
-    names = NAME_BANK.get(code, ",".join(DEFAULT_NAMES)).split(",")
-    name = random.choice(names)
+    cities = country["cities"]
+
+    # CITY MUST CHANGE
+    old_city = old_data.get("city", "") if old_data else ""
+    available_cities = [c for c in cities if c != old_city]
+    if not available_cities:
+        available_cities = cities
+    city = random.choice(available_cities)
+
+    # NAME MUST CHANGE
+    names = NAME_BANK.get(code, DEFAULT_NAMES)
+    old_name = old_data.get("name", "") if old_data else ""
+    available_names = [n for n in names if n != old_name]
+    if not available_names:
+        available_names = names
+    name = random.choice(available_names)
+
+    # STREET MUST CHANGE
+    old_street = old_data.get("street", "") if old_data else ""
+    street = make_street(code)
+    attempts = 0
+    while street == old_street and attempts < 20:
+        street = make_street(code)
+        attempts += 1
+
+    # POSTAL MUST CHANGE
+    old_postal = old_data.get("postal", "") if old_data else ""
+    postal = postal_code(code)
+    attempts = 0
+    while postal == old_postal and attempts < 30:
+        postal = postal_code(code)
+        attempts += 1
+
+    state = get_state(code, city)
     facts = FACTS.get(code, ("দেশভেদে পরিবর্তনশীল", "দেশভেদে পরিবর্তনশীল", "স্থানীয় খাবার", "Business / Job / Services"))
+    famous = FAMOUS.get(city, "স্থানীয় ইতিহাস, সংস্কৃতি, ব্যবসা ও পর্যটনের জন্য পরিচিত")
 
     return {
         "country": country["name"],
         "flag": country["flag"],
         "leader": LEADERS.get(code, "রাষ্ট্রপ্রধান / সরকারপ্রধান"),
         "name": name,
-        "street": street_name(code),
+        "street": street,
         "city": city,
-        "famous": FAMOUS.get(city, "ব্যবসা, সংস্কৃতি, ইতিহাস ও স্থানীয় বৈশিষ্ট্যের জন্য পরিচিত"),
-        "state": state_name(code, city),
-        "postal": postal_code(code),
+        "famous": famous,
+        "state": state,
+        "postal": postal,
         "population": facts[0],
         "area": facts[1],
         "food": facts[2],
         "work": facts[3],
         "duty": random.choice(["সাধারণত ৮ ঘণ্টা", "সাধারণত ৮–৯ ঘণ্টা", "সাধারণত ৮–১০ ঘণ্টা"])
-}
+    }
+
 def display_text(data):
     return (
         f"<b>{data['country']} {data['flag']} ({data['leader']})</b>\n"
@@ -507,7 +548,6 @@ def display_text(data):
 
 def copy_text(data):
     return (
-        f"{data['country']} {data['flag']}\n"
         f"Name: {data['name']}\n"
         f"Street: {data['street']}\n"
         f"City: {data['city']}\n"
@@ -516,26 +556,10 @@ def copy_text(data):
         f"Country: {data['country']}"
     )
 
-def keyboard(data, code):
-    copied = copy_text(data)
-    return {
-        "inline_keyboard": [
-            [
-                {
-                    "text": "📋 Copy Address",
-                    "copy_text": {
-                        "text": copied[:256]
-                    }
-                }
-            ],
-            [
-                {
-                    "text": "🔄 Generate",
-                    "callback_data": "generate:" + code
-                }
-            ]
-        ]
-    }
+
+# ==========================================
+# TELEGRAM ENGINE
+# ==========================================
 
 def api(method, data=None):
     if data is None:
@@ -549,27 +573,62 @@ def api(method, data=None):
         print("API ERROR:", e)
         return None
 
-def send_message(chat_id, text, reply_markup=None):
+def make_keyboard(data, code):
+    old_city = data["city"].replace(":", "").replace("|", "")
+    old_name = data["name"].replace(":", "").replace("|", "")
+    old_postal = data["postal"].replace(":", "").replace("|", "")
+
+    callback = (
+        "generate:" + code + ":" +
+        urllib.parse.quote(old_city, safe="") + ":" +
+        urllib.parse.quote(old_name, safe="") + ":" +
+        urllib.parse.quote(old_postal, safe="")
+    )
+
+    if len(callback.encode("utf-8")) > 64:
+        callback = "generate:" + code + ":" + urllib.parse.quote(old_city, safe="")
+
+    copied = copy_text(data)
+
+    return {
+        "inline_keyboard": [
+            [
+                {
+                    "text": "📋 Copy Address",
+                    "copy_text": {
+                        "text": copied[:256]
+                    }
+                }
+            ],
+            [
+                {
+                    "text": "🔄 Generate",
+                    "callback_data": callback
+                }
+            ]
+        ]
+    }
+
+def send_message(chat_id, text, keyboard):
     data = {
         "chat_id": chat_id,
         "text": text,
-        "parse_mode": "HTML"
+        "parse_mode": "HTML",
+        "reply_markup": json.dumps(keyboard, ensure_ascii=False)
     }
-    if reply_markup:
-        data["reply_markup"] = json.dumps(reply_markup, ensure_ascii=False)
     return api("sendMessage", data)
 
-def edit_message(chat_id, message_id, text, reply_markup):
+def edit_message(chat_id, message_id, text, keyboard):
     data = {
         "chat_id": chat_id,
         "message_id": message_id,
         "text": text,
         "parse_mode": "HTML",
-        "reply_markup": json.dumps(reply_markup, ensure_ascii=False)
+        "reply_markup": json.dumps(keyboard, ensure_ascii=False)
     }
     return api("editMessageText", data)
 
-def callback_answer(callback_id):
+def answer_callback(callback_id):
     return api("answerCallbackQuery", {"callback_query_id": callback_id})
 
 def find_country(text):
@@ -588,26 +647,16 @@ def handle_message(message):
         send_message(
             chat_id,
             "<b>🌍 COUNTRY DETAILS 🚀</b>\n\n"
-            "Country লিখে Generate করো।\n\n"
+            "Example:\n\n"
+            "<code>/fake india</code>\n"
             "<code>/fake malaysia</code>\n"
             "<code>/fake qatar</code>\n"
             "<code>/fake oman</code>\n"
             "<code>/fake portugal</code>\n"
-            "<code>/fake japan</code>\n"
-            "<code>/fake india</code>\n"
-            "<code>/fake bangladesh</code>\n\n"
-            "📋 Copy Address = সরাসরি copy\n"
-            "🔄 Generate = সব field নতুন"
-        )
-        return
-
-    if text.lower().startswith("/countries"):
-        lines = []
-        for code, info in COUNTRIES.items():
-            lines.append(f"{info['flag']} {info['name']} — <code>{code}</code>")
-        send_message(
-            chat_id,
-            "<b>🌍 COUNTRY LIST</b>\n\n" + "\n".join(lines)
+            "<code>/fake japan</code>\n\n"
+            "📋 Copy Address = এক ক্লিকে ঠিকানা কপি\n"
+            "🔄 Generate চাপলে সব তথ্য পরিবর্তিত হবে।",
+            {"inline_keyboard": []}
         )
         return
 
@@ -616,9 +665,8 @@ def handle_message(message):
         if len(parts) < 2:
             send_message(
                 chat_id,
-                "❌ Country লিখুন।\n\n"
-                "Example:\n"
-                "<code>/fake malaysia</code>"
+                "❌ Country লিখুন।",
+                {"inline_keyboard": []}
             )
             return
 
@@ -628,44 +676,67 @@ def handle_message(message):
                 chat_id,
                 "❌ Country পাওয়া যায়নি।\n\n"
                 "Example:\n"
+                "<code>/fake india</code>\n"
                 "<code>/fake malaysia</code>\n"
                 "<code>/fake qatar</code>\n"
-                "<code>/fake oman</code>\n"
-                "<code>/fake portugal</code>\n"
-                "<code>/fake japan</code>"
+                "<code>/fake japan</code>",
+                {"inline_keyboard": []}
             )
             return
 
         data = generate_data(code)
-        text_output = display_text(data)
-        buttons = keyboard(data, code)
-        send_message(chat_id, text_output, buttons)
+        output = display_text(data)
+        kb = make_keyboard(data, code)
+        send_message(chat_id, output, kb)
         return
 
 def handle_callback(callback):
     callback_id = callback.get("id")
-    data = callback.get("data", "")
+    callback_data = callback.get("data", "")
     message = callback.get("message", {})
-    chat_id = message.get("chat", {}).get("id")
+    chat = message.get("chat", {})
+    chat_id = chat.get("id")
     message_id = message.get("message_id")
 
-    callback_answer(callback_id)
+    answer_callback(callback_id)
 
-    if data.startswith("generate:"):
-        code = data.split(":", 1)[1]
+    if callback_data.startswith("generate:"):
+        parts = callback_data.split(":")
+        code = parts[1]
+
         if code not in COUNTRIES:
             return
 
-        new_data = generate_data(code)
+        old_data = {}
+        if len(parts) >= 3:
+            try:
+                old_data["city"] = urllib.parse.unquote(parts[2])
+            except:
+                old_data["city"] = ""
+        if len(parts) >= 4:
+            try:
+                old_data["name"] = urllib.parse.unquote(parts[3])
+            except:
+                old_data["name"] = ""
+        if len(parts) >= 5:
+            try:
+                old_data["postal"] = urllib.parse.unquote(parts[4])
+            except:
+                old_data["postal"] = ""
+
+        new_data = generate_data(code, old_data)
         new_text = display_text(new_data)
-        new_keyboard = keyboard(new_data, code)
+        new_keyboard = make_keyboard(new_data, code)
+
         edit_message(chat_id, message_id, new_text, new_keyboard)
 
+        print(f"GENERATED: {new_data['country']} | {new_data['name']} | {new_data['city']} | {new_data['state']} | {new_data['postal']}")
+
 def run_bot():
-    print("====================================")
-    print(" 🌍 COUNTRY DETAILS BOT")
-    print("====================================")
-    print("Loaded countries:", len(COUNTRIES))
+    print("================================")
+    print("🌍 COUNTRY DETAILS BOT")
+    print("================================")
+    print("Countries loaded:", len(COUNTRIES))
     print("Bot is running...\n")
 
     offset = 0
@@ -673,8 +744,13 @@ def run_bot():
     while True:
         try:
             result = api("getUpdates", {"timeout": 50, "offset": offset})
-            if not result or not result.get("ok"):
+            if not result:
                 time.sleep(2)
+                continue
+
+            if not result.get("ok"):
+                print("Telegram Error:", result)
+                time.sleep(3)
                 continue
 
             updates = result.get("result", [])
@@ -691,10 +767,10 @@ def run_bot():
                     try:
                         handle_callback(update["callback_query"])
                     except Exception as e:
-                        print("BUTTON ERROR:", e)
+                        print("CALLBACK ERROR:", e)
 
         except KeyboardInterrupt:
-            print("Bot stopped.")
+            print("BOT STOPPED")
             break
         except Exception as e:
             print("MAIN ERROR:", e)
@@ -702,6 +778,6 @@ def run_bot():
 
 if __name__ == "__main__":
     if not BOT_TOKEN or BOT_TOKEN == "PASTE_YOUR_BOT_TOKEN_HERE":
-        print("❌ BOT TOKEN বসানো হয়নি।")
+        print("❌ BOT TOKEN বসাও।")
     else:
         run_bot()
