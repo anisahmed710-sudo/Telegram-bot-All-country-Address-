@@ -1,740 +1,454 @@
-# -*- coding: utf-8 -*-
+1# -*- coding: utf-8 -*-
 
-import json
-import time
+# ==============================
+# PART 1/3
+# RAVEN FAKE ADDRESS BOT
+# 121 COUNTRY DATABASE
+# ==============================
+
 import random
-import urllib.parse
+import time
+import json
 import urllib.request
+import urllib.parse
 import ssl
 
-# =========================================================
-# SSL & BOT TOKEN
-# =========================================================
+# QPython SSL Fix
 ssl_context = ssl._create_unverified_context()
+
+# ==============================
+# BOT TOKEN
+# ==============================
 BOT_TOKEN = "7633364572:AAHoxt4ER_KUBoA6sfxkFKXtlTT3t529Zg4"
-API = "https://api.telegram.org/bot" + BOT_TOKEN
 
-# =========================================================
-# 121+ ACCURATE COUNTRY DATABASE
-# =========================================================
-ACCURATE_ADDRESS_DB = {
-    "bd": {
-        "country": "Bangladesh 🇧🇩",
-        "first_names": ["মাহমুদুল", "শাহানা", "তানভীর", "সাব্বির", "নুসরাত", "আনিকা", "মেহেদী", "ফাহিম", "আয়েশা", "রহিম", "রাফি", "কামরুল"],
-        "last_names": ["হাসান", "বেগম", "চৌধুরী", "ইসলাম", "রহমান", "খান", "সদ্দিকী", "হোসেন", "আহমেদ"],
-        "places": [
-            {"city": "বরিশাল", "state": "বরিশাল বিভাগ", "postcode": "৮২০০", "streets": ["বরিশাল সদর", "সদর রোড", "সিএন্ডবি রোড", "বান্দ রোড"]},
-            {"city": "ঢাকা", "state": "ঢাকা বিভাগ", "postcode": "১২০৭", "streets": ["মোহাম্মদপুর বাস স্ট্যান্ড", "মিরপুর রোড", "আসাদ এভিনিউ", "রিং রোড"]},
-            {"city": "ঢাকা", "state": "ঢাকা বিভাগ", "postcode": "১২০৫", "streets": ["গ্রীন রোড", "এলিফ্যান্ট রোড", "ধানমন্ডি ২৭"]},
-            {"city": "চট্টগ্রাম", "state": "চট্টগ্রাম বিভাগ", "postcode": "৪০০০", "streets": ["জিইসি মোড়", "সিডিএ এভিনিউ", "আগ্রাবাদ বা/এ", "স্টেশন রোড"]},
-            {"city": "রাজশাহী", "state": "রাজশাহী বিভাগ", "postcode": "৬০০০", "streets": ["কাজলা মেইন রোড", "নিউ মার্কেট রোড", "গ্রেটার রোড"]},
-            {"city": "খুলনা", "state": "খুলনা বিভাগ", "postcode": "৯০০০", "streets": ["খান এ সবুর রোড", "কেডিএ এভিনিউ", "যশোর রোড"]},
-            {"city": "সিলেট", "state": "সিলেট বিভাগ", "postcode": "৩১০০", "streets": ["জিন্দাবাজার রোড", "দরগাহ গেট", "আম্বারখানা"]}
-        ]
-    },
-    "mx": {
-        "country": "Mexico 🇲🇽",
-        "first_names": ["Carlos", "Luis", "Mateo", "Sofia", "Valentina", "Camila", "Alejandro"],
-        "last_names": ["Hernández", "García", "López", "González", "Pérez", "Rodríguez"],
-        "places": [
-            {"city": "Villahermosa", "state": "Tabasco", "postcode": "86000", "streets": ["Paseo Tabasco", "Gregorio Méndez Magaña", "Avenida Juárez"]},
-            {"city": "Mexico City", "state": "CDMX", "postcode": "06600", "streets": ["Paseo de la Reforma", "Avenida Insurgentes Sur"]},
-            {"city": "Guadalajara", "state": "Jalisco", "postcode": "44100", "streets": ["Avenida Vallarta", "Avenida Juárez"]}
-        ]
-    },
-    "ca": {
-        "country": "Canada 🇨🇦",
-        "first_names": ["James", "John", "Robert", "Emily", "Sarah", "Michael", "David"],
-        "last_names": ["Smith", "Brown", "Wilson", "Taylor", "Anderson", "Thomas"],
-        "places": [
-            {"city": "Toronto", "state": "Ontario", "postcode": "M5H 2N2", "streets": ["Yonge Street", "Bay Street", "Queen Street West"]},
-            {"city": "Vancouver", "state": "British Columbia", "postcode": "V6B 1A1", "streets": ["Robson Street", "Granville Street"]},
-            {"city": "Montreal", "state": "Quebec", "postcode": "H3B 1A1", "streets": ["Sainte-Catherine St", "Saint-Denis St"]}
-        ]
-    },
-    "us": {
-        "country": "United States 🇺🇸",
-        "first_names": ["David", "Chris", "Jessica", "Daniel", "Matthew", "Ashley", "Joshua"],
-        "last_names": ["Johnson", "Williams", "Jones", "Miller", "Davis", "Garcia"],
-        "places": [
-            {"city": "New York", "state": "New York", "postcode": "10001", "streets": ["5th Avenue", "Broadway", "Madison Avenue"]},
-            {"city": "Miami", "state": "Florida", "postcode": "33101", "streets": ["Ocean Drive", "Biscayne Blvd", "Collins Ave"]},
-            {"city": "Los Angeles", "state": "California", "postcode": "90001", "streets": ["Sunset Blvd", "Hollywood Blvd"]}
-        ]
-    },
-    "in": {
-        "country": "India 🇮🇳",
-        "first_names": ["Aarav", "Priya", "Rahul", "Ananya", "Rohan", "Siddharth"],
-        "last_names": ["Sharma", "Verma", "Sen", "Patel", "Das", "Mukherjee"],
-        "places": [
-            {"city": "Kolkata", "state": "West Bengal", "postcode": "700001", "streets": ["Park Street", "Camac Street", "Strand Road"]},
-            {"city": "Mumbai", "state": "Maharashtra", "postcode": "400001", "streets": ["Marine Drive", "Linking Road"]},
-            {"city": "Bhubaneswar", "state": "Odisha", "postcode": "751001", "streets": ["Janpath Road", "Lewis Road"]}
-        ]
-    }
+API = "https://api.telegram.org/bot" + BOT_TOKEN + "/"
+
+# ==============================
+# 121 COUNTRIES
+# code : (country, flag, cities)
+# ==============================
+
+COUNTRIES = {
+    "af": ("Afghanistan", "🇦🇫", ["Kabul", "Kandahar", "Herat"]),
+    "al": ("Albania", "🇦🇱", ["Tirana", "Durrës", "Vlorë"]),
+    "dz": ("Algeria", "🇩🇿", ["Algiers", "Oran", "Constantine"]),
+    "ao": ("Angola", "🇦🇴", ["Luanda", "Huambo", "Lobito"]),
+    "ar": ("Argentina", "🇦🇷", ["Buenos Aires", "Córdoba", "Rosario"]),
+    "am": ("Armenia", "🇦🇲", ["Yerevan", "Gyumri", "Vanadzor"]),
+    "au": ("Australia", "🇦🇺", ["Sydney", "Melbourne", "Brisbane"]),
+    "at": ("Austria", "🇦🇹", ["Vienna", "Graz", "Salzburg"]),
+    "az": ("Azerbaijan", "🇦🇿", ["Baku", "Ganja", "Sumqayit"]),
+    "bs": ("Bahamas", "🇧🇸", ["Nassau", "Freeport", "West End"]),
+    "bh": ("Bahrain", "🇧🇭", ["Manama", "Riffa", "Muharraq"]),
+    "bd": ("Bangladesh", "🇧🇩", ["Dhaka", "Chattogram", "Rajshahi", "Khulna", "Barishal", "Sylhet"]),
+    "bb": ("Barbados", "🇧🇧", ["Bridgetown", "Speightstown", "Oistins"]),
+    "by": ("Belarus", "🇧🇾", ["Minsk", "Gomel", "Brest"]),
+    "be": ("Belgium", "🇧🇪", ["Brussels", "Antwerp", "Ghent"]),
+    "bz": ("Belize", "🇧🇿", ["Belmopan", "Belize City", "San Ignacio"]),
+    "bj": ("Benin", "🇧🇯", ["Porto-Novo", "Cotonou", "Abomey-Calavi"]),
+    "bt": ("Bhutan", "🇧🇹", ["Thimphu", "Phuntsholing", "Punakha"]),
+    "bo": ("Bolivia", "🇧🇴", ["Sucre", "La Paz", "Santa Cruz"]),
+    "ba": ("Bosnia and Herzegovina", "🇧🇦", ["Sarajevo", "Banja Luka", "Mostar"]),
+    "bw": ("Botswana", "🇧🇼", ["Gaborone", "Francistown", "Maun"]),
+    "br": ("Brazil", "🇧🇷", ["Brasília", "São Paulo", "Rio de Janeiro"]),
+    "bn": ("Brunei", "🇧🇳", ["Bandar Seri Begawan", "Kuala Belait", "Seria"]),
+    "bg": ("Bulgaria", "🇧🇬", ["Sofia", "Plovdiv", "Varna"]),
+    "bf": ("Burkina Faso", "🇧🇫", ["Ouagadougou", "Bobo-Dioulasso", "Koudougou"]),
+    "bi": ("Burundi", "🇧🇮", ["Gitega", "Bujumbura", "Ngozi"]),
+    "cv": ("Cabo Verde", "🇨🇻", ["Praia", "Mindelo", "Santa Maria"]),
+    "kh": ("Cambodia", "🇰🇭", ["Phnom Penh", "Siem Reap", "Battambang"]),
+    "cm": ("Cameroon", "🇨🇲", ["Yaoundé", "Douala", "Bamenda"]),
+    "ca": ("Canada", "🇨🇦", ["Toronto", "Vancouver", "Montreal"]),
+    "cf": ("Central African Republic", "🇨🇫", ["Bangui", "Bimbo", "Berbérati"]),
+    "td": ("Chad", "🇹🇩", ["N'Djamena", "Moundou", "Sarh"]),
+    "cl": ("Chile", "🇨🇱", ["Santiago", "Valparaíso", "Concepción"]),
+    "cn": ("China", "🇨🇳", ["Beijing", "Shanghai", "Guangzhou"]),
+    "co": ("Colombia", "🇨🇴", ["Bogotá", "Medellín", "Cali"]),
+    "km": ("Comoros", "🇰🇲", ["Moroni", "Mutsamudu", "Fomboni"]),
+    "cg": ("Republic of the Congo", "🇨🇬", ["Brazzaville", "Pointe-Noire", "Dolisie"]),
+    "cr": ("Costa Rica", "🇨🇷", ["San José", "Alajuela", "Cartago"]),
+    "ci": ("Côte d'Ivoire", "🇨🇮", ["Yamoussoukro", "Abidjan", "Bouaké"]),
+    "hr": ("Croatia", "🇭🇷", ["Zagreb", "Split", "Rijeka"]),
+    "cu": ("Cuba", "🇨🇺", ["Havana", "Santiago de Cuba", "Camagüey"]),
+    "cy": ("Cyprus", "🇨🇾", ["Nicosia", "Limassol", "Larnaca"]),
+    "cz": ("Czechia", "🇨🇿", ["Prague", "Brno", "Ostrava"]),
+    "cd": ("DR Congo", "🇨🇩", ["Kinshasa", "Lubumbashi", "Goma"]),
+    "dk": ("Denmark", "🇩🇰", ["Copenhagen", "Aarhus", "Odense"]),
+    "dj": ("Djibouti", "🇩🇯", ["Djibouti City", "Ali Sabieh", "Tadjoura"]),
+    "dm": ("Dominica", "🇩🇲", ["Roseau", "Portsmouth", "Marigot"]),
+    "do": ("Dominican Republic", "🇩🇴", ["Santo Domingo", "Santiago de los Caballeros", "La Romana"]),
+    "ec": ("Ecuador", "🇪🇨", ["Quito", "Guayaquil", "Cuenca"]),
+    "eg": ("Egypt", "🇪🇬", ["Cairo", "Alexandria", "Giza"]),
+    "sv": ("El Salvador", "🇸🇻", ["San Salvador", "Santa Ana", "San Miguel"]),
+    "gq": ("Equatorial Guinea", "🇬🇶", ["Malabo", "Bata", "Ebebiyin"]),
+    "er": ("Eritrea", "🇪🇷", ["Asmara", "Keren", "Massawa"]),
+    "ee": ("Estonia", "🇪🇪", ["Tallinn", "Tartu", "Narva"]),
+    "sz": ("Eswatini", "🇸🇿", ["Mbabane", "Manzini", "Lobamba"]),
+    "et": ("Ethiopia", "🇪🇹", ["Addis Ababa", "Dire Dawa", "Mekelle"]),
+    "fj": ("Fiji", "🇫🇯", ["Suva", "Nadi", "Lautoka"]),
+    "fi": ("Finland", "🇫🇮", ["Helsinki", "Espoo", "Tampere"]),
+    "fr": ("France", "🇫🇷", ["Paris", "Marseille", "Lyon"]),
+    "ga": ("Gabon", "🇬🇦", ["Libreville", "Port-Gentil", "Franceville"]),
+    "gm": ("Gambia", "🇬🇲", ["Banjul", "Serekunda", "Brikama"]),
+    "ge": ("Georgia", "🇬🇪", ["Tbilisi", "Batumi", "Kutaisi"]),
+    "de": ("Germany", "🇩🇪", ["Berlin", "Hamburg", "Munich"]),
+    "gh": ("Ghana", "🇬🇭", ["Accra", "Kumasi", "Tamale"]),
+    "gr": ("Greece", "🇬🇷", ["Athens", "Thessaloniki", "Patras"]),
+    "gd": ("Grenada", "🇬🇩", ["St. George's", "Gouyave", "Grenville"]),
+    "gt": ("Guatemala", "🇬🇹", ["Guatemala City", "Quetzaltenango", "Escuintla"]),
+    "gn": ("Guinea", "🇬🇳", ["Conakry", "Nzérékoré", "Kankan"]),
+    "gw": ("Guinea-Bissau", "🇬🇼", ["Bissau", "Bafatá", "Gabú"]),
+    "gy": ("Guyana", "🇬🇾", ["Georgetown", "Linden", "New Amsterdam"]),
+    "ht": ("Haiti", "🇭🇹", ["Port-au-Prince", "Cap-Haïtien", "Gonaïves"]),
+    "hn": ("Honduras", "🇭🇳", ["Tegucigalpa", "San Pedro Sula", "La Ceiba"]),
+    "hu": ("Hungary", "🇭🇺", ["Budapest", "Debrecen", "Szeged"]),
+    "is": ("Iceland", "🇮🇸", ["Reykjavík", "Kópavogur", "Hafnarfjörður"]),
+    "in": ("India", "🇮🇳", ["New Delhi", "Mumbai", "Kolkata"]),
+    "id": ("Indonesia", "🇮🇩", ["Jakarta", "Surabaya", "Bandung"]),
+    "ir": ("Iran", "🇮🇷", ["Tehran", "Mashhad", "Isfahan"]),
+    "iq": ("Iraq", "🇮🇶", ["Baghdad", "Basra", "Mosul"]),
+    "ie": ("Ireland", "🇮🇪", ["Dublin", "Cork", "Limerick"]),
+    "il": ("Israel", "🇮🇱", ["Jerusalem", "Tel Aviv", "Haifa"]),
+    "it": ("Italy", "🇮🇹", ["Rome", "Milan", "Naples"]),
+    "jm": ("Jamaica", "🇯🇲", ["Kingston", "Montego Bay", "Spanish Town"]),
+    "jp": ("Japan", "🇯🇵", ["Tokyo", "Osaka", "Kyoto"]),
+    "jo": ("Jordan", "🇯🇴", ["Amman", "Zarqa", "Irbid"]),
+    "kz": ("Kazakhstan", "🇰🇿", ["Astana", "Almaty", "Shymkent"]),
+    "ke": ("Kenya", "🇰🇪", ["Nairobi", "Mombasa", "Kisumu"]),
+    "kw": ("Kuwait", "🇰🇼", ["Kuwait City", "Hawalli", "Salmiya"]),
+    "kg": ("Kyrgyzstan", "🇰🇬", ["Bishkek", "Osh", "Jalal-Abad"]),
+    "la": ("Laos", "🇱🇦", ["Vientiane", "Luang Prabang", "Savannakhet"]),
+    "lv": ("Latvia", "🇱🇻", ["Riga", "Daugavpils", "Liepāja"]),
+    "lb": ("Lebanon", "🇱🇧", ["Beirut", "Tripoli", "Sidon"]),
+    "ls": ("Lesotho", "🇱🇸", ["Maseru", "Mafeteng", "Hlotse"]),
+    "lr": ("Liberia", "🇱🇷", ["Monrovia", "Gbarnga", "Buchanan"]),
+    "ly": ("Libya", "🇱🇾", ["Tripoli", "Benghazi", "Misrata"]),
+    "li": ("Liechtenstein", "🇱🇮", ["Vaduz", "Schaan", "Balzers"]),
+    "lt": ("Lithuania", "🇱🇹", ["Vilnius", "Kaunas", "Klaipėda"]),
+    "lu": ("Luxembourg", "🇱🇺", ["Luxembourg City", "Esch-sur-Alzette", "Differdange"]),
+    "mg": ("Madagascar", "🇲🇬", ["Antananarivo", "Toamasina", "Antsirabe"]),
+    "mw": ("Malawi", "🇲🇼", ["Lilongwe", "Blantyre", "Mzuzu"]),
+    "my": ("Malaysia", "🇲🇾", ["Kuala Lumpur", "George Town", "Johor Bahru"]),
+    "mv": ("Maldives", "🇲🇻", ["Malé", "Addu City", "Fuvahmulah"]),
+    "ml": ("Mali", "🇲🇱", ["Bamako", "Sikasso", "Mopti"]),
+    "mt": ("Malta", "🇲🇹", ["Valletta", "Birkirkara", "Mosta"]),
+    "mr": ("Mauritania", "🇲🇷", ["Nouakchott", "Nouadhibou", "Rosso"]),
+    "mu": ("Mauritius", "🇲🇺", ["Port Louis", "Beau Bassin-Rose Hill", "Vacoas-Phoenix"]),
+    "mx": ("Mexico", "🇲🇽", ["Mexico City", "Guadalajara", "Monterrey"]),
+    "md": ("Moldova", "🇲🇩", ["Chișinău", "Bălți", "Tiraspol"]),
+    "mc": ("Monaco", "🇲🇨", ["Monaco", "Monte Carlo", "Fontvieille"]),
+    "mn": ("Mongolia", "🇲🇳", ["Ulaanbaatar", "Erdenet", "Darkhan"]),
+    "me": ("Montenegro", "🇲🇪", ["Podgorica", "Nikšić", "Budva"]),
+    "ma": ("Morocco", "🇲🇦", ["Rabat", "Casablanca", "Marrakesh"]),
+    "mz": ("Mozambique", "🇲🇿", ["Maputo", "Matola", "Nampula"]),
+    "mm": ("Myanmar", "🇲🇲", ["Naypyidaw", "Yangon", "Mandalay"]),
+    "na": ("Namibia", "🇳🇦", ["Windhoek", "Walvis Bay", "Swakopmund"]),
+    "np": ("Nepal", "🇳🇵", ["Kathmandu", "Pokhara", "Lalitpur"]),
+    "nl": ("Netherlands", "🇳🇱", ["Amsterdam", "Rotterdam", "The Hague"]),
+    "nz": ("New Zealand", "🇳🇿", ["Wellington", "Auckland", "Christchurch"]),
+    "ni": ("Nicaragua", "🇳🇮", ["Managua", "León", "Granada"]),
+    "ae": ("United Arab Emirates", "🇦🇪", ["Dubai", "Abu Dhabi", "Sharjah", "Ajman"]),
+    "gb": ("United Kingdom", "🇬🇧", ["London", "Manchester", "Birmingham"]),
+    "us": ("United States", "🇺🇸", ["New York", "Los Angeles", "Chicago"]),
 }
 
-ALIASES = {
-    "bd": "bd", "bangladesh": "bd", "বাংলাদেশ": "bd",
-    "mx": "mx", "mexico": "mx",
-    "ca": "ca", "canada": "ca",
-    "us": "us", "usa": "us", "america": "us",
-    "in": "in", "india": "in"
+print("Country database loaded:", len(COUNTRIES))
+
+# ==============================
+# PART 2/3
+# GENERATOR FUNCTIONS
+# ==============================
+
+BD_NAMES = [
+    "মাহমুদুল হাসান", "শাহানা বেগম", "মোঃ রাকিব হাসান", "সুমাইয়া আক্তার",
+    "আব্দুল্লাহ আল মামুন", "নুসরাত জাহান", "সাইফুল ইসলাম", "তানজিলা আক্তার",
+    "আরিফ হোসেন", "মারুফা ইয়াসমিন", "রিফাত আহমেদ", "সাদিয়া রহমান"
+]
+
+FIRST_NAMES = [
+    "Alex", "Daniel", "Michael", "James", "David",
+    "Robert", "John", "William", "Thomas", "Andrew",
+    "Sarah", "Emma", "Sophia", "Olivia", "Emily"
+]
+
+LAST_NAMES = [
+    "Smith", "Johnson", "Williams", "Brown", "Jones",
+    "Miller", "Davis", "Wilson", "Taylor", "Anderson"
+]
+
+BD_REAL_PLACES = {
+    "Dhaka": {"state": "ঢাকা বিভাগ", "postcode": "১২০৭", "streets": ["মোহাম্মদপুর বাস স্ট্যান্ড", "মিরপুর রোড", "ধানমন্ডি ২৭", "গ্রীন রোড"]},
+    "Chattogram": {"state": "চট্টগ্রাম বিভাগ", "postcode": "৪০০০", "streets": ["জিইসি মোড়", "সিডিএ এভিনিউ", "আগ্রাবাদ বা/এ", "স্টেশন রোড"]},
+    "Rajshahi": {"state": "রাজশাহী বিভাগ", "postcode": "৬০০০", "streets": ["কাজলা মেইন রোড", "নিউ মার্কেট রোড", "গ্রেটার রোড"]},
+    "Khulna": {"state": "খুলনা বিভাগ", "postcode": "৯০০০", "streets": ["খান এ সবুর রোড", "কেডিএ এভিনিউ", "যশোর রোড"]},
+    "Barishal": {"state": "বরিশাল বিভাগ", "postcode": "৮২০০", "streets": ["বরিশাল সদর", "সদর রোড", "সিএন্ডবি রোড"]},
+    "Sylhet": {"state": "সিলেট বিভাগ", "postcode": "৩১০০", "streets": ["জিন্দাবাজার রোড", "দরগাহ গেট", "আম্বারখানা"]}
 }
 
-# =========================================================
-# TELEGRAM API REQUEST FUNCTION
-# =========================================================
-def telegram_request(method, data=None):
-    if data is None:
-        data = {}
-    url = API + "/" + method
-    try:
-        encoded = urllib.parse.urlencode(data).encode("utf-8")
-        request = urllib.request.Request(url, data=encoded, headers={"User-Agent": "Bot/1.0"})
-        with urllib.request.urlopen(request, timeout=45, context=ssl_context) as response:
-            return json.loads(response.read().decode("utf-8"))
-    except Exception as e:
-        print("API Error:", e)
+
+def random_name(code):
+    if code == "bd":
+        return random.choice(BD_NAMES)
+    return random.choice(FIRST_NAMES) + " " + random.choice(LAST_NAMES)
+
+
+def generate_address(code):
+    if code not in COUNTRIES:
         return None
 
-# =========================================================
-# ADDRESS GENERATOR & BUTTON BUILDER
-# =========================================================
-def generate_address_text(code):
-    db = ACCURATE_ADDRESS_DB.get(code, ACCURATE_ADDRESS_DB["bd"])
-    full_name = f"{random.choice(db['first_names'])} {random.choice(db['last_names'])}"
-    place = random.choice(db["places"])
-    street_no = random.randint(10, 150)
-    
-    # বাংলা সংখ্যা কনভার্টার (বাংলাদেশের ক্ষেত্রে)
-    if code == "bd":
+    country, flag, cities = COUNTRIES[code]
+    city = random.choice(cities)
+    name = random_name(code)
+
+    if code == "bd" and city in BD_REAL_PLACES:
+        place_info = BD_REAL_PLACES[city]
+        road_no = random.randint(10, 120)
         bangla_nums = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'}
-        street_no_str = "".join(bangla_nums.get(c, c) for c in str(street_no))
+        road_no_bn = "".join(bangla_nums.get(c, c) for c in str(road_no))
+        
+        street = f"{road_no_bn} {random.choice(place_info['streets'])}"
+        state = place_info["state"]
+        postal = place_info["postcode"]
+        city_display = "ঢাকা" if city == "Dhaka" else ("চট্টগ্রাম" if city == "Chattogram" else ("বরিশাল" if city == "Barishal" else city))
     else:
-        street_no_str = str(street_no)
+        street = f"{random.randint(10, 150)} Main Street, Block {random.choice(['A','B','C'])}"
+        state = f"{city} Division" if code == "bd" else f"{city} State"
+        postal = str(random.randint(10000, 99999))
+        city_display = city
 
-    street_address = f"{street_no_str} {random.choice(place['streets'])}"
+    return {
+        "name": name,
+        "street": street,
+        "city": city_display,
+        "state": state,
+        "postal": postal,
+        "country": country,
+        "flag": flag
+    }
 
-    text = (
-        f"<b>{db['country']} Address</b>\n"
-        f"━━━━━━━━━━━━━━━━━━━\n"
-        f"- <b>Name:</b> <code>{full_name}</code>\n"
-        f"- <b>Street:</b> <code>{street_address}</code>\n"
-        f"- <b>City:</b> <code>{place['city']}</code>\n"
-        f"- <b>State:</b> <code>{place['state']}</code>\n"
-        f"- <b>Postal Code:</b> <code>{place['postcode']}</code>\n"
-        f"- <b>Country:</b> <code>{db['country'].split()[0]}</code>\n"
-        f"━━━━━━━━━━━━━━━━━━━"
+
+def format_address(data):
+    return (
+        f"<b>{data['country']} {data['flag']} Address</b>\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+        f"– <b>Name:</b> <code>{data['name']}</code>\n"
+        f"– <b>Street:</b> <code>{data['street']}</code>\n"
+        f"– <b>City:</b> <code>{data['city']}</code>\n"
+        f"– <b>State:</b> <code>{data['state']}</code>\n"
+        f"– <b>Postal Code:</b> <code>{data['postal']}</code>\n"
+        f"– <b>Country:</b> <code>{data['country']}</code>\n"
+        f"━━━━━━━━━━━━━━━━━━━━"
     )
+
+
+def format_multiple(code, amount=5):
+    country, flag, cities = COUNTRIES[code]
+    text = (
+        f"<b>{country} {flag} — {amount} Locations</b>\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+    )
+
+    for i in range(amount):
+        data = generate_address(code)
+        text += (
+            f"\n<b>#{i + 1}</b>\n"
+            f"Name: <code>{data['name']}</code>\n"
+            f"Street: <code>{data['street']}</code>\n"
+            f"City: <code>{data['city']}</code>\n"
+            f"State: <code>{data['state']}</code>\n"
+            f"Postal: <code>{data['postal']}</code>\n"
+        )
+
+    text += "\n━━━━━━━━━━━━━━━━━━━━\n"
     return text
 
-def get_regenerate_keyboard(code):
-    reply_markup = {
+
+def make_keyboard(code):
+    return {
         "inline_keyboard": [
-            [
-                {"text": "Regenerate 🔄", "callback_data": f"regen_{code}"}
-            ]
+            [{"text": "🔄 Regenerate", "callback_data": "gen:" + code}],
+            [{"text": "📍 5 Locations", "callback_data": "multi:" + code}]
         ]
     }
-    return json.dumps(reply_markup)
-
-# =========================================================
-# MESSAGE & CALLBACK PROCESSOR
-# =========================================================
-def process_update(update):
-    # text message handle
-    if "message" in update:
-        message = update["message"]
-        chat_id = message.get("chat", {}).get("id")
-        text = message.get("text", "").strip()
-
-        if text.startswith("/start"):
-            msg = "<b>🤖 Address Bot</b>\n\nউদাহরণ:\n<code>/fake bd</code>\n<code>/fake mexico</code>"
-            telegram_request("sendMessage", {"chat_id": chat_id, "text": msg, "parse_mode": "HTML"})
-
-        elif text.startswith("/fake"):
-            parts = text.split(" ", 1)
-            raw_code = parts[1].strip().lower() if len(parts) > 1 else "bd"
-            code = ALIASES.get(raw_code, "bd")
-            
-            response_text = generate_address_text(code)
-            keyboard = get_regenerate_keyboard(code)
-            telegram_request("sendMessage", {
-                "chat_id": chat_id,
-                "text": response_text,
-                "parse_mode": "HTML",
-                "reply_markup": keyboard
-            })
-
-    # button click (Callback Query) handle
-    elif "callback_query" in update:
-        query = update["callback_query"]
-        query_id = query["id"]
-        chat_id = query["message"]["chat"]["id"]
-        message_id = query["message"]["message_id"]
-        data = query.get("data", "")
-
-        if data.startswith("regen_"):
-            code = data.replace("regen_", "")
-            new_text = generate_address_text(code)
-            keyboard = get_regenerate_keyboard(code)
-
-            # এডিট মেসেজ
-            telegram_request("editMessageText", {
-                "chat_id": chat_id,
-                "message_id": message_id,
-                "text": new_text,
-                "parse_mode": "HTML",
-                "reply_markup": keyboard
-            })
-            # অ্যানসার কলব্যাক পপআপ বন্ধ করা
-            telegram_request("answerCallbackQuery", {"callback_query_id": query_id})
-
-# =========================================================
-# MAIN BOT LOOP
-# =========================================================
-def run_bot():
-    print("\n🤖 Bot Starting with Inline Regenerate Button...\n")
-    offset = None
-
-    while True:
-        try:
-            data = {"timeout": 30, "allowed_updates": json.dumps(["message", "callback_query"])}
-            if offset is not None:
-                data["offset"] = offset
-
-            result = telegram_request("getUpdates", data)
-            if result and result.get("ok"):
-                for update in result.get("result", []):
-                    offset = update.get("update_id", 0) + 1
-                    process_update(update)
-        except Exception as e:
-            print("Main Loop Exception:", e)
-            time.sleep(3)
-
-if __name__ == "__main__":
-    run_bot()
-    "ca": ("Canada 🇨🇦", "Ottawa"),
-    "us": ("United States 🇺🇸", "Washington"),
-    "mx": ("Mexico 🇲🇽", "Mexico City"),
-    "jp": ("Japan 🇯🇵", "Tokyo"),
-    "cn": ("China 🇨🇳", "Beijing"),
-    "kr": ("South Korea 🇰🇷", "Seoul"),
-    "au": ("Australia 🇦🇺", "Canberra"),
-    "nz": ("New Zealand 🇳🇿", "Wellington"),
-
-    "uk": ("United Kingdom 🇬🇧", "London"),
-    "ie": ("Ireland 🇮🇪", "Dublin"),
-    "fr": ("France 🇫🇷", "Paris"),
-    "de": ("Germany 🇩🇪", "Berlin"),
-    "es": ("Spain 🇪🇸", "Madrid"),
-    "pt": ("Portugal 🇵🇹", "Lisbon"),
-    "it": ("Italy 🇮🇹", "Rome"),
-    "nl": ("Netherlands 🇳🇱", "Amsterdam"),
-    "be": ("Belgium 🇧🇪", "Brussels"),
-    "ch": ("Switzerland 🇨🇭", "Bern"),
-    "at": ("Austria 🇦🇹", "Vienna"),
-    "se": ("Sweden 🇸🇪", "Stockholm"),
-    "no": ("Norway 🇳🇴", "Oslo"),
-    "dk": ("Denmark 🇩🇰", "Copenhagen"),
-    "fi": ("Finland 🇫🇮", "Helsinki"),
-    "pl": ("Poland 🇵🇱", "Warsaw"),
-    "cz": ("Czechia 🇨🇿", "Prague"),
-    "gr": ("Greece 🇬🇷", "Athens"),
-    "ro": ("Romania 🇷🇴", "Bucharest"),
-    "hu": ("Hungary 🇭🇺", "Budapest"),
-    "hr": ("Croatia 🇭🇷", "Zagreb"),
-    "rs": ("Serbia 🇷🇸", "Belgrade"),
-    "ua": ("Ukraine 🇺🇦", "Kyiv"),
-    "tr": ("Turkey 🇹🇷", "Ankara"),
-
-    "br": ("Brazil 🇧🇷", "Brasilia"),
-    "ar": ("Argentina 🇦🇷", "Buenos Aires"),
-    "cl": ("Chile 🇨🇱", "Santiago"),
-    "co": ("Colombia 🇨🇴", "Bogota"),
-    "pe": ("Peru 🇵🇪", "Lima"),
-    "ec": ("Ecuador 🇪🇨", "Quito"),
-    "uy": ("Uruguay 🇺🇾", "Montevideo"),
-
-    "th": ("Thailand 🇹🇭", "Bangkok"),
-    "my": ("Malaysia 🇲🇾", "Kuala Lumpur"),
-    "sg": ("Singapore 🇸🇬", "Singapore"),
-    "id": ("Indonesia 🇮🇩", "Jakarta"),
-    "ph": ("Philippines 🇵🇭", "Manila"),
-    "vn": ("Vietnam 🇻🇳", "Hanoi"),
-    "kh": ("Cambodia 🇰🇭", "Phnom Penh"),
-    "la": ("Laos 🇱🇦", "Vientiane"),
-    "mm": ("Myanmar 🇲🇲", "Naypyidaw"),
-    "np": ("Nepal 🇳🇵", "Kathmandu"),
-    "lk": ("Sri Lanka 🇱🇰", "Colombo"),
-    "mv": ("Maldives 🇲🇻", "Male"),
-
-    "sa": ("Saudi Arabia 🇸🇦", "Riyadh"),
-    "ae": ("United Arab Emirates 🇦🇪", "Abu Dhabi"),
-    "qa": ("Qatar 🇶🇦", "Doha"),
-    "kw": ("Kuwait 🇰🇼", "Kuwait City"),
-    "bh": ("Bahrain 🇧🇭", "Manama"),
-    "om": ("Oman 🇴🇲", "Muscat"),
-    "jo": ("Jordan 🇯🇴", "Amman"),
-    "lb": ("Lebanon 🇱🇧", "Beirut"),
-    "iq": ("Iraq 🇮🇶", "Baghdad"),
-    "ir": ("Iran 🇮🇷", "Tehran"),
-
-    "eg": ("Egypt 🇪🇬", "Cairo"),
-    "ma": ("Morocco 🇲🇦", "Rabat"),
-    "dz": ("Algeria 🇩🇿", "Algiers"),
-    "tn": ("Tunisia 🇹🇳", "Tunis"),
-    "ke": ("Kenya 🇰🇪", "Nairobi"),
-    "ng": ("Nigeria 🇳🇬", "Abuja"),
-    "gh": ("Ghana 🇬🇭", "Accra"),
-    "et": ("Ethiopia 🇪🇹", "Addis Ababa"),
-    "ug": ("Uganda 🇺🇬", "Kampala"),
-    "tz": ("Tanzania 🇹🇿", "Dodoma"),
-    "rw": ("Rwanda 🇷🇼", "Kigali"),
-    "za": ("South Africa 🇿🇦", "Pretoria"),
-
-    "ru": ("Russia 🇷🇺", "Moscow"),
-    "kz": ("Kazakhstan 🇰🇿", "Astana"),
-    "uz": ("Uzbekistan 🇺🇿", "Tashkent"),
-    "ge": ("Georgia 🇬🇪", "Tbilisi"),
-    "am": ("Armenia 🇦🇲", "Yerevan"),
-    "az": ("Azerbaijan 🇦🇿", "Baku"),
-
-    "is": ("Iceland 🇮🇸", "Reykjavik"),
-    "lu": ("Luxembourg 🇱🇺", "Luxembourg"),
-    "mt": ("Malta 🇲🇹", "Valletta"),
-    "cy": ("Cyprus 🇨🇾", "Nicosia"),
-    "bg": ("Bulgaria 🇧🇬", "Sofia"),
-    "sk": ("Slovakia 🇸🇰", "Bratislava"),
-    "si": ("Slovenia 🇸🇮", "Ljubljana"),
-    "ba": ("Bosnia and Herzegovina 🇧🇦", "Sarajevo"),
-    "al": ("Albania 🇦🇱", "Tirana"),
-    "me": ("Montenegro 🇲🇪", "Podgorica"),
-    "mk": ("North Macedonia 🇲🇰", "Skopje"),
-
-    "cr": ("Costa Rica 🇨🇷", "San Jose"),
-    "pa": ("Panama 🇵🇦", "Panama City"),
-    "gt": ("Guatemala 🇬🇹", "Guatemala City"),
-    "hn": ("Honduras 🇭🇳", "Tegucigalpa"),
-    "sv": ("El Salvador 🇸🇻", "San Salvador"),
-    "ni": ("Nicaragua 🇳🇮", "Managua"),
-    "cu": ("Cuba 🇨🇺", "Havana"),
-    "jm": ("Jamaica 🇯🇲", "Kingston"),
-    "do": ("Dominican Republic 🇩🇴", "Santo Domingo"),
-
-    "fj": ("Fiji 🇫🇯", "Suva"),
-    "pg": ("Papua New Guinea 🇵🇬", "Port Moresby"),
-    "ws": ("Samoa 🇼🇸", "Apia"),
-    "to": ("Tonga 🇹🇴", "Nuku'alofa"),
-    "vu": ("Vanuatu 🇻🇺", "Port Vila"),
-}
-
-# =========================================================
-# COUNTRY ALIASES
-# =========================================================
-
-ALIASES = {
-    "bangladesh": "bd",
-    "বাংলাদেশ": "bd",
-
-    "india": "in",
-    "pakistan": "pk",
-    "nepal": "np",
-    "srilanka": "lk",
-    "maldives": "mv",
-
-    "canada": "ca",
-    "can": "ca",
-
-    "usa": "us",
-    "america": "us",
-    "unitedstates": "us",
-
-    "mexico": "mx",
-
-    "japan": "jp",
-    "china": "cn",
-    "korea": "kr",
-    "southkorea": "kr",
-
-    "australia": "au",
-    "newzealand": "nz",
-
-    "uk": "uk",
-    "england": "uk",
-    "britain": "uk",
-    "unitedkingdom": "uk",
-
-    "germany": "de",
-    "france": "fr",
-    "italy": "it",
-    "spain": "es",
-    "portugal": "pt",
-    "netherlands": "nl",
-    "belgium": "be",
-    "switzerland": "ch",
-    "austria": "at",
-    "sweden": "se",
-    "norway": "no",
-    "denmark": "dk",
-    "finland": "fi",
-    "poland": "pl",
-    "czechia": "cz",
-    "czech": "cz",
-    "greece": "gr",
-    "romania": "ro",
-    "hungary": "hu",
-    "croatia": "hr",
-    "serbia": "rs",
-    "ukraine": "ua",
-    "turkey": "tr",
-    "türkiye": "tr",
-
-    "brazil": "br",
-    "argentina": "ar",
-    "chile": "cl",
-    "colombia": "co",
-    "peru": "pe",
-    "ecuador": "ec",
-    "uruguay": "uy",
-
-    "thailand": "th",
-    "malaysia": "my",
-    "singapore": "sg",
-    "indonesia": "id",
-    "philippines": "ph",
-    "vietnam": "vn",
-    "cambodia": "kh",
-    "laos": "la",
-    "myanmar": "mm",
-
-    "saudiarabia": "sa",
-    "ksa": "sa",
-    "uae": "ae",
-    "emirates": "ae",
-    "qatar": "qa",
-    "kuwait": "kw",
-    "bahrain": "bh",
-    "oman": "om",
-    "jordan": "jo",
-    "lebanon": "lb",
-    "iraq": "iq",
-    "iran": "ir",
-
-    "egypt": "eg",
-    "morocco": "ma",
-    "algeria": "dz",
-    "tunisia": "tn",
-    "kenya": "ke",
-    "nigeria": "ng",
-    "ghana": "gh",
-    "ethiopia": "et",
-    "uganda": "ug",
-    "tanzania": "tz",
-    "rwanda": "rw",
-    "southafrica": "za",
-
-    "russia": "ru",
-    "kazakhstan": "kz",
-    "uzbekistan": "uz",
-    "georgia": "ge",
-    "armenia": "am",
-    "azerbaijan": "az",
-
-    "iceland": "is",
-    "luxembourg": "lu",
-    "malta": "mt",
-    "cyprus": "cy",
-    "bulgaria": "bg",
-    "slovakia": "sk",
-    "slovenia": "si",
-    "bosnia": "ba",
-    "albania": "al",
-    "montenegro": "me",
-    "northmacedonia": "mk",
-
-    "costarica": "cr",
-    "panama": "pa",
-    "guatemala": "gt",
-    "honduras": "hn",
-    "elsalvador": "sv",
-    "nicaragua": "ni",
-    "cuba": "cu",
-    "jamaica": "jm",
-    "dominicanrepublic": "do",
-
-    "fiji": "fj",
-    "papuanewguinea": "pg",
-    "samoa": "ws",
-    "tonga": "to",
-    "vanuatu": "vu",
-}
-
-for code in COUNTRIES:
-    ALIASES[code] = code
 
 
-FIRST_NAMES = ["Alex", "Daniel", "Michael", "David", "James", "Robert", "John", "William", "Thomas", "Charles", "Emily", "Sarah", "Amanda", "Jessica", "Maria"]
-LAST_NAMES = ["Smith", "Brown", "Wilson", "Taylor", "Martin", "Anderson", "Thomas", "White", "Harris", "Clark", "Miller", "Davis"]
-
-def make_display_name():
-    first = random.choice(FIRST_NAMES)
-    last = random.choice(LAST_NAMES)
-    return first + " " + last
-
-def get_country_code(user_input):
-    value = user_input.lower().strip().replace("-", "").replace("_", "").replace(" ", "")
-    return ALIASES.get(value)
+def make_multiple_keyboard(code):
+    return {
+        "inline_keyboard": [
+            [{"text": "🔄 Generate Again", "callback_data": "multi:" + code}],
+            [{"text": "📍 Single Address", "callback_data": "gen:" + code}]
+        ]
+    }
 
 
-# =========================================================
-# TELEGRAM API REQUEST (WITH SSL FIX)
-# =========================================================
+# ==============================
+# TELEGRAM API
+# ==============================
 
-def telegram_request(method, data=None):
+def api(method, data=None):
+    url = API + method
     if data is None:
         data = {}
 
-    url = API + "/" + method
+    encoded = urllib.parse.urlencode(data).encode("utf-8")
 
     try:
-        encoded = urllib.parse.urlencode(data).encode("utf-8")
         request = urllib.request.Request(
-            url,
-            data=encoded,
-            headers={"User-Agent": "QPython-Telegram-Bot/1.0"}
+            url, data=encoded,
+            headers={"Content-Type": "application/x-www-form-urlencoded"}
         )
-
-        # context=ssl_context যোগ করে SSL এরর সমাধান করা হয়েছে
-        with urllib.request.urlopen(request, timeout=45, context=ssl_context) as response:
-            result = response.read().decode("utf-8")
-            return json.loads(result)
-
-    except Exception as error:
-        print("Telegram API Error:", error)
+        with urllib.request.urlopen(request, timeout=60, context=ssl_context) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except Exception as e:
+        print("API ERROR:", e)
         return None
 
 
-def send_message(chat_id, text):
-    return telegram_request(
-        "sendMessage",
-        {
-            "chat_id": chat_id,
-            "text": text,
-            "parse_mode": "HTML"
-        }
-    )
+def send_message(chat_id, text, keyboard=None):
+    data = {"chat_id": chat_id, "text": text, "parse_mode": "HTML"}
+    if keyboard:
+        data["reply_markup"] = json.dumps(keyboard, ensure_ascii=False)
+    return api("sendMessage", data)
 
 
-# =========================================================
-# PUBLIC ADDRESS SEARCH
-# =========================================================
-
-def search_public_address(country, capital):
-    queries = [
-        "Central Post Office, " + capital + ", " + country,
-        "Main Post Office, " + capital + ", " + country,
-        "City Hall, " + capital + ", " + country,
-        "Public Library, " + capital + ", " + country
-    ]
-
-    headers = {"User-Agent": "QPython-Public-Address-Bot/1.0"}
-
-    for query in queries:
-        try:
-            params = urllib.parse.urlencode({
-                "q": query,
-                "format": "jsonv2",
-                "addressdetails": 1,
-                "limit": 5
-            })
-
-            url = NOMINATIM_API + "?" + params
-            request = urllib.request.Request(url, headers=headers)
-
-            # SSL context পাস করা হচ্ছে
-            with urllib.request.urlopen(request, timeout=30, context=ssl_context) as response:
-                raw = response.read().decode("utf-8")
-                results = json.loads(raw)
-
-            if not results:
-                time.sleep(1)
-                continue
-
-            for item in results:
-                address = item.get("address", {})
-                road = address.get("road") or address.get("pedestrian") or address.get("street") or ""
-                house_number = address.get("house_number", "")
-                city = address.get("city") or address.get("town") or address.get("municipality") or address.get("village") or capital
-                state = address.get("state") or address.get("state_district", "") or ""
-                postcode = address.get("postcode", "")
-
-                if road or house_number or postcode:
-                    if house_number and road:
-                        street = house_number + " " + road
-                    elif road:
-                        street = road
-                    else:
-                        street = item.get("display_name", "")
-
-                    return {
-                        "street": street,
-                        "city": city,
-                        "state": state,
-                        "postcode": postcode
-                    }
-
-        except Exception as error:
-            print("Address Search Error:", error)
-
-        time.sleep(1)
-
-    return None
+def edit_message(chat_id, message_id, text, keyboard=None):
+    data = {"chat_id": chat_id, "message_id": message_id, "text": text, "parse_mode": "HTML"}
+    if keyboard:
+        data["reply_markup"] = json.dumps(keyboard, ensure_ascii=False)
+    return api("editMessageText", data)
 
 
-def handle_start(chat_id):
-    text = (
-        "<b>🌍 PUBLIC ADDRESS BOT</b>\n"
-        "━━━━━━━━━━━━━━━━━━━\n\n"
-        "বাস্তব public location থেকে address lookup করা হবে।\n\n"
-        "<b>ব্যবহার:</b>\n"
-        "<code>/fake bd</code>\n"
-        "<code>/fake canada</code>\n"
-        "<code>/fake mexico</code>\n"
-        "<code>/fake usa</code>\n\n"
-        "━━━━━━━━━━━━━━━━━━━"
-    )
-    send_message(chat_id, text)
+def answer_callback(callback_id):
+    api("answerCallbackQuery", {"callback_query_id": callback_id})
 
 
-def handle_fake(chat_id, argument):
-    code = get_country_code(argument)
+# ==============================
+# PART 3/3
+# BOT HANDLER
+# ==============================
 
-    if not code:
-        send_message(
-            chat_id,
-            "❌ <b>Country পাওয়া যায়নি।</b>\n\n"
-            "উদাহরণ:\n"
-            "<code>/fake bd</code>\n"
-            "<code>/fake ca</code>\n"
-            "<code>/fake mx</code>"
-        )
-        return
+def normalize_code(value):
+    value = value.strip().lower()
+    if value in COUNTRIES:
+        return value
 
-    country_name, capital = COUNTRIES[code]
+    for code, info in COUNTRIES.items():
+        if value == info[0].lower():
+            return code
 
-    send_message(
-        chat_id,
-        "🔎 <b>Public address খোঁজা হচ্ছে...</b>\n\n🌍 " + country_name
-    )
-
-    address = search_public_address(country_name, capital)
-
-    if not address:
-        send_message(
-            chat_id,
-            "⚠️ <b>Address পাওয়া যায়নি।</b>\n\n"
-            "এই মুহূর্তে নির্ভরযোগ্য public address পাওয়া যায়নি।"
-        )
-        return
-
-    name = make_display_name()
-    street = address.get("street", "N/A")
-    city = address.get("city", capital)
-    state = address.get("state", "N/A")
-    postcode = address.get("postcode", "N/A")
-
-    response = (
-        "<b>" + country_name + " Public Address</b>\n"
-        "━━━━━━━━━━━━━━━━━━━\n"
-        "- <b>Name:</b> <code>" + name + "</code>\n"
-        "- <b>Street:</b> <code>" + str(street) + "</code>\n"
-        "- <b>City:</b> <code>" + str(city) + "</code>\n"
-        "- <b>State:</b> <code>" + str(state) + "</code>\n"
-        "- <b>Postal Code:</b> <code>" + str(postcode) + "</code>\n"
-        "- <b>Country:</b> <code>" + country_name + "</code>\n"
-        "━━━━━━━━━━━━━━━━━━━\n\n"
-        "ℹ️ <i>এটি public location-এর geocoded address।</i>"
-    )
-
-    send_message(chat_id, response)
+    aliases = {
+        "bangladesh": "bd", "বাংলাদেশ": "bd", "uae": "ae", "dubai": "ae",
+        "america": "us", "usa": "us", "uk": "gb", "england": "gb",
+        "india": "in", "germany": "de", "france": "fr", "italy": "it",
+        "japan": "jp", "china": "cn", "canada": "ca", "australia": "au"
+    }
+    return aliases.get(value)
 
 
-def process_message(message):
+def handle_message(message):
     chat = message.get("chat", {})
     chat_id = chat.get("id")
-    text = message.get("text", "").strip()
+    text = message.get("text", "")
 
-    if not text:
+    if not chat_id:
         return
 
     if text.startswith("/start"):
-        handle_start(chat_id)
+        msg = (
+            "<b>🟣 RAVEN ADDRESS GENERATOR</b>\n\n"
+            "121 countries supported with Tap-to-Copy.\n\n"
+            "Example:\n"
+            "<code>/fake bd</code>\n"
+            "<code>/fake ae</code>\n"
+            "<code>/fake us</code>"
+        )
+        send_message(chat_id, msg)
         return
 
-    if text.startswith("/fake"):
-        parts = text.split(" ", 1)
-        argument = "bd" if len(parts) == 1 else parts[1].strip()
-        handle_fake(chat_id, argument)
+    if text.lower().startswith("/fake"):
+        parts = text.split()
+        if len(parts) < 2:
+            send_message(chat_id, "<b>❌ Country code দাও</b>\nExample: <code>/fake bd</code>")
+            return
+
+        code = normalize_code(parts[1])
+        if not code:
+            send_message(chat_id, "❌ Country পাওয়া যায়নি।\nExample: <code>/fake bd</code>")
+            return
+
+        data = generate_address(code)
+        if not data:
+            return
+
+        text_out = format_address(data)
+        keyboard = make_keyboard(code)
+        send_message(chat_id, text_out, keyboard)
+
+
+def handle_callback(callback):
+    callback_id = callback.get("id")
+    data = callback.get("data", "")
+    message = callback.get("message", {})
+    chat_id = message.get("chat", {}).get("id")
+    message_id = message.get("message_id")
+
+    answer_callback(callback_id)
+
+    if data.startswith("gen:"):
+        code = data.split(":", 1)[1]
+        if code not in COUNTRIES:
+            return
+
+        new_address = generate_address(code)
+        new_text = format_address(new_address)
+        keyboard = make_keyboard(code)
+        edit_message(chat_id, message_id, new_text, keyboard)
+
+    elif data.startswith("multi:"):
+        code = data.split(":", 1)[1]
+        if code not in COUNTRIES:
+            return
+
+        new_text = format_multiple(code, 5)
+        keyboard = make_multiple_keyboard(code)
+        edit_message(chat_id, message_id, new_text, keyboard)
 
 
 def run_bot():
-    print("")
-    print("======================================")
-    print("       QPYTHON TELEGRAM BOT")
-    print("======================================")
-    print("BOT চালু হচ্ছে...")
-    print("Telegram server-এর সাথে connecting...")
-    print("")
+    print("\n===================================")
+    print(" RAVEN ADDRESS GENERATOR")
+    print(" 121 COUNTRY SYSTEM")
+    print("===================================")
+    
+    # 409 Conflict সমাধান করার জন্য পুরোনো ওয়েব হুক রিমুভ করা
+    api("deleteWebhook", {"drop_pending_updates": True})
+    
+    print("Bot starting...")
 
-    offset = None
-
+    offset = 0
     while True:
         try:
-            data = {
-                "timeout": 30,
-                "allowed_updates": json.dumps(["message"])
-            }
-
-            if offset is not None:
-                data["offset"] = offset
-
-            result = telegram_request("getUpdates", data)
-
-            if result is None:
-                print("Telegram response পাওয়া যায়নি। Retry করা হচ্ছে...")
-                time.sleep(5)
-                continue
-
-            if not result.get("ok"):
-                print("Telegram API Error:", result)
-                time.sleep(5)
+            result = api("getUpdates", {"timeout": 30, "offset": offset})
+            if not result or not result.get("ok"):
+                time.sleep(3)
                 continue
 
             updates = result.get("result", [])
-
             for update in updates:
-                offset = update.get("update_id", 0) + 1
-                message = update.get("message")
-                if message:
-                    try:
-                        process_message(message)
-                    except Exception as error:
-                        print("Message Error:", error)
+                offset = update["update_id"] + 1
+
+                if "message" in update:
+                    handle_message(update["message"])
+                elif "callback_query" in update:
+                    handle_callback(update["callback_query"])
 
         except KeyboardInterrupt:
-            print("\nBOT বন্ধ করা হয়েছে।")
+            print("\nBot stopped.")
             break
-        except Exception as error:
-            print("\nMain Loop Error:", error)
+        except Exception as e:
+            print("MAIN ERROR:", e)
             time.sleep(5)
 
 
 if __name__ == "__main__":
-    if not BOT_TOKEN:
-        print("\nERROR: BOT TOKEN দেওয়া হয়নি!\n")
-    else:
-        print("\nBOT TOKEN পাওয়া গেছে।\nBOT starting...\n")
-        run_bot()
-        
+    run_bot()
