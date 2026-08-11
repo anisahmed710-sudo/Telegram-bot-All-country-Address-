@@ -1,7 +1,6 @@
 # ==========================================
-# P1/3
 # RAVEN GLOBAL COUNTRY GENERATOR
-# 121 COUNTRIES
+# 121 COUNTRIES (FULL SINGLE-FILE BOT CODE)
 # ==========================================
 
 import random
@@ -169,7 +168,7 @@ se|Sweden|🇸🇪|Stockholm
 ch|Switzerland|🇨🇭|Bern
 sy|Syria|🇸🇾|Damascus
 tj|Tajikistan|🇹🇯|Dushanbe
-tz|Tanzania|🇹🇿|Dodoma
+tz|Tanzania|🇹ℤ|Dodoma
 th|Thailand|🇹🇭|Bangkok
 tg|Togo|🇹🇬|Lome
 tt|Trinidad and Tobago|🇹🇹|Port of Spain
@@ -190,36 +189,24 @@ zm|Zambia|🇿🇲|Lusaka
 zw|Zimbabwe|🇿🇼|Harare
 """.strip()
 
-
 COUNTRIES = {}
-
 for line in COUNTRY_LIST.splitlines():
-
     parts = line.split("|")
-
     code = parts[0]
     name = parts[1]
     flag = parts[2]
     capital = parts[3]
-
     COUNTRIES[code] = {
         "name": name,
         "flag": flag,
         "capital": capital
     }
 
-
 ALIASES = {}
-
 for code, info in COUNTRIES.items():
-
-    ALIASES[
-        info["name"].lower()
-    ] = code
-
+    ALIASES[info["name"].lower()] = code
 
 ALIASES.update({
-
     "bangladesh": "bd",
     "india": "in",
     "malaysia": "my",
@@ -247,184 +234,31 @@ ALIASES.update({
     "china": "cn"
 })
 
-
-print(
-    "121 Country System Loaded:",
-    len(COUNTRIES)
-)
-# ==========================================
-# P2/3
-# COUNTRY DATA + GENERATOR
-# ==========================================
-
 NAMES = {
-
-    "bd": [
-        "মাহমুদুল হাসান",
-        "সুমাইয়া আক্তার",
-        "রাকিব হাসান",
-        "নুসরাত জাহান",
-        "সাইফুল ইসলাম"
-    ],
-
-    "in": [
-        "Aarav Sharma",
-        "Arjun Patel",
-        "Rahul Mehta",
-        "Priya Singh",
-        "Ananya Gupta"
-    ],
-
-    "my": [
-        "Muhammad Faris",
-        "Ahmad Hakim",
-        "Nur Aisyah",
-        "Siti Aminah",
-        "Hafiz Rahman"
-    ],
-
-    "qa": [
-        "Mohammed Al-Kuwari",
-        "Ahmed Al-Thani",
-        "Fatima Al-Mansoori",
-        "Mariam Al-Hajri"
-    ],
-
-    "om": [
-        "Ahmed Al-Harthy",
-        "Mohammed Al-Balushi",
-        "Fatma Al-Rawahi",
-        "Aisha Al-Hinai"
-    ],
-
-    "ae": [
-        "Omar Al Mansouri",
-        "Ahmed Al Nuaimi",
-        "Fatima Al Mazrouei",
-        "Maryam Al Hashimi"
-    ],
-
-    "jp": [
-        "Haruto Sato",
-        "Yuki Tanaka",
-        "Ren Suzuki",
-        "Aoi Yamamoto"
-    ],
-
-    "cn": [
-        "Wei Zhang",
-        "Li Wang",
-        "Chen Liu",
-        "Mei Zhang"
-    ],
-
-    "de": [
-        "Lukas Müller",
-        "Thomas Schneider",
-        "Anna Weber",
-        "Sophie Fischer"
-    ],
-
-    "fr": [
-        "Jean Martin",
-        "Pierre Bernard",
-        "Claire Dubois",
-        "Marie Laurent"
-    ],
-
-    "it": [
-        "Marco Rossi",
-        "Luca Romano",
-        "Giulia Bianchi",
-        "Sofia Conti"
-    ],
-
-    "es": [
-        "Carlos García",
-        "Miguel Fernández",
-        "Lucía Martínez",
-        "Sofía López"
-    ],
-
-    "pt": [
-        "João Silva",
-        "Miguel Santos",
-        "Tiago Pereira",
-        "Ana Ferreira"
-    ],
-
-    "us": [
-        "James Williams",
-        "Michael Johnson",
-        "William Davis",
-        "Daniel Brown",
-        "Emily Wilson"
-    ],
-
-    "gb": [
-        "Oliver Smith",
-        "George Williams",
-        "Harry Taylor",
-        "Emily Brown"
-    ],
-
-    "ca": [
-        "Liam Martin",
-        "Noah Wilson",
-        "Emma Thompson",
-        "Olivia Brown"
-    ],
-
-    "au": [
-        "Jack Smith",
-        "William Jones",
-        "Charlotte Brown",
-        "Amelia Wilson"
-    ],
-
-    "br": [
-        "João Silva",
-        "Carlos Santos",
-        "Lucas Oliveira",
-        "Ana Souza"
-    ],
-
-    "mx": [
-        "Carlos Hernández",
-        "Luis García",
-        "Diego Martínez",
-        "Sofía López"
-    ],
-
-    "tr": [
-        "Mehmet Yılmaz",
-        "Ahmet Kaya",
-        "Elif Demir",
-        "Zeynep Aydın"
-    ],
-
-    "sa": [
-        "Ahmed Al-Qahtani",
-        "Mohammed Al-Harbi",
-        "Fatimah Al-Shehri",
-        "Noura Al-Otaibi"
-    ],
-
-    "eg": [
-        "Ahmed Hassan",
-        "Mohamed Ali",
-        "Omar Mahmoud",
-        "Mariam Ahmed"
-    ],
-
-    "za": [
-        "Thabo Mokoena",
-        "Sipho Dlamini",
-        "Lerato Molefe",
-        "Nomsa Ndlovu"
-    ]
+    "bd": ["মাহমুদুল হাসান", "সুমাইয়া আক্তার", "রাকিব হাসান", "নুসরাত জাহান", "সাইফুল ইসলাম"],
+    "in": ["Aarav Sharma", "Arjun Patel", "Rahul Mehta", "Priya Singh", "Ananya Gupta"],
+    "my": ["Muhammad Faris", "Ahmad Hakim", "Nur Aisyah", "Siti Aminah", "Hafiz Rahman"],
+    "qa": ["Mohammed Al-Kuwari", "Ahmed Al-Thani", "Fatima Al-Mansoori", "Mariam Al-Hajri"],
+    "om": ["Ahmed Al-Harthy", "Mohammed Al-Balushi", "Fatma Al-Rawahi", "Aisha Al-Hinai"],
+    "ae": ["Omar Al Mansouri", "Ahmed Al Nuaimi", "Fatima Al Mazrouei", "Maryam Al Hashimi"],
+    "jp": ["Haruto Sato", "Yuki Tanaka", "Ren Suzuki", "Aoi Yamamoto"],
+    "cn": ["Wei Zhang", "Li Wang", "Chen Liu", "Mei Zhang"],
+    "de": ["Lukas Müller", "Thomas Schneider", "Anna Weber", "Sophie Fischer"],
+    "fr": ["Jean Martin", "Pierre Bernard", "Claire Dubois", "Marie Laurent"],
+    "it": ["Marco Rossi", "Luca Romano", "Giulia Bianchi", "Sofia Conti"],
+    "es": ["Carlos García", "Miguel Fernández", "Lucía Martínez", "Sofía López"],
+    "pt": ["João Silva", "Miguel Santos", "Tiago Pereira", "Ana Ferreira"],
+    "us": ["James Williams", "Michael Johnson", "William Davis", "Daniel Brown", "Emily Wilson"],
+    "gb": ["Oliver Smith", "George Williams", "Harry Taylor", "Emily Brown"],
+    "ca": ["Liam Martin", "Noah Wilson", "Emma Thompson", "Olivia Brown"],
+    "au": ["Jack Smith", "William Jones", "Charlotte Brown", "Amelia Wilson"],
+    "br": ["João Silva", "Carlos Santos", "Lucas Oliveira", "Ana Souza"],
+    "mx": ["Carlos Hernández", "Luis García", "Diego Martínez", "Sofía López"],
+    "tr": ["Mehmet Yılmaz", "Ahmet Kaya", "Elif Demir", "Zeynep Aydın"],
+    "sa": ["Ahmed Al-Qahtani", "Mohammed Al-Harbi", "Fatimah Al-Shehri", "Noura Al-Otaibi"],
+    "eg": ["Ahmed Hassan", "Mohamed Ali", "Omar Mahmoud", "Mariam Ahmed"],
+    "za": ["Thabo Mokoena", "Sipho Dlamini", "Lerato Molefe", "Nomsa Ndlovu"]
 }
-
 
 DEFAULT_NAMES = [
     "Alexander Martin",
@@ -435,170 +269,45 @@ DEFAULT_NAMES = [
     "Sarah Johnson"
 ]
 
-
-# ==========================================
-# CITY INFORMATION
-# ==========================================
-
 CITY_INFO = {
-
-    "Dhaka":
-        "রাজধানী, ব্যবসা-বাণিজ্য ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
-
-    "Mumbai":
-        "বলিউড, আর্থিক কেন্দ্র ও সমুদ্রতটের জন্য বিখ্যাত",
-
-    "Kuala Lumpur":
-        "Petronas Twin Towers, ব্যবসা ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
-
-    "Doha":
-        "আধুনিক স্থাপত্য, ব্যবসা ও বিশ্বকাপ আয়োজনের জন্য বিখ্যাত",
-
-    "Muscat":
-        "সমুদ্র, পাহাড় ও ঐতিহ্যবাহী আরব স্থাপত্যের জন্য বিখ্যাত",
-
-    "Dubai":
-        "আকাশচুম্বী ভবন, পর্যটন, ব্যবসা ও শপিংয়ের জন্য বিখ্যাত",
-
-    "Tokyo":
-        "প্রযুক্তি, ব্যবসা ও আধুনিক নগরজীবনের জন্য বিখ্যাত",
-
-    "Beijing":
-        "রাজধানী, ইতিহাস ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
-
-    "Berlin":
-        "ইতিহাস, সংস্কৃতি ও আধুনিক শিল্পের জন্য বিখ্যাত",
-
-    "Paris":
-        "Eiffel Tower, fashion, শিল্প ও সংস্কৃতির জন্য বিখ্যাত",
-
-    "Rome":
-        "Colosseum, প্রাচীন ইতিহাস ও Vatican-এর জন্য বিখ্যাত",
-
-    "Madrid":
-        "ফুটবল, শিল্প, সংস্কৃতি ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
-
-    "Lisbon":
-        "ঐতিহাসিক স্থাপনা, সমুদ্র ও Portuguese culture-এর জন্য বিখ্যাত",
-
-    "London":
-        "রাজধানী, ব্যবসা, ইতিহাস ও পর্যটনের জন্য বিখ্যাত",
-
-    "New York":
-        "আর্থিক কেন্দ্র, Times Square ও Statue of Liberty-এর জন্য বিখ্যাত",
-
-    "Toronto":
-        "ব্যবসা, CN Tower ও বহুসাংস্কৃতিক পরিবেশের জন্য বিখ্যাত",
-
-    "Sydney":
-        "Opera House, Harbour Bridge ও সমুদ্রসৈকতের জন্য বিখ্যাত",
-
-    "Sao Paulo":
-        "ব্যবসা, শিল্প ও আর্থিক কর্মকাণ্ডের জন্য বিখ্যাত",
-
-    "Mexico City":
-        "রাজধানী, ইতিহাস ও সংস্কৃতির জন্য বিখ্যাত",
-
-    "Istanbul":
-        "ইউরোপ-এশিয়ার সংযোগ, ইতিহাস ও পর্যটনের জন্য বিখ্যাত",
-
-    "Riyadh":
-        "রাজধানী, ব্যবসা ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
-
-    "Cairo":
-        "পিরামিড, নীলনদ ও প্রাচীন ইতিহাসের জন্য বিখ্যাত",
-
-    "Johannesburg":
-        "ব্যবসা, খনি ও অর্থনীতির জন্য বিখ্যাত"
+    "Dhaka": "রাজধানী, ব্যবসা-বাণিজ্য ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Mumbai": "বলিউড, আর্থিক কেন্দ্র ও সমুদ্রতটের জন্য বিখ্যাত",
+    "Kuala Lumpur": "Petronas Twin Towers, ব্যবসা ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
+    "Doha": "আধুনিক স্থাপত্য, ব্যবসা ও বিশ্বকাপ আয়োজনের জন্য বিখ্যাত",
+    "Muscat": "সমুদ্র, পাহাড় ও ঐতিহ্যবাহী আরব স্থাপত্যের জন্য বিখ্যাত",
+    "Dubai": "আকাশচুম্বী ভবন, পর্যটন, ব্যবসা ও শপিংয়ের জন্য বিখ্যাত",
+    "Tokyo": "প্রযুক্তি, ব্যবসা ও আধুনিক নগরজীবনের জন্য বিখ্যাত",
+    "Beijing": "রাজধানী, ইতিহাস ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Berlin": "ইতিহাস, সংস্কৃতি ও আধুনিক শিল্পের জন্য বিখ্যাত",
+    "Paris": "Eiffel Tower, fashion, শিল্প ও সংস্কৃতির জন্য বিখ্যাত",
+    "Rome": "Colosseum, প্রাচীন ইতিহাস ও Vatican-এর জন্য বিখ্যাত",
+    "Madrid": "ফুটবল, শিল্প, সংস্কৃতি ও ঐতিহাসিক স্থাপনার জন্য বিখ্যাত",
+    "Lisbon": "ঐতিহাসিক স্থাপনা, সমুদ্র ও Portuguese culture-এর জন্য বিখ্যাত",
+    "London": "রাজধানী, ব্যবসা, ইতিহাস ও পর্যটনের জন্য বিখ্যাত",
+    "New York": "আর্থিক কেন্দ্র, Times Square ও Statue of Liberty-এর জন্য বিখ্যাত",
+    "Toronto": "ব্যবসা, CN Tower ও বহুসাংস্কৃতিক পরিবেশের জন্য বিখ্যাত",
+    "Sydney": "Opera House, Harbour Bridge ও সমুদ্রসৈকতের জন্য বিখ্যাত",
+    "Sao Paulo": "ব্যবসা, শিল্প ও আর্থিক কর্মকাণ্ডের জন্য বিখ্যাত",
+    "Mexico City": "রাজধানী, ইতিহাস ও সংস্কৃতির জন্য বিখ্যাত",
+    "Istanbul": "ইউরোপ-এশিয়ার সংযোগ, ইতিহাস ও পর্যটনের জন্য বিখ্যাত",
+    "Riyadh": "রাজধানী, ব্যবসা ও আধুনিক স্থাপত্যের জন্য বিখ্যাত",
+    "Cairo": "পিরামিড, নীলনদ ও প্রাচীন ইতিহাসের জন্য বিখ্যাত",
+    "Johannesburg": "ব্যবসা, খনি ও অর্থনীতির জন্য বিখ্যাত"
 }
-
-
-# ==========================================
-# COUNTRY FACTS
-# ==========================================
 
 FACTS = {
-
-    "bd": {
-        "population": "প্রায় ১৭.৫ কোটি",
-        "area": "প্রায় ১,৪৭,৫৭০ বর্গকিলোমিটার",
-        "food": "ভাত, মাছ, ডাল ও ভর্তা",
-        "work": "গার্মেন্টস, কৃষি, ব্যবসা ও সেবা",
-        "duty": "সাধারণত ৮ ঘণ্টা"
-    },
-
-    "in": {
-        "population": "প্রায় ১৪৬ কোটি",
-        "area": "প্রায় ৩২,৮৭,২৬৩ বর্গকিলোমিটার",
-        "food": "ভাত, রুটি, ডাল ও বিরিয়ানি",
-        "work": "IT, ব্যবসা, কৃষি, শিল্প ও সেবা",
-        "duty": "সাধারণত ৮–১০ ঘণ্টা"
-    },
-
-    "my": {
-        "population": "প্রায় ৩.৫ কোটি",
-        "area": "প্রায় ৩,৩০,৮০৩ বর্গকিলোমিটার",
-        "food": "Nasi Lemak, Satay ও Laksa",
-        "work": "Manufacturing, ব্যবসা, প্রযুক্তি ও সেবা",
-        "duty": "সাধারণত ৮ ঘণ্টা"
-    },
-
-    "qa": {
-        "population": "প্রায় ৩০ লাখ",
-        "area": "প্রায় ১১,৫৮৬ বর্গকিলোমিটার",
-        "food": "Machboos, Harees ও Dates",
-        "work": "তেল-গ্যাস, ব্যবসা, নির্মাণ ও সেবা",
-        "duty": "সাধারণত ৮ ঘণ্টা"
-    },
-
-    "om": {
-        "population": "প্রায় ৫৫ লাখ",
-        "area": "প্রায় ৩,০৯,৫০০ বর্গকিলোমিটার",
-        "food": "Shuwa, Majboos ও Dates",
-        "work": "তেল-গ্যাস, বাণিজ্য, পর্যটন ও সেবা",
-        "duty": "সাধারণত ৮ ঘণ্টা"
-    },
-
-    "ae": {
-        "population": "প্রায় ১ কোটি",
-        "area": "প্রায় ৮৩,৬০০ বর্গকিলোমিটার",
-        "food": "Machboos, Hummus, Shawarma ও Dates",
-        "work": "ব্যবসা, তেল-গ্যাস, নির্মাণ ও পর্যটন",
-        "duty": "সাধারণত ৮ ঘণ্টা"
-    },
-
-    "jp": {
-        "population": "প্রায় ১২.৩ কোটি",
-        "area": "প্রায় ৩,৭৭,৯৭৫ বর্গকিলোমিটার",
-        "food": "Sushi, Ramen ও Tempura",
-        "work": "প্রযুক্তি, অটোমোবাইল ও শিল্প",
-        "duty": "সাধারণত ৮ ঘণ্টা"
-    },
-
-    "us": {
-        "population": "প্রায় ৩৪ কোটি",
-        "area": "প্রায় ৯৮,৩৩,৫১৭ বর্গকিলোমিটার",
-        "food": "Burger, Steak, Pizza",
-        "work": "Technology, Business, Industry ও Services",
-        "duty": "সাধারণত ৮ ঘণ্টা"
-    },
-
-    "gb": {
-        "population": "প্রায় ৬.৯ কোটি",
-        "area": "প্রায় ২,৪৩,৬১০ বর্গকিলোমিটার",
-        "food": "Fish and Chips, Roast ও Pie",
-        "work": "Finance, Services, Technology ও Business",
-        "duty": "সাধারণত ৮ ঘণ্টা"
-    }
+    "bd": {"population": "প্রায় ১৭.৫ কোটি", "area": "প্রায় ১,৪৭,৫৭০ বর্গকিলোমিটার", "food": "ভাত, মাছ, ডাল ও ভর্তা", "work": "গার্মেন্টস, কৃষি, ব্যবসা ও সেবা", "duty": "সাধারণত ৮ ঘণ্টা"},
+    "in": {"population": "প্রায় ১৪৬ কোটি", "area": "প্রায় ৩২,৮৭,২৬৩ বর্গকিলোমিটার", "food": "ভাত, রুটি, ডাল ও বিরিয়ানি", "work": "IT, ব্যবসা, কৃষি, শিল্প ও সেবা", "duty": "সাধারণত ৮–১০ ঘণ্টা"},
+    "my": {"population": "প্রায় ৩.৫ কোটি", "area": "প্রায় ৩,৩০,৮০৩ বর্গকিলোমিটার", "food": "Nasi Lemak, Satay ও Laksa", "work": "Manufacturing, ব্যবসা, প্রযুক্তি ও সেবা", "duty": "সাধারণত ৮ ঘণ্টা"},
+    "qa": {"population": "প্রায় ৩০ লাখ", "area": "প্রায় ১১,৫৮৬ বর্গকিলোমিটার", "food": "Machboos, Harees ও Dates", "work": "তেল-গ্যাস, ব্যবসা, নির্মাণ ও সেবা", "duty": "সাধারণত ৮ ঘণ্টা"},
+    "om": {"population": "প্রায় ৫৫ লাখ", "area": "প্রায় ৩,০৯,৫০০ বর্গকিলোমিটার", "food": "Shuwa, Majboos ও Dates", "work": "তেল-গ্যাস, বাণিজ্য, পর্যটন ও সেবা", "duty": "সাধারণত ৮ ঘণ্টা"},
+    "ae": {"population": "প্রায় ১ কোটি", "area": "প্রায় ৮৩,৬০০ বর্গকিলোমিটার", "food": "Machboos, Hummus, Shawarma ও Dates", "work": "ব্যবসা, তেল-গ্যাস, নির্মাণ ও পর্যটন", "duty": "সাধারণত ৮ ঘণ্টা"},
+    "jp": {"population": "প্রায় ১২.৩ কোটি", "area": "প্রায় ৩,৭৭,৯৭৫ বর্গকিলোমিটার", "food": "Sushi, Ramen ও Tempura", "work": "প্রযুক্তি, অটোমোবাইল ও শিল্প", "duty": "সাধারণত ৮ ঘণ্টা"},
+    "us": {"population": "প্রায় ৩৪ কোটি", "area": "প্রায় ৯৮,৩৩,৫১৭ বর্গকিলোমিটার", "food": "Burger, Steak, Pizza", "work": "Technology, Business, Industry ও Services", "duty": "সাধারণত ৮ ঘণ্টা"},
+    "gb": {"population": "প্রায় ৬.৯ কোটি", "area": "প্রায় ২,৪৩,৬১০ বর্গকিলোমিটার", "food": "Fish and Chips, Roast ও Pie", "work": "Finance, Services, Technology ও Business", "duty": "সাধারণত ৮ ঘণ্টা"}
 }
 
-
-# ==========================================
-# LEADERS
-# ==========================================
-
 LEADERS = {
-
     "bd": "রাষ্ট্রপ্রধান",
     "in": "নরেন্দ্র মোদি",
     "us": "ডোনাল্ড ট্রাম্প",
@@ -624,448 +333,144 @@ LEADERS = {
     "za": "সিরিল রামাফোসা"
 }
 
-
-# ==========================================
-# GENERATOR
-# ==========================================
-
 def generate_name(code):
-
-    return random.choice(
-        NAMES.get(
-            code,
-            DEFAULT_NAMES
-        )
-    )
-
+    return random.choice(NAMES.get(code, DEFAULT_NAMES))
 
 def generate_postal(code):
-
     formats = {
-
-        "bd": lambda:
-            random.choice([
-                "1000", "1100",
-                "1205", "4000",
-                "6000", "3100"
-            ]),
-
-        "in": lambda:
-            str(
-                random.randint(
-                    110000,
-                    999999
-                )
-            ),
-
-        "us": lambda:
-            str(
-                random.randint(
-                    10000,
-                    99999
-                )
-            ),
-
-        "gb": lambda:
-            random.choice([
-                "SW1A 1AA",
-                "EC1A 1BB",
-                "M1 1AE"
-            ]),
-
-        "ca": lambda:
-            random.choice([
-                "M5V 2T6",
-                "V6B 1A1",
-                "H2X 1Y4"
-            ]),
-
-        "au": lambda:
-            random.choice([
-                "2000", "3000",
-                "4000", "6000"
-            ]),
-
-        "de": lambda:
-            random.choice([
-                "10115", "20095",
-                "80331", "50667"
-            ]),
-
-        "fr": lambda:
-            random.choice([
-                "75001", "69001",
-                "13001"
-            ]),
-
-        "it": lambda:
-            random.choice([
-                "00118", "20121",
-                "80100"
-            ]),
-
-        "jp": lambda:
-            random.choice([
-                "100-0001",
-                "530-0001",
-                "600-8001"
-            ]),
-
-        "cn": lambda:
-            random.choice([
-                "100000",
-                "200000",
-                "510000"
-            ]),
-
-        "my": lambda:
-            random.choice([
-                "50000",
-                "50100",
-                "50450"
-            ]),
-
-        "qa": lambda:
-            "N/A",
-
-        "om": lambda:
-            "N/A",
-
-        "ae": lambda:
-            "N/A",
-
-        "pt": lambda:
-            random.choice([
-                "1000-001",
-                "4000-001"
-            ]),
-
-        "es": lambda:
-            random.choice([
-                "28001",
-                "08001",
-                "41001"
-            ]),
-
-        "tr": lambda:
-            random.choice([
-                "06000",
-                "34000",
-                "35000"
-            ])
+        "bd": lambda: random.choice(["1000", "1100", "1205", "4000", "6000", "3100"]),
+        "in": lambda: str(random.randint(110000, 999999)),
+        "us": lambda: str(random.randint(10000, 99999)),
+        "gb": lambda: random.choice(["SW1A 1AA", "EC1A 1BB", "M1 1AE"]),
+        "ca": lambda: random.choice(["M5V 2T6", "V6B 1A1", "H2X 1Y4"]),
+        "au": lambda: random.choice(["2000", "3000", "4000", "6000"]),
+        "de": lambda: random.choice(["10115", "20095", "80331", "50667"]),
+        "fr": lambda: random.choice(["75001", "69001", "13001"]),
+        "it": lambda: random.choice(["00118", "20121", "80100"]),
+        "jp": lambda: random.choice(["100-0001", "530-0001", "600-8001"]),
+        "cn": lambda: random.choice(["100000", "200000", "510000"]),
+        "my": lambda: random.choice(["50000", "50100", "50450"]),
+        "qa": lambda: "N/A",
+        "om": lambda: "N/A",
+        "ae": lambda: "N/A",
+        "pt": lambda: random.choice(["1000-001", "4000-001"]),
+        "es": lambda: random.choice(["28001", "08001", "41001"]),
+        "tr": lambda: random.choice(["06000", "34000", "35000"])
     }
-
     if code in formats:
         return formats[code]()
-
-    return str(
-        random.randint(
-            10000,
-            999999
-        )
-    )
-
+    return str(random.randint(10000, 999999))
 
 def generate_address(code):
-
     info = COUNTRIES[code]
-
     city = info["capital"]
-
     street = (
-        str(
-            random.randint(
-                10,
-                999
-            )
-        )
+        str(random.randint(10, 999))
         + " "
-        + random.choice([
-            "Main Street",
-            "Central Road",
-            "Market Road",
-            "Station Road",
-            "Park Avenue"
-        ])
+        + random.choice(["Main Street", "Central Road", "Market Road", "Station Road", "Park Avenue"])
         + ", Block "
-        + random.choice([
-            "A", "B", "C", "D"
-        ])
+        + random.choice(["A", "B", "C", "D"])
     )
-
-    facts = FACTS.get(
-        code,
-        {
-            "population":
-                "তথ্য দেখুন",
-            "area":
-                "তথ্য দেখুন",
-            "food":
-                "স্থানীয় খাবার",
-            "work":
-                "Business / Job / Services",
-            "duty":
-                "সাধারণত ৮ ঘণ্টা"
-        }
-    )
+    facts = FACTS.get(code, {
+        "population": "তথ্য দেখুন",
+        "area": "তথ্য দেখুন",
+        "food": "স্থানীয় খাবার",
+        "work": "Business / Job / Services",
+        "duty": "সাধারণত ৮ ঘণ্টা"
+    })
 
     return {
-
-        "country":
-            info["name"],
-
-        "flag":
-            info["flag"],
-
-        "leader":
-            LEADERS.get(
-                code,
-                "রাষ্ট্রপ্রধান / সরকারপ্রধান"
-            ),
-
-        "name":
-            generate_name(code),
-
-        "street":
-            street,
-
-        "city":
-            city,
-
-        "famous":
-            CITY_INFO.get(
-                city,
-                "ঐতিহাসিক, সাংস্কৃতিক ও অর্থনৈতিক গুরুত্বের জন্য পরিচিত"
-            ),
-
-        "state":
-            info["capital"]
-            + " Region",
-
-        "postal":
-            generate_postal(code),
-
-        "population":
-            facts["population"],
-
-        "area":
-            facts["area"],
-
-        "food":
-            facts["food"],
-
-        "work":
-            facts["work"],
-
-        "duty":
-            facts["duty"]
+        "country": info["name"],
+        "flag": info["flag"],
+        "leader": LEADERS.get(code, "রাষ্ট্রপ্রধান / সরকারপ্রধান"),
+        "name": generate_name(code),
+        "street": street,
+        "city": city,
+        "famous": CITY_INFO.get(city, "ঐতিহাসিক, সাংস্কৃতিক ও অর্থনৈতিক গুরুত্বের জন্য পরিচিত"),
+        "state": info["capital"] + " Region",
+        "postal": generate_postal(code),
+        "population": facts["population"],
+        "area": facts["area"],
+        "food": facts["food"],
+        "work": facts["work"],
+        "duty": facts["duty"]
     }
 
-
 def format_address(data):
-
     return (
-        f"<b>{data['country']} "
-        f"{data['flag']} "
-        f"({data['leader']})</b>\n"
+        f"<b>{data['country']} {data['flag']} ({data['leader']})</b>\n"
         f"━━━━━━━━━━━━━━━━━━━━\n\n"
-
-        f"– <b>Name:</b> "
-        f"{data['name']}\n"
-
-        f"– <b>Street:</b> "
-        f"{data['street']}\n"
-
-        f"– <b>City:</b> "
-        f"{data['city']}\n"
-
-        f"  ↳ <b>বিখ্যাত:</b> "
-        f"{data['famous']}\n"
-
-        f"– <b>State/Region:</b> "
-        f"{data['state']}\n"
-
-        f"– <b>Postal Code:</b> "
-        f"{data['postal']}\n"
-
-        f"– <b>Country Population:</b> "
-        f"{data['population']}\n"
-
-        f"– <b>Country Area:</b> "
-        f"{data['area']}\n"
-
-        f"– <b>প্রধান খাদ্য:</b> "
-        f"{data['food']}\n"
-
-        f"– <b>প্রধান কর্মক্ষেত্র:</b> "
-        f"{data['work']}\n"
-
-        f"– <b>Job Duty Hour:</b> "
-        f"{data['duty']}\n\n"
-
+        f"– <b>Name:</b> {data['name']}\n"
+        f"– <b>Street:</b> {data['street']}\n"
+        f"– <b>City:</b> {data['city']}\n"
+        f"  ↳ <b>বিখ্যাত:</b> {data['famous']}\n"
+        f"– <b>State/Region:</b> {data['state']}\n"
+        f"– <b>Postal Code:</b> {data['postal']}\n"
+        f"– <b>Country Population:</b> {data['population']}\n"
+        f"– <b>Country Area:</b> {data['area']}\n"
+        f"– <b>প্রধান খাদ্য:</b> {data['food']}\n"
+        f"– <b>প্রধান কর্মক্ষেত্র:</b> {data['work']}\n"
+        f"– <b>Job Duty Hour:</b> {data['duty']}\n\n"
         f"━━━━━━━━━━━━━━━━━━━━"
     )
 
-
-# ==========================================
-# TELEGRAM API
-# ==========================================
-
 def api(method, data=None):
-
     if data is None:
         data = {}
-
-    encoded = urllib.parse.urlencode(
-        data
-    ).encode("utf-8")
-
+    encoded = urllib.parse.urlencode(data).encode("utf-8")
     try:
-
-        request = urllib.request.Request(
-            API + method,
-            data=encoded
-        )
-
-        with urllib.request.urlopen(
-            request,
-            timeout=60
-        ) as response:
-
-            return json.loads(
-                response.read()
-                .decode("utf-8")
-            )
-
+        request = urllib.request.Request(API + method, data=encoded)
+        with urllib.request.urlopen(request, timeout=60) as response:
+            return json.loads(response.read().decode("utf-8"))
     except Exception as e:
-
-        print(
-            "API ERROR:",
-            e
-        )
-
+        print("API ERROR:", e)
         return None
 
-
-def send_message(
-    chat_id,
-    text,
-    keyboard=None
-):
-
+def send_message(chat_id, text, keyboard=None):
     data = {
         "chat_id": chat_id,
         "text": text,
         "parse_mode": "HTML"
     }
-
     if keyboard:
+        data["reply_markup"] = json.dumps(keyboard, ensure_ascii=False)
+    return api("sendMessage", data)
 
-        data[
-            "reply_markup"
-        ] = json.dumps(
-            keyboard,
-            ensure_ascii=False
-        )
-
-    return api(
-        "sendMessage",
-        data
-    )
-
-
-def edit_message(
-    chat_id,
-    message_id,
-    text,
-    keyboard=None
-):
-
+def edit_message(chat_id, message_id, text, keyboard=None):
     data = {
         "chat_id": chat_id,
         "message_id": message_id,
         "text": text,
         "parse_mode": "HTML"
     }
-
     if keyboard:
+        data["reply_markup"] = json.dumps(keyboard, ensure_ascii=False)
+    return api("editMessageText", data)
 
-        data[
-            "reply_markup"
-        ] = json.dumps(
-            keyboard,
-            ensure_ascii=False
-        )
-
-    return api(
-        "editMessageText",
-        data
-    )
-
-
-def answer_callback(
-    callback_id
-):
-
-    return api(
-        "answerCallbackQuery",
-        {
-            "callback_query_id":
-                callback_id
-        }
-)
-
-# ==========================================
-# P3/3
-# BOT HANDLER
-# ==========================================
-
+def answer_callback(callback_id):
+    return api("answerCallbackQuery", {"callback_query_id": callback_id})
 
 def make_keyboard(code):
-
     return {
         "inline_keyboard": [
             [
                 {
                     "text": "🔄 Generate",
-                    "callback_data":
-                        "generate:" + code
+                    "callback_data": "generate:" + code
                 }
             ]
         ]
     }
 
-
 def handle_message(message):
+    chat_id = message["chat"]["id"]
+    text = message.get("text", "").strip()
 
-    chat_id = message[
-        "chat"
-    ][
-        "id"
-    ]
-
-    text = message.get(
-        "text",
-        ""
-    ).strip()
-
-
-    # ======================================
-    # START
-    # ======================================
-
-    if text.startswith(
-        "/start"
-    ):
-
+    if text.startswith("/start"):
         send_message(
-
             chat_id,
-
             "<b>🌍 COUNTRY DETAILS 🚀</b>\n\n"
-
             "121 Country Generator Ready.\n\n"
-
             "Example:\n"
             "<code>/fake bd</code>\n"
             "<code>/fake malaysia</code>\n"
@@ -1073,96 +478,43 @@ def handle_message(message):
             "<code>/fake oman</code>\n"
             "<code>/fake portugal</code>\n"
             "<code>/fake japan</code>\n\n"
-
-            "🔄 Generate চাপলে "
-            "একই card পরিবর্তন হবে।"
+            "🔄 Generate চাপলে একই card পরিবর্তন হবে।"
         )
-
         return
 
-
-    # ======================================
-    # COUNTRY LIST
-    # ======================================
-
-    if text.lower().startswith(
-        "/countries"
-    ):
-
+    if text.lower().startswith("/countries"):
         lines = []
-
         for code, info in COUNTRIES.items():
-
-            lines.append(
-                f"{info['flag']} "
-                f"{info['name']} "
-                f"— <code>{code}</code>"
-            )
-
+            lines.append(f"{info['flag']} {info['name']} — <code>{code}</code>")
         send_message(
             chat_id,
-            "<b>🌍 121 COUNTRIES</b>\n\n"
-            + "\n".join(lines)
+            "<b>🌍 121 COUNTRIES</b>\n\n" + "\n".join(lines)
         )
-
         return
 
-
-    # ======================================
-    # FAKE
-    # ======================================
-
-    if text.lower().startswith(
-        "/fake"
-    ):
-
-        parts = text.split(
-            None,
-            1
-        )
-
+    if text.lower().startswith("/fake"):
+        parts = text.split(None, 1)
         if len(parts) < 2:
-
             send_message(
-
                 chat_id,
-
                 "❌ Country দিন।\n\n"
                 "Example:\n"
                 "<code>/fake malaysia</code>\n"
                 "<code>/fake qatar</code>\n"
                 "<code>/fake oman</code>"
             )
-
             return
 
+        country_input = parts[1].strip().lower()
+        code = ALIASES.get(country_input)
 
-        country_input = (
-            parts[1]
-            .strip()
-            .lower()
-        )
-
-        code = ALIASES.get(
-            country_input
-        )
-
+        if not code and country_input in COUNTRIES:
+            code = country_input
 
         if not code:
-
-            # সরাসরি ISO code
-            if country_input in COUNTRIES:
-                code = country_input
-
-
-        if not code:
-
             send_message(
-
                 chat_id,
-
                 "❌ Country পাওয়া যায়নি।\n\n"
-
                 "Try:\n"
                 "<code>/fake malaysia</code>\n"
                 "<code>/fake qatar</code>\n"
@@ -1170,272 +522,78 @@ def handle_message(message):
                 "<code>/fake portugal</code>\n"
                 "<code>/fake japan</code>"
             )
-
             return
 
+        address = generate_address(code)
+        output = format_address(address)
+        keyboard = make_keyboard(code)
 
-        address = generate_address(
-            code
-        )
-
-        output = format_address(
-            address
-        )
-
-        keyboard = make_keyboard(
-            code
-        )
-
-        send_message(
-
-            chat_id,
-
-            output,
-
-            keyboard
-        )
-
+        send_message(chat_id, output, keyboard)
         return
 
+def handle_callback(callback):
+    callback_id = callback["id"]
+    data = callback.get("data", "")
+    message = callback.get("message", {})
+    chat_id = message.get("chat", {}).get("id")
+    message_id = message.get("message_id")
 
-# ==========================================
-# CALLBACK
-# ==========================================
+    answer_callback(callback_id)
 
-def handle_callback(
-    callback
-):
-
-    callback_id = callback[
-        "id"
-    ]
-
-    data = callback.get(
-        "data",
-        ""
-    )
-
-    message = callback.get(
-        "message",
-        {}
-    )
-
-    chat_id = message.get(
-        "chat",
-        {}
-    ).get(
-        "id"
-    )
-
-    message_id = message.get(
-        "message_id"
-    )
-
-
-    answer_callback(
-        callback_id
-    )
-
-
-    if data.startswith(
-        "generate:"
-    ):
-
-        code = data.split(
-            ":",
-            1
-        )[1]
-
-
+    if data.startswith("generate:"):
+        code = data.split(":", 1)[1]
         if code not in COUNTRIES:
             return
 
+        new_address = generate_address(code)
+        new_output = format_address(new_address)
+        keyboard = make_keyboard(code)
 
-        new_address = generate_address(
-            code
-        )
+        edit_message(chat_id, message_id, new_output, keyboard)
 
-        new_output = format_address(
-            new_address
-        )
-
-        keyboard = make_keyboard(
-            code
-        )
-
-
-        # পুরোনো message-ই পরিবর্তন
-        edit_message(
-
-            chat_id,
-
-            message_id,
-
-            new_output,
-
-            keyboard
-        )
-
-
-# ==========================================
-# LONG POLLING
-# ==========================================
 
 def run_bot():
-
-    print(
-        "================================"
-    )
-
-    print(
-        " RAVEN COUNTRY DETAILS BOT"
-    )
-
-    print(
-        "================================"
-    )
-
-    print(
-        "Countries loaded:",
-        len(COUNTRIES)
-    )
-
-    print(
-        "Bot is running..."
-    )
-
-    print("")
-
+    print("================================")
+    print(" RAVEN COUNTRY DETAILS BOT")
+    print("================================")
+    print("Countries loaded:", len(COUNTRIES))
+    print("Bot is running...\n")
 
     offset = 0
 
-
     while True:
-
         try:
-
-            result = api(
-
-                "getUpdates",
-
-                {
-                    "timeout":
-                        50,
-
-                    "offset":
-                        offset
-                }
-            )
-
-
-            if not result:
-
+            result = api("getUpdates", {"timeout": 50, "offset": offset})
+            if not result or not result.get("ok"):
                 time.sleep(2)
-
                 continue
 
-
-            if not result.get(
-                "ok"
-            ):
-
-                time.sleep(3)
-
-                continue
-
-
-            updates = result.get(
-                "result",
-                []
-            )
-
-
+            updates = result.get("result", [])
             for update in updates:
-
-                offset = (
-                    update[
-                        "update_id"
-                    ]
-                    + 1
-                )
-
+                offset = update["update_id"] + 1
 
                 if "message" in update:
-
                     try:
-
-                        handle_message(
-                            update[
-                                "message"
-                            ]
-                        )
-
+                        handle_message(update["message"])
                     except Exception as e:
+                        print("MESSAGE ERROR:", e)
 
-                        print(
-                            "MESSAGE ERROR:",
-                            e
-                        )
-
-
-                elif (
-                    "callback_query"
-                    in update
-                ):
-
+                elif "callback_query" in update:
                     try:
-
-                        handle_callback(
-                            update[
-                                "callback_query"
-                            ]
-                        )
-
+                        handle_callback(update["callback_query"])
                     except Exception as e:
-
-                        print(
-                            "CALLBACK ERROR:",
-                            e
-                        )
-
+                        print("CALLBACK ERROR:", e)
 
         except KeyboardInterrupt:
-
-            print(
-                "Bot stopped."
-            )
-
+            print("Bot stopped.")
             break
-
-
         except Exception as e:
-
-            print(
-                "MAIN ERROR:",
-                e
-            )
-
+            print("MAIN ERROR:", e)
             time.sleep(5)
 
-
-# ==========================================
-# START
-# ==========================================
-
 if __name__ == "__main__":
-
-    if (
-        not BOT_TOKEN
-        or
-        BOT_TOKEN
-        ==
-        "PASTE_YOUR_BOT_TOKEN_HERE"
-    ):
-
-        print(
-            "❌ BOT TOKEN বসাও।"
-        )
-
+    if not BOT_TOKEN or BOT_TOKEN == "PASTE_YOUR_BOT_TOKEN_HERE":
+        print("❌ BOT TOKEN বসাও।")
     else:
-
         run_bot()
+
