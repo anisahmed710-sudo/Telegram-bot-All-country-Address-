@@ -9,7 +9,7 @@ import json
 import urllib.request
 import urllib.parse
 
-BOT_TOKEN = "PASTE_YOUR_BOT_TOKEN_HERE"
+BOT_TOKEN = "7633364572:AAHoxt4ER_KUBoA6sfxkFKXtlTT3t529Zg4"
 
 API = "https://api.telegram.org/bot" + BOT_TOKEN + "/"
 
