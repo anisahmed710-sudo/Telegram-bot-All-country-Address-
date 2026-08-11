@@ -225,7 +225,7 @@ def generate_address(code):
     }
 
 # ==========================================
-# TAP-TO-COPY FORMATTING
+# TAP-TO-COPY FORMATTING (WITHOUT TEST NOTICE)
 # ==========================================
 def format_address(data):
     return (
@@ -237,8 +237,7 @@ def format_address(data):
         f"– <b>State:</b> <code>{data['state']}</code>\n"
         f"– <b>Postal Code:</b> <code>{data['postal']}</code>\n"
         f"– <b>Country:</b> <code>{data['country']}</code>\n\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"<i>⚠ Synthetic/Test Address</i>"
+        f"━━━━━━━━━━━━━━━━━━━━"
     )
 
 def generate_button(code):
