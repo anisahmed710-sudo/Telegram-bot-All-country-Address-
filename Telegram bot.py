@@ -514,7 +514,7 @@ def generate_data(code, old_data=None):
     return {
         "country": country["name"],
         "flag": country["flag"],
-        "leader": LEADERS.get(code, "রাষ্ট্রপ্রধান / সরকারপ্রধান"),
+        "leader": LEADERS.get(code, "তারেক রহমান"),
         "name": name,
         "street": street,
         "city": city,
