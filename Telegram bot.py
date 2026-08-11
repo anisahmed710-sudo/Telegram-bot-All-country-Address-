@@ -1,6 +1,6 @@
 # ==========================================
 # GLOBAL COUNTRY ADDRESS BOT
-# 121 COUNTRIES (FULL SINGLE-FILE BOT CODE WITH COPY BUTTON)
+# 121 COUNTRIES (FULL SINGLE-FILE BOT CODE WITH MONO/COPY FORMAT)
 # ==========================================
 
 import random
@@ -528,16 +528,20 @@ def generate_data(code, old_data=None):
         "duty": random.choice(["সাধারণত ৮ ঘণ্টা", "সাধারণত ৮–৯ ঘণ্টা", "সাধারণত ৮–১০ ঘণ্টা"])
     }
 
+# ==========================================
+# DISPLAY FORMAT (ALL VALUES ARE MONO FORMATTED `...`)
+# ==========================================
+
 def display_text(data):
     return (
         f"<b>{data['country']} {data['flag']} ({data['leader']})</b>\n"
         f"━━━━━━━━━━━━━━━━━━━━\n\n"
-        f"– <b>Name:</b> {data['name']}\n"
-        f"– <b>Street:</b> {data['street']}\n"
-        f"– <b>City:</b> {data['city']}\n"
+        f"– <b>Name:</b> <code>{data['name']}</code>\n"
+        f"– <b>Street:</b> <code>{data['street']}</code>\n"
+        f"– <b>City:</b> <code>{data['city']}</code>\n"
         f"  ↳ <b>বিখ্যাত:</b> {data['famous']}\n"
-        f"– <b>State/Region:</b> {data['state']}\n"
-        f"– <b>Postal Code:</b> {data['postal']}\n"
+        f"– <b>State/Region:</b> <code>{data['state']}</code>\n"
+        f"– <b>Postal Code:</b> <code>{data['postal']}</code>\n"
         f"– <b>Country Population:</b> {data['population']}\n"
         f"– <b>Country Area:</b> {data['area']}\n"
         f"– <b>প্রধান খাদ্য:</b> {data['food']}\n"
@@ -654,7 +658,7 @@ def handle_message(message):
             "<code>/fake oman</code>\n"
             "<code>/fake portugal</code>\n"
             "<code>/fake japan</code>\n\n"
-            "📋 Copy Address = এক ক্লিকে ঠিকানা কপি\n"
+            "📋 টেক্সটের ওপর ট্যাপ করলে বা 'Copy Address' চাপলে সরাসরি কপি হবে।\n"
             "🔄 Generate চাপলে সব তথ্য পরিবর্তিত হবে।",
             {"inline_keyboard": []}
         )
