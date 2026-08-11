@@ -1,33 +1,3 @@
-# ============================================================
-# 🌍 LIVE COUNTRY GENERATOR - TELEGRAM BOT
-# ============================================================
-# Python 3 / Pydroid 3
-#
-# Required:
-#     pip install requests
-#
-# API:
-#     REST Countries v5
-#
-# Features:
-#     • Live country data
-#     • Population
-#     • Area
-#     • Capital
-#     • Flag
-#     • Currency
-#     • Government type
-#     • 7 location options where available
-#     • Generate button
-#     • Location changes on every Generate
-#     • Country-specific representative terminology
-#     • No "Synthetic/Test Address" text
-#
-# IMPORTANT:
-#     Street/Name below are demo/fictional values.
-#     Do not use them as real identity/address.
-# ============================================================
-
 import requests
 import random
 import time
