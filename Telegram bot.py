@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import requests
 import json
 import random
@@ -7,11 +9,11 @@ import urllib.parse
 
 # =========================================================
 # QPYTHON TELEGRAM COUNTRY BOT
-# P1
+# FULL SINGLE-FILE SCRIPT WITH MONO & COPY BUTTON
 # =========================================================
 
 BOT_TOKEN = "7633364572:AAHoxt4ER_KUBoA6sfxkFKXtlTT3t529Zg4"
-REST_COUNTRIES_KEY = "rc_live_317037a7db864904b9a3695f31b68e57"
+REST_COUNTRIES_KEY = "Rc_live_317037a7db864904b9a3695f31b68e57"
 
 TG = "https://api.telegram.org/bot" + BOT_TOKEN + "/"
 RC = "https://api.restcountries.com/countries/v5"
@@ -350,136 +352,87 @@ FALLBACK_CITIES = {
         "Perth", "Adelaide", "Canberra", "Hobart"
     ]
 }
+
+
 # =========================================================
-# P2 - API + DATA ENGINE
+# API & DATA ENGINE
 # =========================================================
 
 def tg(method, data=None):
-
     try:
         r = requests.post(
             TG + method,
             data=data or {},
             timeout=60
         )
-
         try:
             return r.json()
         except:
-            return {
-                "ok": False,
-                "error": r.text
-            }
-
+            return {"ok": False, "error": r.text}
     except Exception as e:
         print("Telegram error:", e)
         return None
 
 
 def country_api(country):
-
     url = (
         RC +
         "/names.common/" +
-        urllib.parse.quote(
-            country,
-            safe=""
-        )
+        urllib.parse.quote(country, safe="")
     )
 
     headers = {
-        "Authorization":
-            "Bearer " +
-            REST_COUNTRIES_KEY.strip()
+        "Authorization": "Bearer " + REST_COUNTRIES_KEY.strip()
     }
 
     try:
-
-        r = requests.get(
-            url,
-            headers=headers,
-            timeout=40
-        )
-
-        print(
-            "REST Countries:",
-            r.status_code
-        )
-
+        r = requests.get(url, headers=headers, timeout=10)
         if r.status_code != 200:
-            print(r.text)
             return None
 
         data = r.json()
-
-        objects = (
-            data
-            .get("data", {})
-            .get("objects", [])
-        )
-
+        objects = data.get("data", {}).get("objects", [])
         if not objects:
             return None
 
         return objects[0]
-
     except Exception as e:
-
-        print(
-            "Country API error:",
-            e
-        )
-
+        print("Country API error:", e)
         return None
 
 
 def get_cities(country):
-
     if country in FALLBACK_CITIES:
         return FALLBACK_CITIES[country][:]
-
-    return []
+    return ["Capital City", "Central City", "North City", "South City"]
 
 
 def get_flag(data):
-
-    return (
-        data
-        .get("flag", {})
-        .get("emoji", "")
-    )
+    if not data:
+        return "🌍"
+    return data.get("flag", {}).get("emoji", "🌍")
 
 
 def get_population(data):
-
-    value = data.get(
-        "population"
-    )
-
+    if not data:
+        return "তথ্য উপলভ্য নয়"
+    value = data.get("population")
     if value is None:
         return "N/A"
-
     try:
         return f"{int(value):,}"
-
     except:
         return str(value)
 
 
 def get_area(data):
-
-    value = (
-        data
-        .get("area", {})
-        .get("kilometers")
-    )
-
+    if not data:
+        return "তথ্য উপলভ্য নয়"
+    value = data.get("area", {}).get("kilometers")
     if value is None:
         return "N/A"
-
     try:
         return f"{int(value):,} km²"
-
     except:
         return str(value) + " km²"
 
@@ -509,935 +462,314 @@ POSTAL = {
 
 
 LEADERS = {
-    "Bangladesh":
-        "প্রধানমন্ত্রী: তারেক রহমান",
-
-    "India":
-        "প্রধানমন্ত্রী: নরেন্দ্র মোদি",
-
-    "United States":
-        "President: Donald J. Trump",
-
-    "Oman":
-        "সুলতান: হাইথাম বিন তারিক",
-
-    "United Arab Emirates":
-        "President: মোহাম্মদ বিন জায়েদ আল নাহিয়ান",
-
-    "Qatar":
-        "আমির: তামিম বিন হামাদ আল থানি",
-
-    "Spain":
-        "রাজা: ষষ্ঠ ফিলিপ",
-
-    "Japan":
-        "সম্রাট: নারুহিতো",
-
-    "China":
-        "President: শি জিনপিং",
-
-    "France":
-        "President: Emmanuel Macron",
-
-    "Germany":
-        "Chancellor: Friedrich Merz",
-
-    "Italy":
-        "President: Sergio Mattarella",
-
-    "United Kingdom":
-        "রাজা: তৃতীয় চার্লস",
-
-    "Canada":
-        "প্রধানমন্ত্রী: Mark Carney",
-
-    "Australia":
-        "প্রধানমন্ত্রী: Anthony Albanese",
-
-    "Pakistan":
-        "President: Asif Ali Zardari",
-
-    "Malaysia":
-        "Yang di-Pertuan Agong: Sultan Ibrahim",
-
-    "Singapore":
-        "President: Tharman Shanmugaratnam",
-
-    "Portugal":
-        "President: António José Seguro",
-
-    "Turkey":
-        "President: Recep Tayyip Erdoğan"
+    "Bangladesh": "প্রধানমন্ত্রী: তারেক রহমান",
+    "India": "প্রধানমন্ত্রী: নরেন্দ্র মোদি",
+    "United States": "President: Donald J. Trump",
+    "Oman": "সুলতান: হাইথাম বিন তারিক",
+    "United Arab Emirates": "President: মোহাম্মদ বিন জায়েদ আল নাহিয়ান",
+    "Qatar": "আমির: তামিম বিন হামাদ আল থানি",
+    "Spain": "রাজা: ষষ্ঠ ফিলিপ",
+    "Japan": "সম্রাট: নারুহিতো",
+    "China": "President: শি জিনপিং",
+    "France": "President: Emmanuel Macron",
+    "Germany": "Chancellor: Friedrich Merz",
+    "Italy": "President: Sergio Mattarella",
+    "United Kingdom": "রাজা: তৃতীয় চার্লস",
+    "Canada": "প্রধানমন্ত্রী: Mark Carney",
+    "Australia": "প্রধানমন্ত্রী: Anthony Albanese",
+    "Pakistan": "President: Asif Ali Zardari",
+    "Malaysia": "Yang di-Pertuan Agong: Sultan Ibrahim",
+    "Singapore": "President: Tharman Shanmugaratnam",
+    "Portugal": "President: António José Seguro",
+    "Turkey": "President: Recep Tayyip Erdoğan"
 }
 
 
 def get_leader(country):
-
-    return LEADERS.get(
-        country,
-        "বর্তমান রাষ্ট্রপ্রধানের তথ্য"
-    )
+    return LEADERS.get(country, "বর্তমান রাষ্ট্রপ্রধানের তথ্য")
 
 
 DIVISION_DATA = {
-
     "Bangladesh": {
-
-        "Dhaka": (
-            "ঢাকা বিভাগ",
-            "ঢাকা-১৭ আসনের বর্তমান প্রতিনিধি"
-        ),
-
-        "Chattogram": (
-            "চট্টগ্রাম বিভাগ",
-            "চট্টগ্রাম অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"
-        ),
-
-        "Rajshahi": (
-            "রাজশাহী বিভাগ",
-            "রাজশাহী অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"
-        ),
-
-        "Khulna": (
-            "খুলনা বিভাগ",
-            "খুলনা অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"
-        ),
-
-        "Barishal": (
-            "বরিশাল বিভাগ",
-            "বরিশাল অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"
-        ),
-
-        "Sylhet": (
-            "সিলেট বিভাগ",
-            "সিলেট অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"
-        ),
-
-        "Rangpur": (
-            "রংপুর বিভাগ",
-            "রংপুর অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"
-        )
+        "Dhaka": ("ঢাকা বিভাগ", "ঢাকা-১৭ আসনের বর্তমান প্রতিনিধি"),
+        "Chattogram": ("চট্টগ্রাম বিভাগ", "চট্টগ্রাম অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"),
+        "Rajshahi": ("রাজশাহী বিভাগ", "রাজশাহী অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"),
+        "Khulna": ("খুলনা বিভাগ", "খুলনা অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"),
+        "Barishal": ("বরিশাল বিভাগ", "বরিশাল অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"),
+        "Sylhet": ("সিলেট বিভাগ", "সিলেট অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি"),
+        "Rangpur": ("রংপুর বিভাগ", "রংপুর অঞ্চলের সংশ্লিষ্ট আসনের প্রতিনিধি")
     }
 }
 
 
-def division_info(
-    country,
-    city
-):
-
+def division_info(country, city):
     if country == "Bangladesh":
-
-        item = (
-            DIVISION_DATA
-            .get(country, {})
-            .get(city)
-        )
-
+        item = DIVISION_DATA.get(country, {}).get(city)
         if item:
-
             return item[0], item[1]
-
-        return (
-            city + " বিভাগ",
-            "সংশ্লিষ্ট নির্বাচনী আসনের প্রতিনিধি"
-        )
-
-    return (
-        city + " অঞ্চল",
-        "সংশ্লিষ্ট স্থানীয় প্রতিনিধি"
-    )
+        return (city + " বিভাগ", "সংশ্লিষ্ট নির্বাচনী আসনের প্রতিনিধি")
+    return (city + " অঞ্চল", "সংশ্লিষ্ট স্থানীয় প্রতিনিধি")
 
 
-def generate(
-    country,
-    old_city=""
-):
-
-    data = country_api(
-        country
-    )
-
-    if not data:
-        return None
-
-    real_country = (
-        data
-        .get("names", {})
-        .get("common", country)
-    )
+def generate(country_input, old_city=""):
+    real_country = COUNTRY_ALIASES.get(country_input.lower(), country_input.title())
+    data = country_api(real_country)
 
     flag = get_flag(data)
+    cities = get_cities(real_country)
 
-    cities = get_cities(
-        real_country
-    )
+    available = [x for x in cities if x != old_city]
+    city = random.choice(available if available else cities)
 
-    if not cities:
+    famous = CITY_FAMOUS.get(city, "স্থানীয় সংস্কৃতি, ব্যবসা ও পর্যটনের জন্য পরিচিত")
+    division, representative = division_info(real_country, city)
 
-        capitals = data.get(
-            "capitals",
-            []
-        )
+    names = NAMES.get(real_country, DEFAULT_NAMES)
+    name = random.choice(names)
 
-        if capitals:
-            cities = [
-                capitals[0].get(
-                    "name",
-                    "Capital"
-                )
-            ]
-        else:
-            cities = [
-                "Capital"
-            ]
-
-    available = [
-        x for x in cities
-        if x != old_city
-    ]
-
-    if available:
-        city = random.choice(
-            available
-        )
-    else:
-        city = random.choice(
-            cities
-        )
-
-    famous = CITY_FAMOUS.get(
-        city,
-        "স্থানীয় সংস্কৃতি, ব্যবসা ও পর্যটনের জন্য পরিচিত"
-    )
-
-    division, representative = division_info(
-        real_country,
-        city
-    )
-
-    names = NAMES.get(
-        real_country,
-        DEFAULT_NAMES
-    )
-
-    name = random.choice(
-        names
-    )
-
-    street_number = random.randint(
-        10,
-        999
-    )
-
-    street = (
-        str(street_number)
-        + " "
-        + random.choice(
-            STREET_NAMES
-        )
-        + ", Block "
-        + random.choice(
-            ["A", "B", "C", "D"]
-        )
-    )
+    street_number = random.randint(10, 999)
+    street = f"{street_number} {random.choice(STREET_NAMES)}, Block {random.choice(['A', 'B', 'C', 'D'])}"
 
     postal = POSTAL.get(
         real_country,
-        data.get(
-            "postal_code",
-            {}
-        ).get(
-            "format",
-            "N/A"
-        )
+        data.get("postal_code", {}).get("format", "N/A") if data else "N/A"
     )
 
-    food = COUNTRY_FOOD.get(
-        real_country,
-        "স্থানীয় খাবার"
-    )
-
-    jobs = COUNTRY_JOBS.get(
-        real_country,
-        "Business / Services / Industry"
-    )
-
-    duty = random.choice([
-        "সাধারণত ৮ ঘণ্টা",
-        "সাধারণত ৮–৯ ঘণ্টা",
-        "সাধারণত ৮–১০ ঘণ্টা"
-    ])
+    food = COUNTRY_FOOD.get(real_country, "স্থানীয় খাবার")
+    jobs = COUNTRY_JOBS.get(real_country, "Business / Services / Industry")
+    duty = random.choice(["সাধারণত ৮ ঘণ্টা", "সাধারণত ৮–৯ ঘণ্টা", "সাধারণত ৮–১০ ঘণ্টা"])
 
     return {
-
-        "country":
-            real_country,
-
-        "flag":
-            flag,
-
-        "leader":
-            get_leader(
-                real_country
-            ),
-
-        "name":
-            name,
-
-        "street":
-            street,
-
-        "city":
-            city,
-
-        "famous":
-            famous,
-
-        "state":
-            division,
-
-        "postal":
-            postal,
-
-        "population":
-            get_population(
-                data
-            ),
-
-        "division":
-            division,
-
-        "representative":
-            representative,
-
-        "area":
-            get_area(
-                data
-            ),
-
-        "food":
-            food,
-
-        "jobs":
-            jobs,
-
-        "duty":
-            duty
+        "country": real_country,
+        "flag": flag,
+        "leader": get_leader(real_country),
+        "name": name,
+        "street": street,
+        "city": city,
+        "famous": famous,
+        "state": division,
+        "postal": postal,
+        "population": get_population(data),
+        "division": division,
+        "representative": representative,
+        "area": get_area(data),
+        "food": food,
+        "jobs": jobs,
+        "duty": duty
     }
 
 
 def format_record(d):
-
     return (
-        "<b>" +
-        html.escape(
-            d["country"]
-        ) +
-        " " +
-        d["flag"] +
-        " (" +
-        html.escape(
-            d["leader"]
-        ) +
-        ")</b>\n"
-
-        "━━━━━━━━━━━━━━━━━━━━\n\n"
-
-        "– <b>Name:</b> " +
-        html.escape(
-            d["name"]
-        ) +
-        "\n"
-
-        "– <b>Street:</b> " +
-        html.escape(
-            d["street"]
-        ) +
-        "\n"
-
-        "– <b>City:</b> " +
-        html.escape(
-            d["city"]
-        ) +
-        "\n"
-
-        "  ↳ <b>বিখ্যাত:</b> " +
-        html.escape(
-            d["famous"]
-        ) +
-        "\n"
-
-        "– <b>State/Region:</b> " +
-        html.escape(
-            d["state"]
-        ) +
-        "\n"
-
-        "– <b>Postal Code:</b> " +
-        html.escape(
-            str(d["postal"])
-        ) +
-        "\n"
-
-        "– <b>Country Population:</b> " +
-        html.escape(
-            str(d["population"])
-        ) +
-        "\n"
-
-        "– <b>Division:</b> " +
-        html.escape(
-            d["division"]
-        ) +
-        "\n"
-
-        "  ↳ <b>Representative:</b> " +
-        html.escape(
-            d["representative"]
-        ) +
-        "\n"
-
-        "– <b>Country Area:</b> " +
-        html.escape(
-            d["area"]
-        ) +
-        "\n"
-
-        "– <b>প্রধান খাদ্য:</b> " +
-        html.escape(
-            d["food"]
-        ) +
-        "\n"
-
-        "– <b>প্রধান কর্মক্ষেত্র:</b> " +
-        html.escape(
-            d["jobs"]
-        ) +
-        "\n"
-
-        "– <b>Job Duty Hour:</b> " +
-        html.escape(
-            d["duty"]
-        ) +
-        "\n\n"
-
-        "━━━━━━━━━━━━━━━━━━━━"
+        f"<b>{html.escape(d['country'])} {d['flag']} ({html.escape(d['leader'])})</b>\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n\n"
+        f"– <b>Name:</b> <code>{html.escape(d['name'])}</code>\n"
+        f"– <b>Street:</b> <code>{html.escape(d['street'])}</code>\n"
+        f"– <b>City:</b> <code>{html.escape(d['city'])}</code>\n"
+        f"  ↳ <b>বিখ্যাত:</b> {html.escape(d['famous'])}\n"
+        f"– <b>State/Region:</b> <code>{html.escape(d['state'])}</code>\n"
+        f"– <b>Postal Code:</b> <code>{html.escape(str(d['postal']))}</code>\n"
+        f"– <b>Country Population:</b> {html.escape(str(d['population']))}\n"
+        f"– <b>Division:</b> <code>{html.escape(d['division'])}</code>\n"
+        f"  ↳ <b>Representative:</b> {html.escape(d['representative'])}\n"
+        f"– <b>Country Area:</b> {html.escape(d['area'])}\n"
+        f"– <b>প্রধান খাদ্য:</b> {html.escape(d['food'])}\n"
+        f"– <b>প্রধান কর্মক্ষেত্র:</b> {html.escape(d['jobs'])}\n"
+        f"– <b>Job Duty Hour:</b> {html.escape(d['duty'])}\n\n"
+        f"━━━━━━━━━━━━━━━━━━━━"
     )
 
 
-def keyboard(
-    country,
-    city
-):
-
-    a = urllib.parse.quote(
-        country,
-        safe=""
+def copy_text(d):
+    return (
+        f"Name: {d['name']}\n"
+        f"Street: {d['street']}\n"
+        f"City: {d['city']}\n"
+        f"State/Region: {d['state']}\n"
+        f"Postal Code: {d['postal']}\n"
+        f"Country: {d['country']}"
     )
 
-    b = urllib.parse.quote(
-        city,
-        safe=""
-    )
+
+def keyboard(country, record):
+    a = urllib.parse.quote(country, safe="")
+    b = urllib.parse.quote(record["city"], safe="")
+    copied = copy_text(record)
 
     return json.dumps({
-
-        "inline_keyboard": [[
-
-            {
-                "text":
-                    "🔄 Generate",
-
-                "callback_data":
-                    "GEN|" +
-                    a +
-                    "|" +
-                    b
-            }
-
-        ]]
-
+        "inline_keyboard": [
+            [
+                {
+                    "text": "📋 Copy Address",
+                    "copy_text": {
+                        "text": copied[:256]
+                    }
+                }
+            ],
+            [
+                {
+                    "text": "🔄 Generate",
+                    "callback_data": f"GEN|{a}|{b}"
+                }
+            ]
+        ]
     }, ensure_ascii=False)
 
+
 # =========================================================
-# P3 - TELEGRAM QPYTHON BOT
+# TELEGRAM QPYTHON BOT HANDLERS
 # =========================================================
 
-def send(
-    chat_id,
-    text,
-    markup=None
-):
-
+def send(chat_id, text, markup=None):
     data = {
-        "chat_id":
-            chat_id,
-
-        "text":
-            text,
-
-        "parse_mode":
-            "HTML",
-
-        "disable_web_page_preview":
-            True
+        "chat_id": chat_id,
+        "text": text,
+        "parse_mode": "HTML",
+        "disable_web_page_preview": True
     }
-
     if markup:
-        data[
-            "reply_markup"
-        ] = markup
-
-    return tg(
-        "sendMessage",
-        data
-    )
+        data["reply_markup"] = markup
+    return tg("sendMessage", data)
 
 
-def edit(
-    chat_id,
-    message_id,
-    text,
-    markup
-):
-
+def edit(chat_id, message_id, text, markup):
     return tg(
         "editMessageText",
         {
-            "chat_id":
-                chat_id,
-
-            "message_id":
-                message_id,
-
-            "text":
-                text,
-
-            "parse_mode":
-                "HTML",
-
-            "disable_web_page_preview":
-                True,
-
-            "reply_markup":
-                markup
+            "chat_id": chat_id,
+            "message_id": message_id,
+            "text": text,
+            "parse_mode": "HTML",
+            "disable_web_page_preview": True,
+            "reply_markup": markup
         }
     )
 
 
-def answer(
-    callback_id
-):
-
-    return tg(
-        "answerCallbackQuery",
-        {
-            "callback_query_id":
-                callback_id
-        }
-    )
+def answer(callback_id):
+    return tg("answerCallbackQuery", {"callback_query_id": callback_id})
 
 
-def command_fake(
-    message
-):
+def command_fake(message):
+    chat_id = message.get("chat", {}).get("id")
+    text = message.get("text", "").strip()
 
-    chat_id = (
-        message
-        .get("chat", {})
-        .get("id")
-    )
-
-    text = message.get(
-        "text",
-        ""
-    ).strip()
-
-    parts = text.split(
-        None,
-        1
-    )
-
+    parts = text.split(None, 1)
     if len(parts) < 2:
-
-        send(
-            chat_id,
-            "❌ Country লিখুন।\n\n"
-            "<code>/fake bd</code>"
-        )
-
+        send(chat_id, "❌ Country লিখুন।\n\n<code>/fake bd</code>")
         return
 
     raw = parts[1].strip()
-
-    country = COUNTRY_ALIASES.get(
-        raw.lower(),
-        raw
-    )
-
-    print(
-        "\nCountry:",
-        country
-    )
-
-    record = generate(
-        country
-    )
-
-    if not record:
-
-        send(
-            chat_id,
-            "❌ Country data পাওয়া যায়নি।"
-        )
-
-        return
+    record = generate(raw)
 
     send(
         chat_id,
-
-        format_record(
-            record
-        ),
-
-        keyboard(
-            country,
-            record["city"]
-        )
+        format_record(record),
+        keyboard(raw, record)
     )
 
 
-def callback_generate(
-    callback
-):
+def callback_generate(callback):
+    callback_id = callback.get("id")
+    answer(callback_id)
 
-    callback_id = callback.get(
-        "id"
-    )
-
-    answer(
-        callback_id
-    )
-
-    raw = callback.get(
-        "data",
-        ""
-    )
-
-    if not raw.startswith(
-        "GEN|"
-    ):
+    raw = callback.get("data", "")
+    if not raw.startswith("GEN|"):
         return
 
-    parts = raw.split(
-        "|",
-        2
-    )
-
+    parts = raw.split("|", 2)
     if len(parts) < 3:
         return
 
-    country = urllib.parse.unquote(
-        parts[1]
-    )
+    country = urllib.parse.unquote(parts[1])
+    old_city = urllib.parse.unquote(parts[2])
 
-    old_city = urllib.parse.unquote(
-        parts[2]
-    )
+    message = callback.get("message", {})
+    chat_id = message.get("chat", {}).get("id")
+    message_id = message.get("message_id")
 
-    message = callback.get(
-        "message",
-        {}
-    )
-
-    chat_id = (
-        message
-        .get("chat", {})
-        .get("id")
-    )
-
-    message_id = message.get(
-        "message_id"
-    )
-
-    record = generate(
-        country,
-        old_city
-    )
-
-    if not record:
-        return
-
+    record = generate(country, old_city)
     edit(
         chat_id,
-
         message_id,
-
-        format_record(
-            record
-        ),
-
-        keyboard(
-            country,
-            record["city"]
-        )
+        format_record(record),
+        keyboard(country, record)
     )
 
 
 def start_bot():
+    print("==================================")
+    print("🌍 COUNTRY DETAILS BOT")
+    print("QPython 3")
+    print("==================================")
 
-    print(
-        "=================================="
-    )
-
-    print(
-        "🌍 COUNTRY DETAILS BOT"
-    )
-
-    print(
-        "QPython 3"
-    )
-
-    print(
-        "=================================="
-    )
-
-
-    # BOT TEST
-
-    me = tg(
-        "getMe"
-    )
-
-    if not me or not me.get(
-        "ok",
-        False
-    ):
-
-        print(
-            "\n❌ Telegram Bot Token ভুল।"
-        )
-
-        print(
-            me
-        )
-
+    me = tg("getMe")
+    if not me or not me.get("ok", False):
+        print("\n❌ Telegram Bot Token ভুল।")
+        print(me)
         return
 
-
-    print(
-        "\n✅ Telegram Bot Connected"
-    )
-
-    print(
-        "Bot:",
-        me["result"].get(
-            "username",
-            ""
-        )
-    )
-
-
-    # API TEST
-
-    test = country_api(
-        "Bangladesh"
-    )
-
-    if test:
-
-        print(
-            "✅ REST Countries API Connected"
-        )
-
-    else:
-
-        print(
-            "⚠ REST Countries API "
-            "response পাওয়া যায়নি।"
-        )
-
-
-    print(
-        "\n🚀 BOT RUNNING..."
-    )
-
-    print(
-        "Telegram-এ /fake bd পাঠাও।"
-    )
-
+    print("\n✅ Telegram Bot Connected")
+    print("Bot:", me["result"].get("username", ""))
+    print("\n🚀 BOT RUNNING...")
 
     offset = 0
 
-
     while True:
-
         try:
-
             result = tg(
-
                 "getUpdates",
-
                 {
-                    "offset":
-                        offset,
-
-                    "timeout":
-                        50,
-
-                    "allowed_updates":
-                        json.dumps([
-                            "message",
-                            "callback_query"
-                        ])
+                    "offset": offset,
+                    "timeout": 30,
+                    "allowed_updates": json.dumps(["message", "callback_query"])
                 }
             )
 
-
-            if not result:
-
+            if not result or not result.get("ok", False):
                 time.sleep(3)
-
                 continue
 
-
-            if not result.get(
-                "ok",
-                False
-            ):
-
-                print(
-                    "\nTelegram ERROR:"
-                )
-
-                print(
-                    result
-                )
-
-                time.sleep(5)
-
-                continue
-
-
-            updates = result.get(
-                "result",
-                []
-            )
-
-
+            updates = result.get("result", [])
             for update in updates:
-
-                offset = (
-                    update[
-                        "update_id"
-                    ] + 1
-                )
-
+                offset = update["update_id"] + 1
 
                 if "message" in update:
-
-                    message = update[
-                        "message"
-                    ]
-
-                    text = message.get(
-                        "text",
-                        ""
-                    ).strip()
-
-
-                    print(
-                        "\n📩",
-                        text
-                    )
-
+                    message = update["message"]
+                    text = message.get("text", "").strip()
 
                     try:
-
-                        if text.startswith(
-                            "/start"
-                        ):
-
-                            chat_id = (
-                                message
-                                .get(
-                                    "chat",
-                                    {}
-                                )
-                                .get(
-                                    "id"
-                                )
-                            )
-
+                        if text.startswith("/start"):
+                            chat_id = message.get("chat", {}).get("id")
                             send(
                                 chat_id,
-
-                                "<b>🌍 Country Details</b>\n\n"
-                                "ব্যবহার:\n"
+                                "<b>🌍 Country Details Bot</b>\n\n"
+                                "ব্যবহার করুন:\n"
                                 "<code>/fake bd</code>\n"
                                 "<code>/fake india</code>\n"
                                 "<code>/fake usa</code>\n"
                                 "<code>/fake ae</code>\n"
                                 "<code>/fake oman</code>\n"
-                                "<code>/fake qatar</code>"
+                                "<code>/fake qatar</code>\n\n"
+                                "📋 মানগুলোর ওপর আলতো চাপলেই স্বয়ংক্রিয়ভাবে কপি হয়ে যাবে।"
                             )
-
-
-                        elif text.lower().startswith(
-                            "/fake"
-                        ):
-
-                            command_fake(
-                                message
-                            )
-
+                        elif text.lower().startswith("/fake"):
+                            command_fake(message)
                     except Exception as e:
+                        print("Message Error:", e)
 
-                        print(
-                            "Message Error:",
-                            e
-                        )
-
-
-                elif (
-                    "callback_query"
-                    in update
-                ):
-
+                elif "callback_query" in update:
                     try:
-
-                        callback_generate(
-                            update[
-                                "callback_query"
-                            ]
-                        )
-
+                        callback_generate(update["callback_query"])
                     except Exception as e:
-
-                        print(
-                            "Generate Error:",
-                            e
-                        )
-
+                        print("Generate Error:", e)
 
         except KeyboardInterrupt:
-
-            print(
-                "\n🛑 BOT STOPPED"
-            )
-
+            print("\n🛑 BOT STOPPED")
             break
-
-
         except Exception as e:
-
-            print(
-                "\nMAIN ERROR:",
-                e
-            )
-
-            time.sleep(5)
+            print("\nMAIN ERROR:", e)
+            time.sleep(3)
 
 
 # =========================================================
@@ -1445,5 +777,4 @@ def start_bot():
 # =========================================================
 
 if __name__ == "__main__":
-
     start_bot()
