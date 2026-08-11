@@ -1,5 +1,5 @@
 # ==========================================
-# RAVEN ADDRESS GENERATOR (FULL WORKING CODE)
+# RAVEN ADDRESS GENERATOR (COMPLETE FULL CODE)
 # ==========================================
 
 import random
@@ -18,78 +18,77 @@ BOT_TOKEN = "7633364572:AAHoxt4ER_KUBoA6sfxkFKXtlTT3t529Zg4"
 API = "https://api.telegram.org/bot" + BOT_TOKEN + "/"
 
 # ==========================================
-# 121 COUNTRIES DATABASE
+# COUNTRY DATABASE
 # ==========================================
 COUNTRIES = {
     "bd": ("Bangladesh", "🇧🇩", ["Dhaka", "Chattogram", "Rajshahi", "Khulna", "Barishal", "Sylhet"]),
     "ae": ("United Arab Emirates", "🇦🇪", ["Dubai", "Abu Dhabi", "Sharjah", "Ajman"]),
-    "in": ("India", "🇮🇳", ["New Delhi", "Mumbai", "Kolkata", "Chennai", "Bengaluru"]),
+    "in": ("India", "🇮🇳", ["New Delhi", "Mumbai", "Kolkata", "Chennai", "Bengaluru", "Hyderabad"]),
     "us": ("United States", "🇺🇸", ["New York", "Los Angeles", "Chicago", "Houston", "Miami"]),
-    "gb": ("United Kingdom", "🇬🇧", ["London", "Manchester", "Birmingham", "Liverpool"]),
-    "ca": ("Canada", "🇨🇦", ["Toronto", "Vancouver", "Montreal", "Calgary"]),
-    "au": ("Australia", "🇦🇺", ["Sydney", "Melbourne", "Brisbane", "Perth"]),
-    "de": ("Germany", "🇩🇪", ["Berlin", "Hamburg", "Munich", "Frankfurt"]),
-    "fr": ("France", "🇫🇷", ["Paris", "Marseille", "Lyon", "Toulouse"]),
-    "it": ("Italy", "🇮🇹", ["Rome", "Milan", "Naples", "Turin"]),
-    "es": ("Spain", "🇪🇸", ["Madrid", "Barcelona", "Valencia", "Seville"]),
-    "nl": ("Netherlands", "🇳🇱", ["Amsterdam", "Rotterdam", "The Hague"]),
-    "be": ("Belgium", "🇧🇪", ["Brussels", "Antwerp", "Ghent"]),
-    "ch": ("Switzerland", "🇨🇭", ["Zurich", "Geneva", "Basel"]),
-    "at": ("Austria", "🇦🇹", ["Vienna", "Graz", "Salzburg"]),
-    "se": ("Sweden", "🇸🇪", ["Stockholm", "Gothenburg", "Malmö"]),
-    "no": ("Norway", "🇳🇴", ["Oslo", "Bergen", "Trondheim"]),
-    "dk": ("Denmark", "🇩🇰", ["Copenhagen", "Aarhus", "Odense"]),
-    "fi": ("Finland", "🇫🇮", ["Helsinki", "Espoo", "Tampere"]),
-    "ie": ("Ireland", "🇮🇪", ["Dublin", "Cork", "Limerick"]),
-    "pt": ("Portugal", "🇵🇹", ["Lisbon", "Porto", "Braga"]),
-    "gr": ("Greece", "🇬🇷", ["Athens", "Thessaloniki", "Patras"]),
-    "tr": ("Turkey", "🇹🇷", ["Istanbul", "Ankara", "Izmir"]),
-    "sa": ("Saudi Arabia", "🇸🇦", ["Riyadh", "Jeddah", "Mecca"]),
+    "gb": ("United Kingdom", "🇬🇧", ["London", "Manchester", "Birmingham", "Liverpool", "Leeds"]),
+    "ca": ("Canada", "🇨🇦", ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa"]),
+    "au": ("Australia", "🇦🇺", ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"]),
+    "de": ("Germany", "🇩🇪", ["Berlin", "Hamburg", "Munich", "Frankfurt", "Cologne"]),
+    "fr": ("France", "🇫🇷", ["Paris", "Marseille", "Lyon", "Toulouse", "Nice"]),
+    "it": ("Italy", "🇮🇹", ["Rome", "Milan", "Naples", "Turin", "Florence"]),
+    "es": ("Spain", "🇪🇸", ["Madrid", "Barcelona", "Valencia", "Seville", "Bilbao"]),
+    "pt": ("Portugal", "🇵🇹", ["Lisbon", "Porto", "Braga", "Coimbra"]),
+    "nl": ("Netherlands", "🇳🇱", ["Amsterdam", "Rotterdam", "The Hague", "Utrecht", "Eindhoven"]),
+    "be": ("Belgium", "🇧🇪", ["Brussels", "Antwerp", "Ghent", "Bruges"]),
+    "ch": ("Switzerland", "🇨🇭", ["Zurich", "Geneva", "Basel", "Bern"]),
+    "at": ("Austria", "🇦🇹", ["Vienna", "Graz", "Salzburg", "Innsbruck"]),
+    "se": ("Sweden", "🇸🇪", ["Stockholm", "Gothenburg", "Malmo", "Uppsala"]),
+    "no": ("Norway", "🇳🇴", ["Oslo", "Bergen", "Trondheim", "Stavanger"]),
+    "dk": ("Denmark", "🇩🇰", ["Copenhagen", "Aarhus", "Odense", "Aalborg"]),
+    "fi": ("Finland", "🇫🇮", ["Helsinki", "Espoo", "Tampere", "Turku"]),
+    "ie": ("Ireland", "🇮🇪", ["Dublin", "Cork", "Limerick", "Galway"]),
+    "gr": ("Greece", "🇬🇷", ["Athens", "Thessaloniki", "Patras", "Heraklion"]),
+    "tr": ("Turkey", "🇹🇷", ["Istanbul", "Ankara", "Izmir", "Bursa", "Antalya"]),
+    "sa": ("Saudi Arabia", "🇸🇦", ["Riyadh", "Jeddah", "Mecca", "Medina", "Dammam"]),
     "qa": ("Qatar", "🇶🇦", ["Doha", "Al Rayyan", "Al Wakrah"]),
     "kw": ("Kuwait", "🇰🇼", ["Kuwait City", "Hawalli", "Salmiya"]),
-    "om": ("Oman", "🇴🇲", ["Muscat", "Salalah", "Sohar"]),
+    "om": ("Oman", "🇴🇲", ["Muscat", "Salalah", "Sohar", "Nizwa"]),
     "bh": ("Bahrain", "🇧🇭", ["Manama", "Riffa", "Muharraq"]),
-    "my": ("Malaysia", "🇲🇾", ["Kuala Lumpur", "George Town", "Johor Bahru"]),
+    "my": ("Malaysia", "🇲🇾", ["Kuala Lumpur", "George Town", "Johor Bahru", "Ipoh"]),
     "sg": ("Singapore", "🇸🇬", ["Singapore"]),
-    "id": ("Indonesia", "🇮🇩", ["Jakarta", "Surabaya", "Bandung"]),
-    "th": ("Thailand", "🇹🇭", ["Bangkok", "Chiang Mai", "Phuket"]),
-    "vn": ("Vietnam", "🇻🇳", ["Hanoi", "Ho Chi Minh City", "Da Nang"]),
-    "ph": ("Philippines", "🇵🇭", ["Manila", "Quezon City", "Cebu City"]),
-    "jp": ("Japan", "🇯🇵", ["Tokyo", "Osaka", "Kyoto"]),
-    "kr": ("South Korea", "🇰🇷", ["Seoul", "Busan", "Incheon"]),
-    "cn": ("China", "🇨🇳", ["Beijing", "Shanghai", "Guangzhou"]),
-    "nz": ("New Zealand", "🇳🇿", ["Auckland", "Wellington", "Christchurch"]),
-    "za": ("South Africa", "🇿🇦", ["Johannesburg", "Cape Town", "Durban"]),
-    "ng": ("Nigeria", "🇳🇬", ["Lagos", "Abuja", "Kano"]),
+    "id": ("Indonesia", "🇮🇩", ["Jakarta", "Surabaya", "Bandung", "Medan", "Denpasar"]),
+    "th": ("Thailand", "🇹🇭", ["Bangkok", "Chiang Mai", "Phuket", "Pattaya"]),
+    "vn": ("Vietnam", "🇻🇳", ["Hanoi", "Ho Chi Minh City", "Da Nang", "Hai Phong"]),
+    "ph": ("Philippines", "🇵🇭", ["Manila", "Quezon City", "Cebu City", "Davao City"]),
+    "jp": ("Japan", "🇯🇵", ["Tokyo", "Osaka", "Kyoto", "Nagoya", "Yokohama"]),
+    "kr": ("South Korea", "🇰🇷", ["Seoul", "Busan", "Incheon", "Daegu"]),
+    "cn": ("China", "🇨🇳", ["Beijing", "Shanghai", "Guangzhou", "Shenzhen", "Chengdu"]),
+    "nz": ("New Zealand", "🇳🇿", ["Auckland", "Wellington", "Christchurch", "Hamilton"]),
+    "za": ("South Africa", "🇿🇦", ["Johannesburg", "Cape Town", "Durban", "Pretoria"]),
+    "ng": ("Nigeria", "🇳🇬", ["Lagos", "Abuja", "Kano", "Ibadan"]),
     "ke": ("Kenya", "🇰🇪", ["Nairobi", "Mombasa", "Kisumu"]),
     "gh": ("Ghana", "🇬🇭", ["Accra", "Kumasi", "Tamale"]),
-    "eg": ("Egypt", "🇪🇬", ["Cairo", "Alexandria", "Giza"]),
-    "ma": ("Morocco", "🇲🇦", ["Rabat", "Casablanca", "Marrakesh"]),
+    "eg": ("Egypt", "🇪🇬", ["Cairo", "Alexandria", "Giza", "Luxor"]),
+    "ma": ("Morocco", "🇲🇦", ["Rabat", "Casablanca", "Marrakesh", "Fes"]),
     "dz": ("Algeria", "🇩🇿", ["Algiers", "Oran", "Constantine"]),
     "tn": ("Tunisia", "🇹🇳", ["Tunis", "Sfax", "Sousse"]),
-    "br": ("Brazil", "🇧🇷", ["São Paulo", "Rio de Janeiro", "Brasília"]),
-    "ar": ("Argentina", "🇦🇷", ["Buenos Aires", "Córdoba", "Rosario"]),
-    "cl": ("Chile", "🇨🇱", ["Santiago", "Valparaíso", "Concepción"]),
-    "co": ("Colombia", "🇨🇴", ["Bogotá", "Medellín", "Cali"]),
-    "mx": ("Mexico", "🇲🇽", ["Mexico City", "Guadalajara", "Monterrey"]),
+    "br": ("Brazil", "🇧🇷", ["Sao Paulo", "Rio de Janeiro", "Brasilia", "Salvador"]),
+    "ar": ("Argentina", "🇦🇷", ["Buenos Aires", "Cordoba", "Rosario", "Mendoza"]),
+    "cl": ("Chile", "🇨🇱", ["Santiago", "Valparaiso", "Concepcion"]),
+    "co": ("Colombia", "🇨🇴", ["Bogota", "Medellin", "Cali", "Cartagena"]),
+    "mx": ("Mexico", "🇲🇽", ["Mexico City", "Guadalajara", "Monterrey", "Cancun"]),
     "pe": ("Peru", "🇵🇪", ["Lima", "Arequipa", "Cusco"]),
-    "uy": ("Uruguay", "🇺🇾", ["Montevideo", "Salto", "Paysandú"]),
-    "pa": ("Panama", "🇵🇦", ["Panama City", "Colón", "David"]),
-    "cr": ("Costa Rica", "🇨🇷", ["San José", "Alajuela", "Cartago"]),
+    "uy": ("Uruguay", "🇺🇾", ["Montevideo", "Salto", "Paysandu"]),
+    "pa": ("Panama", "🇵🇦", ["Panama City", "Colon", "David"]),
+    "cr": ("Costa Rica", "🇨🇷", ["San Jose", "Alajuela", "Cartago"]),
     "is": ("Iceland", "🇮🇸", ["Reykjavik", "Kopavogur", "Hafnarfjordur"]),
     "cz": ("Czechia", "🇨🇿", ["Prague", "Brno", "Ostrava"]),
-    "pl": ("Poland", "🇵🇱", ["Warsaw", "Krakow", "Wroclaw"]),
+    "pl": ("Poland", "🇵🇱", ["Warsaw", "Krakow", "Wroclaw", "Gdansk"]),
     "hu": ("Hungary", "🇭🇺", ["Budapest", "Debrecen", "Szeged"]),
     "ro": ("Romania", "🇷🇴", ["Bucharest", "Cluj-Napoca", "Timisoara"]),
     "bg": ("Bulgaria", "🇧🇬", ["Sofia", "Plovdiv", "Varna"]),
     "rs": ("Serbia", "🇷🇸", ["Belgrade", "Novi Sad", "Nis"]),
     "hr": ("Croatia", "🇭🇷", ["Zagreb", "Split", "Rijeka"]),
-    "si": ("Slovenia", "🇸🇮", ["Ljubljana", "Maribor", "Koper"]),
     "sk": ("Slovakia", "🇸🇰", ["Bratislava", "Kosice", "Presov"]),
     "ee": ("Estonia", "🇪🇪", ["Tallinn", "Tartu", "Narva"]),
     "lv": ("Latvia", "🇱🇻", ["Riga", "Daugavpils", "Liepaja"]),
     "lt": ("Lithuania", "🇱🇹", ["Vilnius", "Kaunas", "Klaipeda"]),
-    "ua": ("Ukraine", "🇺🇦", ["Kyiv", "Lviv", "Odesa"]),
+    "ua": ("Ukraine", "🇺🇦", ["Kyiv", "Lviv", "Odesa", "Kharkiv"]),
     "ge": ("Georgia", "🇬🇪", ["Tbilisi", "Batumi", "Kutaisi"]),
     "am": ("Armenia", "🇦🇲", ["Yerevan", "Gyumri", "Vanadzor"]),
     "az": ("Azerbaijan", "🇦🇿", ["Baku", "Ganja", "Sumqayit"]),
@@ -104,23 +103,22 @@ COUNTRIES = {
     "la": ("Laos", "🇱🇦", ["Vientiane", "Luang Prabang", "Savannakhet"]),
     "mn": ("Mongolia", "🇲🇳", ["Ulaanbaatar", "Erdenet", "Darkhan"]),
     "fj": ("Fiji", "🇫🇯", ["Suva", "Nadi", "Lautoka"]),
-    "pg": ("Papua New Guinea", "🇵🇬", ["Port Moresby", "Lae", "Madang"]),
     "jm": ("Jamaica", "🇯🇲", ["Kingston", "Montego Bay", "Spanish Town"]),
     "bs": ("Bahamas", "🇧🇸", ["Nassau", "Freeport", "West End"]),
     "bb": ("Barbados", "🇧🇧", ["Bridgetown", "Oistins", "Speightstown"]),
     "tt": ("Trinidad and Tobago", "🇹🇹", ["Port of Spain", "San Fernando", "Arima"]),
     "bz": ("Belize", "🇧🇿", ["Belmopan", "Belize City", "San Ignacio"]),
-    "gt": ("Guatemala", "🇬🇹", ["Guatemala City", "Quetzaltenango"]),
+    "gt": ("Guatemala", "🇬🇹", ["Guatemala City", "Quetzaltenango", "Escuintla"]),
     "hn": ("Honduras", "🇭🇳", ["Tegucigalpa", "San Pedro Sula", "La Ceiba"]),
     "sv": ("El Salvador", "🇸🇻", ["San Salvador", "Santa Ana", "San Miguel"]),
     "ni": ("Nicaragua", "🇳🇮", ["Managua", "Leon", "Granada"]),
     "do": ("Dominican Republic", "🇩🇴", ["Santo Domingo", "Santiago", "La Romana"]),
-    "ht": ("Haiti", "🇭🇹", ["Port-au-Prince", "Cap-Haitien", "Gonaives"]),
     "bo": ("Bolivia", "🇧🇴", ["La Paz", "Sucre", "Santa Cruz"]),
     "ec": ("Ecuador", "🇪🇨", ["Quito", "Guayaquil", "Cuenca"]),
     "py": ("Paraguay", "🇵🇾", ["Asuncion", "Ciudad del Este", "Encarnacion"]),
     "gy": ("Guyana", "🇬🇾", ["Georgetown", "Linden", "New Amsterdam"]),
     "sr": ("Suriname", "🇸🇷", ["Paramaribo", "Lelydorp", "Nieuw Nickerie"]),
+    "et": ("Ethiopia", "🇪🇹", ["Addis Ababa", "Dire Dawa", "Mekelle"]),
     "tz": ("Tanzania", "🇹🇿", ["Dodoma", "Dar es Salaam", "Arusha"]),
     "ug": ("Uganda", "🇺🇬", ["Kampala", "Entebbe", "Jinja"]),
     "rw": ("Rwanda", "🇷🇼", ["Kigali", "Butare", "Gisenyi"]),
@@ -132,12 +130,12 @@ COUNTRIES = {
     "mg": ("Madagascar", "🇲🇬", ["Antananarivo", "Toamasina", "Antsirabe"]),
     "mu": ("Mauritius", "🇲🇺", ["Port Louis", "Curepipe", "Vacoas"]),
     "sc": ("Seychelles", "🇸🇨", ["Victoria", "Beau Vallon", "Anse Royale"]),
-    "sn": ("Senegal", "🇸🇳", ["Dakar", "Touba", "Thiès"]),
-    "ci": ("Côte d'Ivoire", "🇨🇮", ["Abidjan", "Yamoussoukro", "Bouake"]),
+    "sn": ("Senegal", "🇸🇳", ["Dakar", "Touba", "Thies"]),
+    "ci": ("Cote d'Ivoire", "🇨🇮", ["Abidjan", "Yamoussoukro", "Bouake"]),
     "cm": ("Cameroon", "🇨🇲", ["Yaounde", "Douala", "Bamenda"]),
     "ao": ("Angola", "🇦🇴", ["Luanda", "Huambo", "Lobito"]),
     "ml": ("Mali", "🇲🇱", ["Bamako", "Sikasso", "Mopti"]),
-    "bf": ("Burkina Faso", "🇧🇫", ["Ouagadougou", "Bobo-Dioulasso"]),
+    "bf": ("Burkina Faso", "🇧🇫", ["Ouagadougou", "Bobo-Dioulasso", "Koudougou"]),
     "ne": ("Niger", "🇳🇪", ["Niamey", "Zinder", "Maradi"]),
     "td": ("Chad", "🇹🇩", ["N'Djamena", "Moundou", "Sarh"]),
     "so": ("Somalia", "🇸🇴", ["Mogadishu", "Hargeisa", "Kismayo"]),
@@ -147,9 +145,38 @@ COUNTRIES = {
     "lb": ("Lebanon", "🇱🇧", ["Beirut", "Tripoli", "Sidon"]),
     "iq": ("Iraq", "🇮🇶", ["Baghdad", "Basra", "Mosul"]),
     "ir": ("Iran", "🇮🇷", ["Tehran", "Mashhad", "Isfahan"]),
-    "il": ("Israel", "🇮🇱", ["Jerusalem", "Tel Aviv", "Haifa"]),
+    "cy": ("Cyprus", "🇨🇾", ["Nicosia", "Limassol", "Larnaca"]),
+    "mt": ("Malta", "🇲🇹", ["Valletta", "Birkirkara", "Mosta"]),
+    "lu": ("Luxembourg", "🇱🇺", ["Luxembourg City", "Esch-sur-Alzette"]),
     "mc": ("Monaco", "🇲🇨", ["Monaco", "Monte Carlo"]),
     "li": ("Liechtenstein", "🇱🇮", ["Vaduz", "Schaan"]),
+    "al": ("Albania", "🇦🇱", ["Tirana", "Durres", "Vlore"]),
+    "ba": ("Bosnia and Herzegovina", "🇧🇦", ["Sarajevo", "Banja Luka", "Mostar"]),
+    "me": ("Montenegro", "🇲🇪", ["Podgorica", "Budva", "Niksic"]),
+    "mk": ("North Macedonia", "🇲🇰", ["Skopje", "Bitola", "Ohrid"]),
+    "md": ("Moldova", "🇲🇩", ["Chisinau", "Balti", "Tiraspol"]),
+    "by": ("Belarus", "🇧🇾", ["Minsk", "Gomel", "Brest"]),
+    "kg": ("Kyrgyzstan", "🇰🇬", ["Bishkek", "Osh", "Jalal-Abad"]),
+    "tj": ("Tajikistan", "🇹🇯", ["Dushanbe", "Khujand", "Kulob"]),
+    "tm": ("Turkmenistan", "🇹🇲", ["Ashgabat", "Turkmenabat", "Dashoguz"]),
+    "ps": ("Palestine", "🇵🇸", ["Ramallah", "Gaza City", "Hebron"]),
+    "sy": ("Syria", "🇸🇾", ["Damascus", "Aleppo", "Homs"]),
+    "ye": ("Yemen", "🇾🇪", ["Sanaa", "Aden", "Taiz"]),
+    "pk": ("Pakistan", "🇵🇰", ["Islamabad", "Karachi", "Lahore", "Rawalpindi", "Peshawar"]),
+    "af": ("Afghanistan", "🇦🇫", ["Kabul", "Kandahar", "Herat"]),
+    "pg": ("Papua New Guinea", "🇵🇬", ["Port Moresby", "Lae", "Madang"]),
+    "vu": ("Vanuatu", "🇻🇺", ["Port Vila", "Luganville"]),
+    "ws": ("Samoa", "🇼🇸", ["Apia", "Vaitele", "Faleula"]),
+    "to": ("Tonga", "🇹🇴", ["Nuku'alofa", "Neiafu"]),
+    "sb": ("Solomon Islands", "🇸🇧", ["Honiara", "Gizo"]),
+    "fm": ("Micronesia", "🇫🇲", ["Palikir", "Weno", "Kolonia"]),
+    "pw": ("Palau", "🇵🇼", ["Ngerulmud", "Koror"]),
+    "mh": ("Marshall Islands", "🇲🇭", ["Majuro", "Ebeye"]),
+    "nr": ("Nauru", "🇳🇷", ["Yaren", "Aiwo"]),
+    "tv": ("Tuvalu", "🇹🇻", ["Funafuti", "Vaiaku"]),
+    "ki": ("Kiribati", "🇰🇮", ["Tarawa", "Betio"]),
+    "sm": ("San Marino", "🇸🇲", ["San Marino", "Serravalle"]),
+    "ad": ("Andorra", "🇦🇩", ["Andorra la Vella", "Escaldes"])
 }
 
 ALIASES = {
@@ -160,12 +187,13 @@ ALIASES = {
 }
 
 # ==========================================
-# LOCALIZED GENERATOR DATA
+# GENERATOR DATA & LOCALES
 # ==========================================
 BD_NAMES = [
-    "মাহমুদুল হাসান", "শাহানা বেগম", "মোঃ রাকিব হাসান", "সুমাইয়া আক্তার",
+    "মাহমুদুল হাসান", "শাহানা বেগম", "রাকিব হাসান", "সুমাইয়া আক্তার",
     "আব্দুল্লাহ আল মামুন", "নুসরাত জাহান", "সাইফুল ইসলাম", "তানজিলা আক্তার",
-    "আরিফ হোসেন", "ফারজানা আক্তার", "মেহেদী হাসান", "আয়েশা সিদ্দিকা"
+    "আরিফ হোসেন", "ফারজানা আক্তার", "রিফাত আহমেদ", "সাদিয়া রহমান",
+    "নাঈম হাসান", "ইমরান হোসেন"
 ]
 
 BD_REAL_PLACES = {
@@ -177,8 +205,15 @@ BD_REAL_PLACES = {
     "Sylhet": {"city": "সিলেট", "state": "সিলেট বিভাগ", "postcode": "৩১০০", "streets": ["জিন্দাবাজার রোড", "দরগাহ গেট", "আম্বারখানা"]}
 }
 
-FIRST_NAMES = ["Michael", "James", "David", "Robert", "John", "William", "Daniel", "Alex", "Emma", "Sarah", "Sophia", "Olivia", "Emily"]
-LAST_NAMES = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson", "Taylor", "Anderson"]
+FIRST_NAMES = [
+    "Michael", "James", "David", "Robert", "John", "William", "Daniel",
+    "Alex", "Emma", "Sarah", "Sophia", "Olivia", "Emily", "Anna", "Maria", "Thomas"
+]
+
+LAST_NAMES = [
+    "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller",
+    "Davis", "Wilson", "Taylor", "Anderson", "Thomas", "Martin"
+]
 
 def get_code(value):
     value = value.strip().lower()
@@ -191,12 +226,17 @@ def get_code(value):
             return code
     return None
 
+def generate_name(code):
+    if code == "bd":
+        return random.choice(BD_NAMES)
+    return random.choice(FIRST_NAMES) + " " + random.choice(LAST_NAMES)
+
 def generate_address(code):
     country, flag, cities = COUNTRIES[code]
     city = random.choice(cities)
 
     if code == "bd":
-        name = random.choice(BD_NAMES)
+        name = generate_name(code)
         place = BD_REAL_PLACES.get(city, BD_REAL_PLACES["Dhaka"])
         road_no = random.randint(10, 150)
         bangla_nums = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'}
@@ -206,7 +246,7 @@ def generate_address(code):
         state_disp = place["state"]
         postal_disp = place["postcode"]
     else:
-        name = f"{random.choice(FIRST_NAMES)} {random.choice(LAST_NAMES)}"
+        name = generate_name(code)
         number = random.randint(10, 999)
         block = random.choice(["A", "B", "C", "D", "E"])
         street = f"{number} Main Street, Block {block}"
@@ -225,7 +265,7 @@ def generate_address(code):
     }
 
 # ==========================================
-# TAP-TO-COPY FORMATTING (WITHOUT TEST NOTICE)
+# TAP-TO-COPY FORMATTING
 # ==========================================
 def format_address(data):
     return (
@@ -243,12 +283,17 @@ def format_address(data):
 def generate_button(code):
     return {
         "inline_keyboard": [
-            [{"text": "🔄 Generate", "callback_data": "generate:" + code}]
+            [
+                {
+                    "text": "🔄 Generate",
+                    "callback_data": "generate:" + code
+                }
+            ]
         ]
     }
 
 # ==========================================
-# TELEGRAM API REQUESTS
+# TELEGRAM API FUNCTIONS
 # ==========================================
 def api(method, data=None):
     if data is None:
@@ -265,13 +310,22 @@ def api(method, data=None):
         return None
 
 def send_message(chat_id, text, keyboard=None):
-    data = {"chat_id": chat_id, "text": text, "parse_mode": "HTML"}
+    data = {
+        "chat_id": chat_id,
+        "text": text,
+        "parse_mode": "HTML"
+    }
     if keyboard:
         data["reply_markup"] = json.dumps(keyboard, ensure_ascii=False)
     return api("sendMessage", data)
 
 def edit_message(chat_id, message_id, text, keyboard=None):
-    data = {"chat_id": chat_id, "message_id": message_id, "text": text, "parse_mode": "HTML"}
+    data = {
+        "chat_id": chat_id,
+        "message_id": message_id,
+        "text": text,
+        "parse_mode": "HTML"
+    }
     if keyboard:
         data["reply_markup"] = json.dumps(keyboard, ensure_ascii=False)
     return api("editMessageText", data)
@@ -293,19 +347,35 @@ def handle_message(message):
             "Country code দিয়ে address generate করো।\n\n"
             "<code>/fake bd</code>\n"
             "<code>/fake ae</code>\n"
+            "<code>/fake india</code>\n"
             "<code>/fake us</code>\n\n"
             "🔄 Generate চাপলে একই message-এ নতুন address আসবে।"
         )
         return
 
     if text.startswith("/countries"):
-        send_message(chat_id, "<b>🌍 121 COUNTRIES SUPPORTED</b>\n\nExample:\n<code>/fake bd</code>\n<code>/fake us</code>")
+        send_message(
+            chat_id,
+            "<b>🌍 COUNTRY ADDRESS GENERATOR</b>\n\n"
+            "Example:\n"
+            "<code>/fake bd</code>\n"
+            "<code>/fake ae</code>\n"
+            "<code>/fake in</code>\n"
+            "<code>/fake us</code>"
+        )
         return
 
     if text.lower().startswith("/fake"):
         parts = text.split()
         if len(parts) < 2:
-            send_message(chat_id, "❌ Country code দিন।\n\nExample:\n<code>/fake bd</code>")
+            send_message(
+                chat_id,
+                "❌ Country code দিন।\n\n"
+                "Example:\n"
+                "<code>/fake bd</code>\n"
+                "<code>/fake ae</code>\n"
+                "<code>/fake india</code>"
+            )
             return
 
         code = get_code(parts[1])
@@ -346,7 +416,7 @@ def run_bot():
     print("==============================")
     print("Countries:", len(COUNTRIES))
     
-    # Drop pending updates to fix 409 Conflict Error
+    # Drop pending updates to fix HTTP 409 Conflict Error
     api("deleteWebhook", {"drop_pending_updates": True})
     
     print("Bot is running...")
@@ -383,5 +453,11 @@ def run_bot():
             print("MAIN ERROR:", e)
             time.sleep(5)
 
+# ==========================================
+# START
+# ==========================================
 if __name__ == "__main__":
-    run_bot()
+    if not BOT_TOKEN or BOT_TOKEN == "PASTE_YOUR_BOT_TOKEN_HERE":
+        print("❌ BOT TOKEN বসানো হয়নি।")
+    else:
+        run_bot()
